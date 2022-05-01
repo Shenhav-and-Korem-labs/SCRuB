@@ -8,7 +8,8 @@ LSQ_init <- function(sinks, sources, COVERAGE=10000){
   alpha_inits <- matrix(data = rep(0, ( n_controls + 1)  * n_samples),
                         nrow = n_samples, 
                         ncol = (n_controls + 1) )
-
+  S_unk_obs = sinks * 0
+  
   for( i in (1:n_samples) ){
     rare_sink <- t(t(rescale(sinks[i,]))) * COVERAGE
     inits <- lsq_procedure(
@@ -20,8 +21,9 @@ LSQ_init <- function(sinks, sources, COVERAGE=10000){
     S_unk_obs[i, ] <- rescale( inits$unknown )  * COVERAGE 
   }
   
-  return(alpha_inits=alpha_inits, 
-         S_unk_obs = S_unk_obs )
+  return(list(
+        alpha_inits=alpha_inits, 
+         S_unk_obs = S_unk_obs ) )
 }
 
 
