@@ -67,9 +67,88 @@ scr_out$gamma %>% plot()
 ```
 
 
-
 ## Spatial SCRuB
 
-Incorporating the well metadata
+It is strongly recommended to incorporate the well metadata of each sample into SCRuB, as this makes it possible ot directly account for potential well leakage into negative controls, reducing the risk of wrongly removing certain species during decontamination.
+
+
+To start, we load the metadata and create a distance matrix between each sample, in which each row/column name corresponds to the rows identifying each sample from our data. 
+```{r}
+well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% select(na_plate_location) %>% 
+  mutate(well = na_plate_location %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
+                         indices = na_plate_location %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
+                           )
+
+print( well_metadata %>% select(well, indices) %>% head() )
+```
+
+
+Let's take a look at the negative controls placement strategy:
+```{r, echo=FALSE}
+control_indices <- row.names(well_metadata) %>% str_detect('blank')
+well_metadata %>%
+        ggplot(aes(x=indices, y=well, fill=control_indices, color=control_indices)) + 
+        geom_point(size=15) +
+        theme_dark() + 
+        theme(strip.text.x = element_text(
+          size = 18, color = "White", face = 'bold'
+        ),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), 
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(), 
+        legend.position='none'
+        )
+```
+
+To build a distanct matrix, we use the `dist` function
+```{r}
+distance_matrix <- well_metadata %>% select(well, indices) %>%
+                      dist(method = 'euclidean') %>% as.matrix() %>% round(2)
+
+distance_matrix[1:5, 1:5]
+
+```
+
+```{r}
+sp_scr_out <- spatial_SCRUB(  data = data, 
+                              is_control=control_indices, 
+                              well_dists = distance_matrix, 
+                              print_loglikelihood = TRUE
+                              )
+```
+
+
+Let's take a look at the results, 3 of which are the same as the output to the `SCRUB` function. The estimated level of contamination was very low, as the fitted `p` parameters indicate our samples are close to `0%` contamination.
+```{r}
+sp_scr_out$p %>% boxplot()
+```
+
+To take a look at the cleaned samples, refer to the `decontaminated_samples` entry. 
+```{r}
+decontaminated_samples <- sp_scr_out$decontaminated_samples
+decontaminated_samples[1:5, 1:5]
+```
+
+
+The last output of the SCRUB function is the `gamma` parameter, which is a vector representing the estimated relative abundance of the contamination community.
+```{r}
+scr_out$gamma %>% plot()
+```
+
+
+One additional output is the `alpha` parameters, which is a `n_control` by `n_samples + 1` matrix that represents the estimated level of leakage into each control. The last column of the `alpha` matrix represents the estimated proportion of each control that originates from the contamination source. In this case, `SCRuB` estimated a high level of leakage for many samples, with a median estimated well-to-well leakge of `25%`.
+
+```{r}
+boxplot( sp_scr_out$alpha[, ncol(sp_scr_out$alpha)] )
+```
+
+
+
+
+
+
 
 
