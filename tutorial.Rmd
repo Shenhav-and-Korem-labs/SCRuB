@@ -1,0 +1,75 @@
+---
+title: 'SCRuB Tutorial'
+output: 
+    html_document:
+       theme: darkly
+---
+<style>
+    body { background-color: #162138;
+            text-color: whitesmoke}
+</style>
+<img src='Images/SCRuB_logo.png' align="right" height="139" />
+
+
+In this tutorial,  we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.
+
+-----------------------
+
+# {.tabset}
+
+## Loading the data
+
+The starting point for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample's read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible, and so data should only be grouped to higher orders of phylogeny (e.g. genus, family...) *after* completing the SCRuB pipeline. 
+
+We start by loading the necessary packages, such as `SCRUB`. We also include the use of `tidyverse` within our tutorial
+```{r, message=FALSE}
+library(tidyverse)
+library(SCRuB)
+```
+
+As an example dataset, we use processed samples publicly available from Qiita (**link**), from a dataset of hospital samples, original from surfaces, patients, and blank controls. In the ensuing pipeline, we demonstrate how SCRuB can be used to remove the contamination from the hospital and patient samples. We demonstrates the SCRuB pipeline on one of the 6 plates from the dataset.
+```{r}
+data <- read.csv('tutorial_data/hospital.csv', row.names=1) %>% as.matrix()
+dim(data)
+```
+
+Let's take a look at the row names, which in this case we will use to identify the control samples, which include `blank` in the row name.
+```{r}
+row.names(data)
+```
+## SCRuB
+
+### Running SCRuB
+```{r}
+control_indices <- row.names(data) %>% str_detect('blank')
+scr_out <- SCRUB( samples = data[control_indices==F, ], 
+                  controls = data[control_indices, ],
+                  print_loglikelihood = T )
+```
+
+### Evaluating the outputs
+
+Let's take a look at the results. The estimated level of contamination was very low, as the fitted `p` parameters indicate our samples are close to `0%` contamination.
+```{r}
+scr_out$p %>% boxplot()
+```
+
+To take a look at the cleaned samples, refer to the `decontaminated_samples` entry. 
+```{r}
+decontaminated_samples <- scr_out$decontaminated_samples
+decontaminated_samples[1:5, 1:5]
+```
+
+
+The last output of the SCRUB function is the `gamma` parameter, which is a vector representing the estimated relative abundance of the contamination community.
+```{r}
+scr_out$gamma %>% plot()
+```
+
+
+
+## Spatial SCRuB
+
+Incorporating the well metadata
+
+

@@ -1,0 +1,22 @@
+name: SCRuB
+output_dir: '.'
+navbar:
+  title: SCRuB
+  left:
+  - text: Tutorial
+    href: tutorial.html
+  - text: Documentation
+    icon: fa-gear
+    menu:
+    - text: SCRuB Manuscript
+      href: 
+  right:
+  - icon: fa-question fa-lg
+    href: https://github.com/korem-lab/SCRuB/issues
+  - icon: fa-github fa-lg
+    href: https://github.com/korem-lab/SCRuB/
+output:
+  html_document:
+    theme: darkly
+    self_contained: no
+
