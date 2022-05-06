@@ -5,6 +5,10 @@ navbar:
   left:
   - text: Tutorial
     href: tutorial.html
+    icon: fa-book
+  - text: preSCRuB
+    href: prescrub_intro.html
+    icon: fa-object-group
   - text: Documentation
     icon: fa-gear
     menu:

@@ -248,7 +248,18 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="tutorial.html">Tutorial</a>
+  <a href="tutorial.html">
+    <span class="fa fa-book"></span>
+     
+    Tutorial
+  </a>
+</li>
+<li>
+  <a href="prescrub_intro.html">
+    <span class="fa fa-object-group"></span>
+     
+    preSCRuB
+  </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -391,19 +402,20 @@ decontaminated_samples[1:5, 1:5]</code></pre>
 <h2>Spatial SCRuB</h2>
 <p>It is strongly recommended to incorporate the well metadata of each sample into SCRuB, as this makes it possible ot directly account for potential well leakage into negative controls, reducing the risk of wrongly removing certain species during decontamination.</p>
 <p>To start, we load the metadata and create a distance matrix between each sample, in which each row/column name corresponds to the rows identifying each sample from our data.</p>
-<pre class="r"><code>well_metadata &lt;- read.csv(&#39;tutorial_data/well_metadata.csv&#39;, row.names=2)[row.names(data), ] %&gt;% select(na_plate_location) %&gt;% 
-  mutate(well = na_plate_location %&gt;% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
-                         indices = na_plate_location %&gt;% sapply( function(x) substr(x, 2, 3) %&gt;% as.integer)
-                           )
+<pre class="r"><code>well_metadata &lt;- read.csv(&#39;tutorial_data/well_metadata.csv&#39;, row.names=2)[row.names(data), ] %&gt;% 
+        select(na_plate_location) %&gt;% 
+        mutate(well = na_plate_location %&gt;% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
+                               indices = na_plate_location %&gt;% sapply( function(x) substr(x, 2, 3) %&gt;% as.integer)
+                                 )
 
-print( well_metadata %&gt;% select(well, indices) %&gt;% head() )</code></pre>
-<pre><code>##                       well indices
-## 13092.000117069.covid    2       1
-## 13092.000117067.covid    4       2
-## 13092.000117455.covid    8      12
-## 13092.000117057.covid    3       5
-## 13092.000117159.covid    2       5
-## 13092.000117160.covid    8       4</code></pre>
+print( well_metadata %&gt;% select(na_plate_location, well, indices) %&gt;% head() )</code></pre>
+<pre><code>##                       na_plate_location well indices
+## 13092.000117069.covid                B1    2       1
+## 13092.000117067.covid                D2    4       2
+## 13092.000117455.covid               H12    8      12
+## 13092.000117057.covid                C5    3       5
+## 13092.000117159.covid                B5    2       5
+## 13092.000117160.covid                H4    8       4</code></pre>
 <p>Let’s take a look at the negative controls placement strategy: <img src="tutorial_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>To build a distanct matrix, we use the <code>dist</code> function</p>
 <pre class="r"><code>distance_matrix &lt;- well_metadata %&gt;% select(well, indices) %&gt;%
@@ -428,11 +440,11 @@ distance_matrix[1:5, 1:5]</code></pre>
 ## 13092.000117455.covid                  9.22
 ## 13092.000117057.covid                  1.00
 ## 13092.000117159.covid                  0.00</code></pre>
-<pre class="r"><code>sp_scr_out &lt;- spatial_SCRUB(  data = data, 
-                              is_control=control_indices, 
-                              well_dists = distance_matrix, 
-                              print_loglikelihood = TRUE
-                              )</code></pre>
+<pre class="r"><code>sp_scr_out &lt;- spatial_SCRUB(data = data, 
+                            is_control=control_indices, 
+                            well_dists = distance_matrix, 
+                            print_loglikelihood = TRUE
+                            )</code></pre>
 <pre><code>## [1] &quot;Log-Likelihood of -4394722.90077628 after 1 iterations!&quot;
 ## [1] &quot;Log-Likelihood of -4393488.46293399 after 2 iterations!&quot;
 ## [1] &quot;Log-Likelihood of -4393336.40817118 after 3 iterations!&quot;
@@ -480,7 +492,7 @@ decontaminated_samples[1:5, 1:5]</code></pre>
 ## [4,]    0    0    2    0    0
 ## [5,]    0    0    4   27    0</code></pre>
 <p>The last output of the SCRUB function is the <code>gamma</code> parameter, which is a vector representing the estimated relative abundance of the contamination community.</p>
-<pre class="r"><code>scr_out$gamma %&gt;% plot()</code></pre>
+<pre class="r"><code>sp_scr_out$gamma %&gt;% plot()</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>One additional output is the <code>alpha</code> parameters, which is a <code>n_control</code> by <code>n_samples + 1</code> matrix that represents the estimated level of leakage into each control. The last column of the <code>alpha</code> matrix represents the estimated proportion of each control that originates from the contamination source. In this case, <code>SCRuB</code> estimated a high level of leakage for many samples, with a median estimated well-to-well leakge of <code>25%</code>.</p>
 <pre class="r"><code>boxplot( sp_scr_out$alpha[, ncol(sp_scr_out$alpha)] )</code></pre>

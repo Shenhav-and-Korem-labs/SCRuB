@@ -74,12 +74,13 @@ It is strongly recommended to incorporate the well metadata of each sample into 
 
 To start, we load the metadata and create a distance matrix between each sample, in which each row/column name corresponds to the rows identifying each sample from our data. 
 ```{r}
-well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% select(na_plate_location) %>% 
-  mutate(well = na_plate_location %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
-                         indices = na_plate_location %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
-                           )
+well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% 
+        select(na_plate_location) %>% 
+        mutate(well = na_plate_location %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
+                               indices = na_plate_location %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
+                                 )
 
-print( well_metadata %>% select(well, indices) %>% head() )
+print( well_metadata %>% select(na_plate_location, well, indices) %>% head() )
 ```
 
 
@@ -113,11 +114,11 @@ distance_matrix[1:5, 1:5]
 ```
 
 ```{r}
-sp_scr_out <- spatial_SCRUB(  data = data, 
-                              is_control=control_indices, 
-                              well_dists = distance_matrix, 
-                              print_loglikelihood = TRUE
-                              )
+sp_scr_out <- spatial_SCRUB(data = data, 
+                            is_control=control_indices, 
+                            well_dists = distance_matrix, 
+                            print_loglikelihood = TRUE
+                            )
 ```
 
 
@@ -135,7 +136,7 @@ decontaminated_samples[1:5, 1:5]
 
 The last output of the SCRUB function is the `gamma` parameter, which is a vector representing the estimated relative abundance of the contamination community.
 ```{r}
-scr_out$gamma %>% plot()
+sp_scr_out$gamma %>% plot()
 ```
 
 
