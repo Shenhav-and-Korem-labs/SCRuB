@@ -20,16 +20,20 @@ output:
 
 --------------------------
 
+Welcome to `SCRuB`! This is a software package designed to provide researchers with a state of the art tool to **<span style="color:lightblue">remove contamination** from microbial datasets.  <br>
+
+In addition to the statistical framework of `SCRuB`, we provide [`preSCRuB`](prescrub_intro.html), a personalized interface to offer user recommendations to **<span style="color:lightblue">optimize negative control strategies** during study design processes. Effective use of `preSCRuB` will allow for even stronger decontamination using `SCRuB` in future analyses.  
+
 ## Installation
 
-SCRuB is currently available through its github repository, which can be installed using `devtools`. The two main package requirements from SCRuB are `glmnet` and `torch`, which can be installed with the following command:
+SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB/]), which can be installed using `devtools`. The main package requirements from SCRuB are `glmnet`, `torch`, and `tidyverse`, which can be installed with the following command:
 
-```S
-install.packages( c('glmnet', 'torch') )
+```{r, eval=FALSE}
+install.packages( c('glmnet', 'torch', 'tidyverse') )
 ```
 
-Once the dependencies are met, SCRuB can be installed as follows:
-```S
+Once the dependencies are met, SCRuB can be installed using `devtools` as follows:
+```{r, eval=FALSE}
 devtools::install_github("korem-lab/SCRuB")
 ```
 
@@ -37,17 +41,13 @@ devtools::install_github("korem-lab/SCRuB")
 
 ## Getting started
 
-**<span style="color:lightblue">To start using SCRuB, we recommend to follow along with our [tutorial](tutorial.html). This notebook demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.:</span>** 
+**<span style="color:lightblue">To start using SCRuB, we recommend to follow along with our [tutorial](tutorial.html), which demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.:</span>** 
 
 &nbsp;
 
 ## FAQs
-*What data does SCRuB need?*
+*Why SCRuB?*
 
-*What are SCRuB's advantages? (what is it's secret sauce?)*
-
-*How should I use SCRuB if I want to remove multiple types of contamination?*
-![](images/sequential_scrubbing.png)
 
 &nbsp;
 
