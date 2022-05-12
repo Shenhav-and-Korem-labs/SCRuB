@@ -37,7 +37,7 @@ ___________________
  
  _is_control_ - A  (n_samples+n_controls) length boolean vector, indicating which rows of the data matrix correspond to negative controls, whose contents represent the contamination community to be removed from the non-control samples
  
-(optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our (<a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to collect this input, using Euclidean distance. 
+(optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our <a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to create this input, using Euclidean distance. 
 
 (optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
 
@@ -72,7 +72,8 @@ data <- read.csv('tutorial_data/hospital.csv', row.names=1) %>% as.matrix()
 ```
 
 Next, load the well metadata
-```well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% 
+```
+well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% 
         select(na_plate_location) %>% 
         mutate(well = na_plate_location %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
                                indices = na_plate_location %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
@@ -107,9 +108,9 @@ count matrix (first 4 rows and columns):
 | ERR525699  |  4 | 5 | 0|0 |
 
 (2) is_control. A vector identifying which rows of _data_ correspond to control samples:
-
-| F | F | T | F |
-
+```
+c( F, F, T, F)
+```
 
 (3) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix.
 
@@ -134,8 +135,9 @@ Output -
 | ERR525699  |  4 | 5 | 0|0 |
 
 (2) p - The estimated fraction of each sample that is not contamination
-
-| 0.16 | 1 | 1 |
+```
+c(0.16, 1, 1)
+```
 
 (3) alpha - the estimated composition of each control:
 | | ERR525688| 
@@ -148,8 +150,9 @@ Output -
 
 
 (4) gamma - The estimated relative abundance of the contamination community
-|  0 | 0.05 | 0 | 0.95 |
-
+```
+c(0, 0.05, 0, 0.95)
+```
 
 
 
