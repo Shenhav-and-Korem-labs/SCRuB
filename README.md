@@ -30,21 +30,22 @@ devtools::install_github("korem-lab/SCRuB")
 
 Usage
 ___________________
-As input, *SCRuB* takes arguments:
+
+### As input, *SCRuB* takes arguments:
 
  _data_ - An ( n_samples + n_controls ) x n_taxa count matrix
  
  _is_control_ - A  (n_samples+n_controls) length boolean vector, indicating which rows of the data matrix correspond to negative controls, whose contents represent the contamination community to be removed from the non-control samples
  
-(OPTIONAL) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our (<a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to collect this input, using Euclidean distance. 
+(optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our (<a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to collect this input, using Euclidean distance. 
 
-(OPTIONAL) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
+(optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
 
-(OPTIONAL) a_init_ float \in (0,1) - The prior assumption representing (1 - level of well leakage into each control). Default is 0.99, i.e. 1% of reads in controls are the result of leakge. 
+(optional) a_init_ float \in (0,1) - The prior assumption representing (1 - level of well leakage into each control). Default is 0.99, i.e. 1% of reads in controls are the result of leakge. 
 
-(OPTIONAL) _print_loglikelihood_ Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
+(optional) _print_loglikelihood_ Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
 
-As output, *SCRuB* returns a list containing:
+#### As output, *SCRuB* returns a list containing:
 
  decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
  
