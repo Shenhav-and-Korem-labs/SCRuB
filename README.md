@@ -109,7 +109,7 @@ count matrix (first 4 rows and columns):
 
 (2) is_control. A vector identifying which rows of _data_ correspond to control samples:
 ```
-c( F, F, T, F)
+c(F, F, T, F)
 ```
 
 (3) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix.
@@ -142,12 +142,9 @@ c(0.16, 1, 1)
 ```
 
 (3) alpha - the estimated composition of each control:
-| | ERR525688| 
-| ------------- | ------------- |
-| ERR525698  | 0.001 |
-| ERR525693  |  0.001 |
-| ERR525699  |  0.001 |
-| taxa_4  |  0.997 |
+| | ERR525698  | ERR525693 | ERR525699 | contaminant  |  
+| ------------- | ------------- | ------------- | ------------- |
+| ERR525688| 0.001 | 0.001 | 0.001 | 0.997 |
 
 
 
