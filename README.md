@@ -1,6 +1,6 @@
 # Source-tracking for Contamination Removal in *micro*Biomes (SCRuB)
 
-SCRUB is a tool designed to help researchers address the common issue of background contamination in microbial studies. This package provides an easy to use framework to apply SCRUB's expectation maximization algorithm to your projects. All you need to get started are n_sample x n_ASV count matrices for both your samples and negative controls. 
+SCRuB is a tool designed to help researchers address the common issue of background contamination in microbial studies. This package provides an easy to use framework to apply SCRUB's expectation maximization algorithm to your projects. All you need to get started are n_sample x n_ASV count matrices for both your samples and negative controls. 
 
 
 Support
