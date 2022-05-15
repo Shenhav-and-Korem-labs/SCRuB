@@ -1,12 +1,12 @@
 # Source-tracking for Contamination Removal in *micro*Biomes (SCRuB)
 
-SCRuB is a tool designed to help researchers address the common issue of background contamination in microbial studies. This package provides an easy to use framework to apply SCRUB's expectation maximization algorithm to your projects. All you need to get started are n_sample x n_ASV count matrices for both your samples and negative controls. 
+SCRuB is a tool designed to help researchers address the common issue of contamination in microbial studies. This package provides an easy to use framework to apply SCRuB to your projects. All you need to get started are n samples x m taxa count matrices for both your samples and controls. 
 
 
 Support
 -----------------------
 
-For support using SCRuB, please use our <a href="https://github.com/korem-lab/SCRuB/issues">issues page</a>.
+For support using SCRuB, please use our <a href="https://github.com/korem-lab/SCRuB/issues">issues page</a> or email: gia2105@columbia.edu.
 
 
 Software Requirements and dependencies
