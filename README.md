@@ -33,25 +33,25 @@ ___________________
 
 ### As input, *SCRuB* takes arguments:
 
- _data_ - An ( n_samples + n_controls ) x n_taxa count matrix
+ _data_ - An ( n_samples + n_controls ) x n_taxa count matrix.
  
  _is_control_ - A  (n_samples+n_controls) length boolean vector, indicating which rows of the data matrix correspond to controls, each representing  contamination community to be removed from the non-control samples.
  
 (optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our <a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to create this input, using Euclidean distance. 
 
-(optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
+(optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
 
 (optional) a_init_ float \in (0,1) - The prior assumption representing (1 - level of well leakage into each control). Default is 0.99, i.e. 1% of reads in controls are the result of leakge. 
 
-(optional) _print_loglikelihood_ Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
+(optional) _print_loglikelihood_ Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration.
 
 #### As output, *SCRuB* returns a list containing:
 
- decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
+ decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
  
- p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
+ p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
  
- alpha - The fitted \alpha parameter, as described in SCRuB's methods. An n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of alpha sums to 1, with each entry of the (n_sample + 1)th  column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage
+ alpha - The fitted \alpha parameter, as described in SCRuB's methods. An n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of alpha sums to 1, with each entry of the (n_sample + 1)th  column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage.
  
 gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
 loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
@@ -59,7 +59,7 @@ loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB
 
 Demo
 -----------------------
-We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/korem-lab/SCRuB/tree/gh-pages_tmp/tutorial_data">here</a>. We provide an rmarkdown notebook <a href="https://github.com/korem-lab/SCRuB/blob/gh-pages_tmp/tutorial.Rmd">here</a> to follow along with the example below
+We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/korem-lab/SCRuB/tree/gh-pages_tmp/tutorial_data">here</a>. We provide an rmarkdown notebook <a href="https://github.com/korem-lab/SCRuB/blob/gh-pages_tmp/tutorial.Rmd">here</a> to follow along with the example below.
 
 First load the **SCRuB** packages into R:
 ```
@@ -71,7 +71,7 @@ Then, load the datasets:
 data <- read.csv('tutorial_data/hospital.csv', row.names=1) %>% as.matrix()
 ```
 
-Next, load the well metadata
+Next, load the well positions metadata
 ```
 well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.names(data), ] %>% 
         select(na_plate_location) %>% 
@@ -80,7 +80,7 @@ well_metadata <- read.csv('tutorial_data/well_metadata.csv', row.names=2)[row.na
                                  )
 ```
 
-Run _SCRuB, saving the output with prefix "demo":
+Run *SCRuB*, saving the output with prefix "demo":
 
 ```
 scr_out <- spatial_SCRUB(data = data, 
