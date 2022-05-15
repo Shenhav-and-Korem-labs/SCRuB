@@ -35,7 +35,7 @@ ___________________
 
  _data_ - An ( n_samples + n_controls ) x n_taxa count matrix
  
- _is_control_ - A  (n_samples+n_controls) length boolean vector, indicating which rows of the data matrix correspond to negative controls, whose contents represent the contamination community to be removed from the non-control samples
+ _is_control_ - A  (n_samples+n_controls) length boolean vector, indicating which rows of the data matrix correspond to controls, each representing  contamination community to be removed from the non-control samples.
  
 (optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our <a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to create this input, using Euclidean distance. 
 
