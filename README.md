@@ -30,7 +30,7 @@ devtools::install_github("korem-lab/SCRuB")
 
 Runtime 
 -------------------
-As an expectation-maximization model, SCRuB is highly efficient, with very low computational costs. On a standard machine, it only requires 5 seconds to install SCRuB using devtools. For the example dataset consisting of 384 samples, we expect the SCRuB function to require at most 45 seconds of runtime. As a result, the full tutorial notebook we provide, which loads the data and runs through multiple variations of SCRuB, will run successfully in under one minute!
+As an expectation-maximization model, SCRuB is highly efficient, with very low computational costs. On a standard machine, it only requires 5 seconds to install SCRuB using devtools. For the example dataset consisting of 384 samples, we expect the SCRuB function to require at most 45 seconds of runtime. As a result, the full tutorial notebook we provide, which loads the data and runs through the SCRuB pipeline, will run successfully in under one minute!
 
 
 Usage
