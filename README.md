@@ -59,14 +59,14 @@ This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
 
 3) inner_iterations -- results from SCRuB's intermediary steps, which includes one list entry per type of control. Each iteration contains:
 
-	- 3.1)d econtaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
+	- 3.1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
  
- 	- 3.2) p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
+ 	- 3.2) p - The fitted $p$ parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
  
- 	- 3.3) alpha - The fitted \alpha parameter, as described in SCRuB's methods. An n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of alpha sums to 1, with each entry of the (n_sample + 1)th  column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage.
+ 	- 3.3) alpha - The fitted $\alpha$ parameter, as described in SCRuB's methods. An n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of $\alpha$ sums to 1, with each entry of the (n_sample + 1)th  column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage.
  
 	- 3.4) gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
-loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
+	- 3.5) loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
 
 
  
@@ -149,7 +149,7 @@ c(0.16, 1, 1)
 ```
 (3) outputs from inner SCRuB iterations, which includes fitted (3.1) decontaminated samples and (3.2) p, as described above, and:
 
-(3.3) alpha - the estimated composition of each control:
+(3.3) alpha - the estimated composition of each control sample:
 | | ERR525698  | ERR525693 | ERR525699 | contaminant  |  
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | ERR525688 | 0.001 | 0.001 | 0.001 | 0.997 |
