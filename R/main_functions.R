@@ -2,6 +2,26 @@
 rescale <- function(m) m / sum(m)
 get_rescaled_mat <- function(Q) ( Q %>% apply(MARGIN=1, rescale) %>% t() )
 
+rarefy <- function(x,maxdepth){
+  if(is.null(maxdepth)) return(x)
+  
+  if(!is.element(class(x), c('matrix', 'data.frame','array')))
+    x <- matrix(x,nrow=nrow(x))
+  nr <- nrow(x)
+  nc <- ncol(x)
+  
+  for(i in 1:nrow(x)){
+    if(sum(x[i,]) > maxdepth){
+      prev.warn <- options()$warn
+      options(warn=-1)
+      s <- sample(nc, size=maxdepth, prob=x[i,], replace=T)
+      options(warn=prev.warn)
+      x[i,] <- hist(s,breaks=seq(.5,nc+.5,1), plot=FALSE)$counts
+    }
+  }
+  return(x)
+}
+
 LSQ_init <- function(sinks, sources, COVERAGE=10000){
   n_samples <- nrow(sinks)
   n_controls <- nrow(sources)
@@ -11,7 +31,7 @@ LSQ_init <- function(sinks, sources, COVERAGE=10000){
   S_unk_obs = sinks * 0
   
   for( i in (1:n_samples) ){
-    rare_sink <- t(t(rescale(sinks[i,]))) * COVERAGE
+    rare_sink <- rescale( rarefy( t( sinks[i,] ), COVERAGE ) )  * COVERAGE
     inits <- lsq_procedure(
       sources,
       rare_sink
@@ -174,17 +194,18 @@ log_likelihood_SCRUB <- function(X, Y, G, gb, p){
 #' @param print_loglikelihood Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
 #' @return A list containing:
 #' 1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
-#' 2) p - The fitter p parameter, as described in SCRuB's methods. 
+#' 2) p - The fitted p parameter, as described in SCRuB's methods. 
 #' An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 #' 3) gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
 #' 4) loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
 #' @export
-SCRUB <- function(samples, 
+SCRUB_no_spatial <- function(samples, 
                   controls, 
                   COVERAGE=10000, 
                   method = 'EM', 
-                  print_loglikelihood = F){
+                  print_loglikelihood = F
+                  ){
   if(method=='EM'){func <- update_scheme}
   if(method=='SVI'){func <- svi_update_scheme }
   

@@ -10,7 +10,6 @@ spatial_SCRUB(
   is_control,
   well_dists,
   dist_threshold = 1.5,
-  a_init = 0.99,
   print_loglikelihood = F
 )
 }
@@ -20,8 +19,6 @@ spatial_SCRUB(
 \item{is_control}{boolean vecotr, length n_samples+n_controls -- a booolean vector indicating which rows of the data matrix correspond to negative controls, whose contents represent the contamination community to be removed from the non-control samples}
 
 \item{dist_threshold}{float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5}
-
-\item{a_init}{float \in (0,1) - The prior assumption representing (1 - level of well leakage into each control). Default is 0.99, i.e. 1% of reads in controls are the result of leakge.}
 
 \item{print_loglikelihood}{Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration}
 }
