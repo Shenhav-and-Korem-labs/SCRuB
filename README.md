@@ -68,7 +68,7 @@ This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
 
 Demo
 -----------------------
-We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/korem-lab/SCRuB/SCRuB/tutorial/">here</a>. We provide an rmarkdown notebook <a href="https://github.com/korem-lab/SCRuB/tutorial/tutorial.Rmd">here</a> to follow along with the example below.
+We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/korem-lab/SCRuB/blob/master/tutorial/">here</a>. We provide an rmarkdown notebook <a href="https://github.com/korem-lab/SCRuB/blob/master/tutorial/tutorial.Rmd">here</a> to follow along with the example below.
 
 First load the **SCRuB** packages into R:
 ```
