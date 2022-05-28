@@ -46,8 +46,6 @@ The second column is a string, identifying the type of each sample, such that SC
 The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
 This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
  
-(optional) _well_dist_ - An ( n_samples + n_controls ) x ( n_samples + n_controls ) distance matrix, summarizing the pairwise distance between each sample. Both the row names and column names of _well_dist_ must correspond to the row names of the _data_ matrix. See our <a href="https://korem-lab.github.io/SCRuB/tutorial.html">tutorial</a> for a demonstration of how to create this input, using Euclidean distance. 
-
 (optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
 
 
@@ -67,10 +65,6 @@ This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
  
 	- 3.4) gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
 	- 3.5) loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
-
-
- 
-
 
 Demo
 -----------------------
@@ -96,7 +90,7 @@ Run *SCRuB*,:
 
 ```
 scr_out <- SCRuB(data = data, 
-                 metadata=metadata
+                 metadata = metadata
                  )
 ```
 
