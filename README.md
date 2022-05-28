@@ -44,7 +44,7 @@ _metadata_ - a metadata matrix of 2 columns (and a third optional column), where
 The first metadata column is boolean, denoting `TRUE` if the corresponding `data` row belongs to a sample representing a contamination source, and `FALSE` otherwise. 
 The second column is a string, identifying the type of each sample, such that SCRuB can identifying which control samples should be grouped together. 
 The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
-This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
+This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
  
 (optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
 
