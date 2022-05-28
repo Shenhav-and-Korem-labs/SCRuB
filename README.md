@@ -1,6 +1,6 @@
 # Source-tracking for Contamination Removal in *micro*Biomes (SCRuB)
 
-![Screenshot](Images/SCRUB_logo.png)
+![Screenshot](Images/SCRuB_logo.png)
 
 SCRuB is a tool designed to help researchers address the common issue of contamination in microbial studies. This package provides an easy to use framework to apply SCRuB to your projects. All you need to get started are n samples x m taxa count matrices for both your samples and controls. 
 
