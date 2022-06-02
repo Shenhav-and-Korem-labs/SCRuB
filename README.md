@@ -51,9 +51,9 @@ This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
 
 #### As output, *SCRuB* returns a list containing:
 
- decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
+1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
  
- p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
+2) p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
 
 3) inner_iterations -- results from SCRuB's intermediary steps, which includes one list entry per type of control. Each iteration contains:
 
