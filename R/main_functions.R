@@ -4,9 +4,6 @@ get_rescaled_mat <- function(Q) ( Q %>% apply(MARGIN=1, rescale) %>% t() )
 
 rarefy <- function(x,maxdepth){
   if(is.null(maxdepth)) return(x)
-  
-  if(!is.element(class(x), c('matrix', 'data.frame','array')))
-    x <- matrix(x,nrow=nrow(x))
   nr <- nrow(x)
   nc <- ncol(x)
   
