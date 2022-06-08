@@ -9,16 +9,32 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
   for(i in 1:ncol(control_idcs) ){
     print(paste( 'SCRuBbing away contamination in the',  colnames(control_idcs)[i] , 'controls...') )
     if(i==1){
+        if(sum(control_idcs[, i])==1){
+          cont_tmp <- t( data[control_idcs[,i],] )
+          row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+        }else{
+          cont_tmp <- data[control_idcs[, i], ]
+        }
+      
+      
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( samples, 
-                                                                                 data[control_idcs[,i],], 
+                                                                                 cont_tmp,
                                                                                  print_loglikelihood = verbose
                                                                                  )
       
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
+      
+      if(sum(control_idcs[, i])==1){
+        cont_tmp <- t( data[control_idcs[,i],] )
+        row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+      }else{
+        cont_tmp <- data[control_idcs[, i], ]
+      }
+      
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( 
         inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
-        data[control_idcs[,i],], 
+        cont_tmp,
         print_loglikelihood = verbose)
       
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
@@ -42,10 +58,18 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
   n_smps <- nrow(samples)
   
   inner_scrub_iterations <- list()
-  for(i in 1:ncol(control_idcs) ){
+  for( i in 1:ncol(control_idcs) ){
     print(paste( 'SCRuBbing away contamination in the',  colnames(control_idcs)[i] , 'controls...') )
     if(i==1){
-      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, data[control_idcs[,i],] ) , 
+      if(sum(control_idcs[, i])==1){
+          cont_tmp <- t( data[control_idcs[,i],] )
+          row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+      }else{
+        cont_tmp <- data[control_idcs[, i], ]
+      }
+
+
+      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, cont_tmp ),
                                                                               c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
                                                                               well_dists,
                                                                               dist_threshold, 
@@ -54,9 +78,17 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
       
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
+          if(sum(control_idcs[, i])==1){
+            cont_tmp <- t( data[control_idcs[,i],] )
+            row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+          }else{
+            cont_tmp <- data[control_idcs[, i], ]
+          }
+          
+      
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( 
                                       rbind( inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
-                                             data[control_idcs[,i],] ) , 
+                                             cont_tmp ) , 
                                       c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
                                       well_dists,
                                       dist_threshold, 
