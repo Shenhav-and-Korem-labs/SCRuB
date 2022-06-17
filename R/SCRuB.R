@@ -117,6 +117,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' The second column is a string, identifying the type of each sample, such that SCRuB can identifying which control samples should be grouped together. 
 #' The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
 #' This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...
+#' @param control_order vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
 #' @param dist_threshold float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. This input is only used if the well location metadata is provided Default of 1.5 
 #' @param dist_metric string, default `euclidean`. The distance metric to be used when evaluating samples' physical distance. This input is used in the `stats` library's `dist` function; see their documentation for other options.
 #' @param verbose boolean - if TRUE, SCRuB prints the log-likelihood of hte dataset thoughout each iteration. 
@@ -129,6 +130,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' @export
 SCRuB <- function(data, 
                   metadata, 
+                  control_order=NA,
                   dist_threshold=1.5, 
                   dist_metric='euclidean',
                   verbose=F
@@ -138,7 +140,29 @@ SCRuB <- function(data,
     stop("The row names of the `data` and `metadata` inputs must be equivalent!")
   }
   
-  control_mat <- metadata[metadata[,1]==T, 2 ] %>% unique() %>% as.character() %>%
+  data <- as.matrix(data)
+  metadata <- as.data.frame(metadata)
+  
+  ## checking the specified controls/control order
+  # if(is.character(control_order)){
+  #   print('here')
+  #   control_order <- c(control_order)
+  # }
+
+  if(is.vector(control_order)&(max(is.na(control_order))==F)){
+    if(length(control_order) !=length(unique(control_order))) stop('All entries within `control_order` must be unique!')
+    for(cont_tp in control_order){
+      if( F == (cont_tp %in% metadata[metadata[,1]==T, 2 ] %>% unique() ) ){
+        stop(paste0( "All entries in `control_order` must be found in the `metadata` rows where `is_contaminant` is TRUE. No such entries found for `", 
+                      cont_tp,
+                      "`."  ) )
+        }   }
+  } else if (min(is.na(control_order))){
+    ## sleect control order based on the oder in the metadata
+    control_order <- metadata[metadata[,1]==T, 2 ] %>% unique() %>% as.character()
+  }
+  
+  control_mat <- control_order %>%
     sapply( function(x) metadata[,2] == x ) %>% as.matrix()
   
   

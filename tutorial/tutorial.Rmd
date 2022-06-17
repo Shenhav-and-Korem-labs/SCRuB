@@ -47,7 +47,7 @@ metadata %>% head()
 
 ### Running SCRuB
 ```{r}
-scr_out <- SCRuB( data, metadata )
+scr_out <- SCRuB(data, metadata, c("control blank DNA extraction", "control blank library prep") )
 ```
 
 ### Evaluating the outputs

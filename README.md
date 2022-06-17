@@ -46,6 +46,8 @@ The second column is a string, identifying the type of each sample, such that SC
 The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
 This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
  
+(Optional) _control_order_ - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
+
 (optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
 
 
@@ -91,13 +93,14 @@ Run *SCRuB*,:
 ```
 scr_out <- SCRuB(data = data, 
                  metadata = metadata
+		control_order = c("control blank DNA extraction", "control blank library prep")
                  )
 ```
 
 
 Input format
 -----------------------
-The input to *SCRuB* is composed of one count matrix, and one metadata matrix (or data frame):
+The required input to *SCRuB* is composed of one count matrix, and one metadata matrix (or data frame):
 
 (1) data - ( n_samples + n_controls ) x n_taxa count matrix, where m is the number samples and n is the number of taxa. Row names are the sample ids ('SampleID'). Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.
 
@@ -111,7 +114,7 @@ count matrix (first 4 rows and columns):
 | ERR525688  |  0 | 13 | 0| 200 |
 | ERR525699  |  4 | 5 | 0|0 |
 
-(2) data - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.
+(2) metadata - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.
 
 | | is_control | sample_type | sample_well |
 | ------------- | ------------- |------------- |------------- |
@@ -119,6 +122,12 @@ count matrix (first 4 rows and columns):
 | ERR525693  |  FALSE | plasma | A2|
 | ERR525688  |  TRUE | extraction control | B1| 
 | ERR525699  |  FALSE | plasma | B2|
+
+(3) (optional) control_order - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
+
+The below input indicates that decontamination from the "control blank DNA extraction" samples should be run first, followed by decontamination from the "control blank library prep" samples.
+
+c("control blank DNA extraction", "control blank library prep")
 
 
 
