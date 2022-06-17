@@ -46,7 +46,7 @@ The second column is a string, identifying the type of each sample, such that SC
 The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
 This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
  
-(Optional) _control_order_ - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
+(optional) _control_order_ - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
 
 (optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
 
