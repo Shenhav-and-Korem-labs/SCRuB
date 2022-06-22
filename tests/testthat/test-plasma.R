@@ -19,4 +19,7 @@ expect_true( nrow(scr_out_1$decontaminated_samples) == length(scr_out_1$p))
 expect_true( length(scr_out_1$inner_iterations$`control blank DNA extraction`$gamma) == 500 )
 expect_true( sum(scr_out_1$inner_iterations$`control blank DNA extraction`$gamma) %>% round(5) == 1 )
 expect_true( scr_out_1$inner_iterations$`control blank DNA extraction`$alpha %>% rowSums() %>% mean() %>% round(5) == 1 )
+expect_true( min( colnames(data)[1:500] == colnames(scr_out_1$decontaminated_samples)) == T )
+expect_true( min( colnames(data)[1:500] == colnames(scr_out_2$decontaminated_samples)) == T )
+
 

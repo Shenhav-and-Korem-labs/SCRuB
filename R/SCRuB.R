@@ -75,7 +75,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
                                                                               dist_threshold, 
                                                                               print_loglikelihood = verbose 
                                                                               )
-      
+      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
           if(sum(control_idcs[, i])==1){
@@ -94,7 +94,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
                                       dist_threshold, 
                                       print_loglikelihood = verbose
                                     )
-      
+      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
     }
     
