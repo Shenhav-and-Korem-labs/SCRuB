@@ -10,13 +10,19 @@ Description: SCRuB is an R package for capturing and removing a microbial datase
 License: Columbia + file LICENSE
 Encoding: UTF-8
 Depends:
+    R (>= 3.6)
     torch,
     glmnet,
-    here, 
+    here,
     tidyverse
+Imports:
+    here, 
+    testthat (>= 3.0.0)
+Suggests:
+    knitr,
+    testthat,
+    covr
 VignetteBuilder: knitr
 biocViews: Microbiome, StatisticalMethod
 RoxygenNote: 7.1.2
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3

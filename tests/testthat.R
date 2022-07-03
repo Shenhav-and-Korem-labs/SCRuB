@@ -7,6 +7,9 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
+library(tidyverse)
+library(glmnet)
+library(torch)
 library(SCRuB)
 
 test_check("SCRuB")

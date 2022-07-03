@@ -1,6 +1,9 @@
+# 
+# data <- read.csv(here::here('tutorial/plasma_data.csv'), row.names=1) %>% as.matrix()
+# metadata <- read.csv(here::here('tutorial/plasma_metadata.csv'), row.names=1)
 
-data <- read.csv(here::here('tutorial/plasma_data.csv'), row.names=1) %>% as.matrix()
-metadata <- read.csv(here::here('tutorial/plasma_metadata.csv'), row.names=1)
+data <- read.csv( paste0( test_path(), '/plasma_data.csv'), row.names=1) %>% as.matrix()
+metadata <- read.csv( paste0( test_path(), '/plasma_metadata.csv'), row.names=1)
 
 set.seed(1)
 print('Testing full samples, metadata....')
