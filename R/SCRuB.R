@@ -131,7 +131,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' 3) inner_iterations -- results from SCRuB's intermediary steps, see the `Spatial_SCRUB` and `SCRUB_no_spatial` documentation for more information
 #' Additional imports
 #' @import tidyverse
-#' @import glmnmet
+#' @import glmnet
 #' @import torch
 #' @export
 SCRuB <- function(data, 
