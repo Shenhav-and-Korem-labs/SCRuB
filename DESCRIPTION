@@ -11,7 +11,8 @@ Encoding: UTF-8
 Depends:
     torch,
     glmnet,
-    here
+    here, 
+    tidyverse
 VignetteBuilder: knitr
 biocViews: Microbiome, StatisticalMethod
 RoxygenNote: 7.1.2
