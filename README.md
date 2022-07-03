@@ -1,4 +1,6 @@
 # SCRuB: Source-tracking for Contamination Removal in *micro*Biomes
+
+[![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/R-CMD-check.yaml)
 <img src='Images/SCRuB_logo.png' align="right" height="139" />
 
 SCRuB is a tool designed to help researchers address the common issue of contamination in microbial studies. This package provides an easy to use framework to apply SCRuB to your projects. All you need to get started are n samples x m taxa count matrices for both your samples and controls. 
