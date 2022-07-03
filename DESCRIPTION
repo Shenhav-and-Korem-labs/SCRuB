@@ -10,7 +10,7 @@ Description: SCRuB is an R package for capturing and removing a microbial datase
 License: Columbia + file LICENSE
 Encoding: UTF-8
 Depends:
-    R (>= 3.6.3)
+    R (>= 3.6.3),
     torch,
     glmnet,
     here,
