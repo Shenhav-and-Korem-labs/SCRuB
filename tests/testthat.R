@@ -10,6 +10,7 @@ library(testthat)
 library(tidyverse)
 library(glmnet)
 library(torch)
+install_torch()
 library(SCRuB)
 
 test_check("SCRuB")
