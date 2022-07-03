@@ -1,4 +1,6 @@
 
+
+
 SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
   
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
@@ -127,6 +129,10 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 #' 3) inner_iterations -- results from SCRuB's intermediary steps, see the `Spatial_SCRUB` and `SCRUB_no_spatial` documentation for more information
+#' Additional imports
+#' @import tidyverse
+#' @import glmnmet
+#' @import torch
 #' @export
 SCRuB <- function(data, 
                   metadata, 
@@ -182,3 +188,6 @@ SCRuB <- function(data,
     return(SCRuB_wrapper_no_spatial(data = data, control_mat, verbose = verbose))
   }
 }
+
+
+

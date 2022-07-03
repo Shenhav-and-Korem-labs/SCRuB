@@ -7,10 +7,7 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(tidyverse)
-library(glmnet)
-library(torch)
-install_torch()
 library(SCRuB)
+install_torch()
 
 test_check("SCRuB")
