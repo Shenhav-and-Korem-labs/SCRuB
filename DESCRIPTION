@@ -14,7 +14,9 @@ Depends:
     torch,
     glmnet,
     here,
-    tidyverse
+    tidyverse,
+    magrittr,
+    rlang
 Imports:
     here, 
     testthat (>= 3.0.0)
