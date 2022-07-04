@@ -8,6 +8,8 @@ Description: SCRuB is an R package for capturing and removing a microbial datase
     a) Estimating the most likely background contamination's relative abundance.
     b) Removing the background contamination from each inputted sample.
 License: Columbia + file LICENSE
+URL: https://github.com/korem-lab/SCRuB
+BugReports: https://github.com/korem-lab/SCRuB/issues
 Encoding: UTF-8
 Depends:
     R (>= 3.6.3),
