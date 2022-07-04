@@ -177,7 +177,7 @@ SCRuB <- function(data,
       mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
              indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
       ) %>% 
-      select(well,indices) %>% 
+      select(as.symbol('well'), as.symbol('indices') ) %>% 
       dist(method=dist_metric) %>% as.matrix()
     print('Incorporating the well metadata to track well-to-well leakage!' )
     

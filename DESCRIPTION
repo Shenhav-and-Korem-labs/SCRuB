@@ -7,7 +7,7 @@ Maintainer: George Austin <gia2105@columbia.edu>
 Description: SCRuB is an R package for capturing and removing a microbial dataset's background contamination using abundance observations among biological samples and negative controls. It provides functionlaities for:
     a) Estimating the most likely background contamination's relative abundance.
     b) Removing the background contamination from each inputted sample.
-License: Columbia + file LICENSE
+License: see file license.md
 URL: https://github.com/korem-lab/SCRuB
 BugReports: https://github.com/korem-lab/SCRuB/issues
 Encoding: UTF-8
@@ -15,16 +15,15 @@ Depends:
     R (>= 3.6.3),
     torch,
     glmnet,
-    here,
     tidyverse,
+    dplyr,
     magrittr,
     rlang
-Imports:
-    here, 
-    testthat (>= 3.0.0)
 Suggests:
     knitr,
-    covr
+    covr,
+    here, 
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 biocViews: Microbiome, StatisticalMethod
 RoxygenNote: 7.2.0
