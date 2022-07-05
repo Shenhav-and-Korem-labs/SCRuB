@@ -1,10 +1,4 @@
 
-get_rowwise_rmses <- function(mat1, mat2){
-  ans <-  c()
-  for(i in 1:nrow(mat1)) ans <- c(ans, get_rmse(mat1[i, ], mat2[i, ]))
-  return(ans)
-}
-
 lsq_glmnet_l1l2 <- function(
                             sink, 
                             sources,

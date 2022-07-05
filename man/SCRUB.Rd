@@ -8,6 +8,7 @@ SCRuB removes contamination from an inputted set of samples using microbial sour
 SCRuB(
   data,
   metadata,
+  control_order = NA,
   dist_threshold = 1.5,
   dist_metric = "euclidean",
   verbose = F
@@ -22,6 +23,8 @@ The second column is a string, identifying the type of each sample, such that SC
 The third (and optional, but highly recommended) column is a string entry identifying the well location of the corresponding sample, which allows SCRuB to track well leakage.
 This must be in a standard *LETTER**NUMBER* format, i.e. A3, B12, D4...}
 
+\item{control_order}{vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table.}
+
 \item{dist_threshold}{float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. This input is only used if the well location metadata is provided Default of 1.5}
 
 \item{dist_metric}{string, default `euclidean`. The distance metric to be used when evaluating samples' physical distance. This input is used in the `stats` library's `dist` function; see their documentation for other options.}
@@ -35,6 +38,7 @@ A list containing:
 An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 3) inner_iterations -- results from SCRuB's intermediary steps, see the `Spatial_SCRUB` and `SCRUB_no_spatial` documentation for more information
+Additional imports
 }
 \description{
 Decontaminate a set of samples

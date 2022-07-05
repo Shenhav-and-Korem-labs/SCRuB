@@ -8,5 +8,6 @@
 
 library(testthat)
 library(SCRuB)
+install_torch()
 
 test_check("SCRuB")

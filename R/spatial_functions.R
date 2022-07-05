@@ -74,6 +74,7 @@ initialize_w2w_params <- function(samples,
 #' SCRuB removes contamination from an inputted set of samples using microbial source-tracking techniques. 
 #' @param data ( n_samples + n_controls ) x n_taxa -- a count matrix representing the observed reads from the controls, and the samples to be decontaminated
 #' @param is_control boolean vecotr, length n_samples+n_controls -- a booolean vector indicating which rows of the data matrix correspond to negative controls, whose contents represent the contamination community to be removed from the non-control samples
+#' @param well_dists numeric matrix. Deontes the spatial distance between each pairwise samples, names rows and columns must correst to the rownames of `data`
 #' @param dist_threshold float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
 #' @param print_loglikelihood Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
 #' @return A list containing:
@@ -81,10 +82,10 @@ initialize_w2w_params <- function(samples,
 #' 2) p - The fitted p parameter, as described in SCRuB's methods. 
 #' An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
-#' 3) alpha - The fitted \alpha parameter, as described in SCRuB's methods. 
+#' 3) alpha - The fitted alpha parameter, as described in SCRuB's methods. 
 #' An n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control.
 #' Each row of alpha sums to 1, with each entry of the (n_sample + 1)th  column being 1 means there is zero estimated well leakge, while entries close to zero would indicate there is a high level of well leakage
-#' 4) gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
+#' 4) gamma - the gamma parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
 #' 5) loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
 #' @export
 spatial_SCRUB <- function(data, 
