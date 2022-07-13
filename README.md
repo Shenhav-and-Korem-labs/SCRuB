@@ -1,6 +1,10 @@
 # SCRuB: Source-tracking for Contamination Removal in *micro*Biomes
 
- <!-- badges: start -->  [![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml)  <!-- badges: end -->
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml)
+  [![Codecov test
+coverage](https://codecov.io/gh/korem-lab/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/korem-lab/SCRuB)
+  <!-- badges: end -->
 
 <img src='Images/SCRuB_logo.png' align="right" height="139" />
 
