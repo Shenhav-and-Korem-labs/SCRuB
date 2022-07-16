@@ -114,10 +114,8 @@ spatial_SCRUB <- function(data,
                                      dist_threshold)
   alpha <- w2w_inits$alpha
   tmp_controls <- w2w_inits$cont_tmp
-  if(sum(tmp_controls) == 0 ){
-    print("Controls' LSQ init removed everything from a control -- will instead set initialization to the observed control")
-    tmp_controls <- controls
-  }
+  if(sum(tmp_controls) == 0 ) print("Controls' LSQ init removed everything from a control -- will instead set initialization to the observed control")
+  if(sum(tmp_controls) == 0 )  tmp_controls <- controls
   
   setup <- set_up_SCRUB(samples, 
                            tmp_controls) 
@@ -138,7 +136,7 @@ spatial_SCRUB <- function(data,
   
   alpha <- torch_tensor(alpha, requires_grad = FALSE)
   
-  eps <- 1e-4
+  eps <- 1e-7
   patience <- 0
   max_iters <- 500
   a <- 0
