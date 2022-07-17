@@ -5,13 +5,7 @@
 \title{Decontaminate a set of samples
 SCRuB removes contamination from an inputted set of samples using microbial source-tracking techniques.}
 \usage{
-SCRUB_no_spatial(
-  samples,
-  controls,
-  COVERAGE = 10000,
-  method = "EM",
-  print_loglikelihood = F
-)
+SCRUB_no_spatial(samples, controls, COVERAGE = 10000, print_loglikelihood = F)
 }
 \arguments{
 \item{samples}{n_samples x n_taxa -- a count matrix representing the observed reads from samples to be decontaminated}
@@ -20,14 +14,12 @@ SCRUB_no_spatial(
 
 \item{COVERAGE}{10000, integer representing the normalizing variable to be used for SCRuB's initialization scheme.}
 
-\item{method}{Either 'EM' (Expectation Maximization) or 'SVI' (Stochastic Variational Inference). The update scheme for SCRuB to use. The SVI scheme requires less memory to run, although it is recommended to always run the 'EM' method if possible.}
-
 \item{print_loglikelihood}{Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration}
 }
 \value{
 A list containing:
 1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
-2) p - The fitted p parameter, as described in SCRuB's methods. 
+2) p - The fitted p parameter, as described in SCRuB's methods.
 An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 3) gamma - the gamma parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community

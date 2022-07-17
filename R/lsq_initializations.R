@@ -3,14 +3,9 @@ lsq_glmnet_l1l2 <- function(
                             sink, 
                             sources,
                             l1l2=1, 
-                            lambda=1e-6,
-                            normalize=T
+                            lambda=1e-6
                             ){
-  
-  if (normalize) {
-    sources <- sources / rowSums(sources)
-    sink <- sink / sum(sink)
-  }
+
   
   Amat <- model.matrix(~Sources, list(Sources=t(sources)))
   result <- glmnet(Amat, sink, alpha=l1l2, lambda=lambda, lower.limits=0)
@@ -24,7 +19,6 @@ lsq_procedure <- function(sources, sink, unknown_eps=0.01) {
   weights_l1 <- lsq_glmnet_l1l2(
     sink,
     sources,
-    normalize=F,
     l1l2=1)
   
   # normalizing

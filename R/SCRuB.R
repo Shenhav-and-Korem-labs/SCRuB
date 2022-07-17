@@ -1,8 +1,17 @@
+#' @keywords internal
 
+#' @import torch
+#' @import tidyverse
+#' @import rlang
+#' @importFrom glmnet glmnet
+#' @importFrom magrittr %<>%
+#' @importFrom graphics hist
+#' @importFrom stats dist model.matrix
+#' @importFrom dplyr select mutate %>% count filter
+NULL
 
 
 SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
-  
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
   samples <- data[any_cont_type==F, ]
   n_smps <- nrow(samples)
@@ -17,34 +26,28 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
         }else{
           cont_tmp <- data[control_idcs[, i], ]
         }
-      
-      
+
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( samples, 
                                                                                  cont_tmp,
                                                                                  print_loglikelihood = verbose
                                                                                  )
-      
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
-      
       if(sum(control_idcs[, i])==1){
         cont_tmp <- t( data[control_idcs[,i],] )
         row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
       }else{
         cont_tmp <- data[control_idcs[, i], ]
       }
-      
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( 
         inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
         cont_tmp,
         print_loglikelihood = verbose)
-      
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
     }
     
     row.names( inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples ) <- row.names(samples)
   }
-  
   return(list(decontaminated_samples=inner_scrub_iterations[[colnames(control_idcs)[ncol(control_idcs)] ]]$decontaminated_samples,
               p = cumulative_p, 
               inner_iterations=inner_scrub_iterations
@@ -63,46 +66,45 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
   for( i in 1:ncol(control_idcs) ){
     print(paste( 'SCRuBbing away contamination in the',  colnames(control_idcs)[i] , 'controls...') )
     if(i==1){
-      if(sum(control_idcs[, i])==1){
-          cont_tmp <- t( data[control_idcs[,i],] )
-          row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+        if(sum(control_idcs[, i])==1){
+            cont_tmp <- t( data[control_idcs[,i],] )
+            row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+        }else{
+          cont_tmp <- data[control_idcs[, i], ]
+        }
+        
+        inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, cont_tmp ),
+                                                                                c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
+                                                                                well_dists,
+                                                                                dist_threshold, 
+                                                                                print_loglikelihood = verbose 
+                                                                                )
+        colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
+        cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
       }else{
-        cont_tmp <- data[control_idcs[, i], ]
-      }
-
-
-      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, cont_tmp ),
-                                                                              c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
-                                                                              well_dists,
-                                                                              dist_threshold, 
-                                                                              print_loglikelihood = verbose 
-                                                                              )
-      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
-      cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
-    }else{
           if(sum(control_idcs[, i])==1){
             cont_tmp <- t( data[control_idcs[,i],] )
             row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
           }else{
-            cont_tmp <- data[control_idcs[, i], ]
-          }
-          
+              cont_tmp <- data[control_idcs[, i], ]
+            }
+            
+        
+        inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( 
+                                        rbind( inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
+                                               cont_tmp ) , 
+                                        c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
+                                        well_dists,
+                                        dist_threshold, 
+                                        print_loglikelihood = verbose
+                                      )
+        colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
+        cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
+      }
       
-      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( 
-                                      rbind( inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
-                                             cont_tmp ) , 
-                                      c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
-                                      well_dists,
-                                      dist_threshold, 
-                                      print_loglikelihood = verbose
-                                    )
-      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
-      cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
+      row.names( inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples ) <- row.names(samples)
     }
     
-    row.names( inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples ) <- row.names(samples)
-  }
-  
   return(list(decontaminated_samples=inner_scrub_iterations[[colnames(control_idcs)[ncol(control_idcs)] ]]$decontaminated_samples,
               p = cumulative_p, 
               inner_iterations=inner_scrub_iterations
@@ -129,10 +131,6 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 #' 3) inner_iterations -- results from SCRuB's intermediary steps, see the `Spatial_SCRUB` and `SCRUB_no_spatial` documentation for more information
-#' Additional imports
-#' @import tidyverse
-#' @import glmnet
-#' @import torch
 #' @export
 SCRuB <- function(data, 
                   metadata, 
@@ -145,16 +143,9 @@ SCRuB <- function(data,
   if( ( row.names(data) == row.names(metadata) ) %>% mean() < 1 ){
     stop("The row names of the `data` and `metadata` inputs must be equivalent!")
   }
-  
   data <- as.matrix(data)
   metadata <- as.data.frame(metadata)
   
-  ## checking the specified controls/control order
-  # if(is.character(control_order)){
-  #   print('here')
-  #   control_order <- c(control_order)
-  # }
-
   if(is.vector(control_order)&(max(is.na(control_order))==F)){
     if(length(control_order) !=length(unique(control_order))) stop('All entries within `control_order` must be unique!')
     for(cont_tp in control_order){
@@ -164,7 +155,7 @@ SCRuB <- function(data,
                       "`."  ) )
         }   }
   } else if (min(is.na(control_order))){
-    ## sleect control order based on the oder in the metadata
+    ## select control order based on the order in the metadata
     control_order <- metadata[metadata[,1]==T, 2 ] %>% unique() %>% as.character()
   }
   
@@ -173,6 +164,15 @@ SCRuB <- function(data,
   
   
   if(ncol(metadata) == 3){
+    
+    well_counts <- count( metadata, metadata[,3] )
+    if( max(well_counts[,2]) > 1){
+      stop(paste0( "Multiple well metadata entries found for the following well locations: ", 
+                   paste0( filter(well_counts, well_counts[, 2] > 1)[,1], collapse = ', '),
+                   ". Well locations must be unique to run sample. If running SCRuB across a collection of multiple batches, decontamination should be implemented in parallel across each plate."  )
+           )
+    }
+    
     well_dists <- metadata %>%
       mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
              indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
@@ -188,6 +188,3 @@ SCRuB <- function(data,
     return(SCRuB_wrapper_no_spatial(data = data, control_mat, verbose = verbose))
   }
 }
-
-
-
