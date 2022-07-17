@@ -49,9 +49,11 @@ jobs:
           args: 'c("--no-manual")'
           error-on: '"error"'
           check-dir: '"check"'
+          if-no-files-found: warn
           
           
       - uses: actions/upload-artifact@main
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+          if-no-files-found: warn
