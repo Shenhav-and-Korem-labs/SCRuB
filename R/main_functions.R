@@ -134,7 +134,7 @@ log_likelihood_SCRUB <- function(X, Y, G, gb, p){
 #' 2) p - The fitted p parameter, as described in SCRuB's methods.
 #' An n_sample vector representing the estimate proportion of each observe sample that was not contamination
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
-#' 3) gamma - the $\gamma$ parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
+#' 3) gamma - the gamma parameter described in SCRuB's methods. An n_taxa vector representing the estimated relative abundance of the contamination community
 #' 4) loglikelihood - float. The log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
 #' @export
 SCRUB_no_spatial <- function(samples,
