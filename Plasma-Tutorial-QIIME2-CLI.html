@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>SCRuB QIIME2 Plugin Tutorial</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">SCRuB</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fab fa-r-project"></span>
+     
+    Package
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="R-inputs.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="tutorial.html">Tutorial</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="glyphicon glyphicon-zoom-in"></span>
+     
+    QIIME2 Plugin
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="qiime2-intro.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-CLI.html">Command line interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-API.html">Qiime2 interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-standalone-API.html">Python interface</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="prescrub_intro.html">
+    <span class="fa fa-object-group"></span>
+     
+    preSCRuB
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-binoculars"></span>
+     
+    Related documents
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="www.google.com">SCRuB Manuscript</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="plans.html">
+    <span class="fa fa-sparkles"></span>
+     
+    Future developments
+  </a>
+</li>
+<li>
+  <a href="contribute.html">Contribute to SCRuB!</a>
+</li>
+<li>
+  <a href="https://github.com/korem-lab/SCRuB/issues">
+    <span class="fa fa-comment"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/korem-lab/SCRuB/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">SCRuB QIIME2 Plugin Tutorial</h1>
+
+</div>
+
+
+<style>
+    body { background-color: #162138;
+            text-color: whitesmoke}
+</style>
+<p><img src='images/SCRuB_logo.png' align="right" height="139" /></p>
+<hr />
+<div id="getting-ready" class="section level1">
+<h1>Getting ready</h1>
+<p>In this tutorial we use <em>SCRuB</em> to decontaminate a dataset comparing the plasma samples of cancer and control subejcts published in <a href="https://www.nature.com/articles/s41586-020-2095-1">Poore et al</a>. This data can be downloaded with the following links:</p>
+<ul>
+<li><strong>Table</strong> (table.qza) | <a href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/table.qza">download</a></li>
+<li><strong>Sample Metadata</strong> (metadata.tsv) | <a href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/metadata.tsv">download</a></li>
+</ul>
+<p><strong>Note</strong>: This tutorial assumes you have installed <a href="https://qiime2.org/">QIIME2</a> using one of the procedures in the <a href="https://docs.qiime2.org/2020.2/install/">install documents</a>. This tutorial also assumed you have installed <a href="https://korem-lab.github.io/SCRuB/">SCRuB</a>.</p>
+<p>First, we will make a tutorial directory and download the data above and move the files to the <code>plasma-data</code> directory:</p>
+<pre class="bash"><code>mkdir plasma-data</code></pre>
+</div>
+<div id="decontaminating" class="section level1">
+<h1>Decontaminating</h1>
+<p>To run SCRuB we only need a single command, whose inputs and parameters are described <a href="qiime2-intro.html">here</a>. In this tutorial our control_idx_column parameter is <code>is_control</code>, our sample_type_column is <code>sample_type</code>, and our well_location_column is <code>well_id</code>. Now we are ready to SCRuB away the contamination:</p>
+<pre class="python"><code>!qiime SCRuB SCRuB \\
+    --i-table plasma-data/table.qza \\
+    --m-metadata-file plasma-data/metadata.tsv \\
+    --p-control-idx-column is_control \\
+    --p-sample-type-column sample_type \\
+    --p-well-location-column well_id \\
+    --p-control-order NA \\
+    --o-scrubbed results/scrubbed.qza</code></pre>
+</div>
+<div id="assessing-output" class="section level1">
+<h1>Assessing output</h1>
+<p>Now we can compare the raw table and SCRuB’s output:</p>
+<pre class="python"><code>import os
+import warnings
+import qiime2 as q2
+# hide pandas Future/Deprecation Warning(s) for tutorial
+warnings.filterwarnings(&quot;ignore&quot;, category=DeprecationWarning) 
+warnings.simplefilter(action=&#39;ignore&#39;, category=FutureWarning)
+
+# import table
+table = q2.Artifact.load(&#39;plasma-data/table.qza&#39;)\
+# import metadata
+metadata = q2.Metadata.load(&#39;plasma-data/metadata.tsv&#39;)
+# import SCRuB output
+scrubbed = q2.Artifact.load(&#39;results/scrubbed.qza&#39;)</code></pre>
+<pre class="python"><code>from qiime2.plugins.deicode.actions import rpca
+from qiime2.plugins.emperor.actions import (plot, biplot)</code></pre>
+<pre class="python"><code># run RPCA and plot with emperor
+rpca_biplot, rpca_distance = rpca(table)
+rpca_biplot_emperor = biplot(rpca_biplot, metadata)
+# make directory to store results
+output_path = &#39;results&#39;
+if os.path.isdir(output_path)==False:
+    os.mkdir(output_path)
+
+# now we can save the plots
+rpca_biplot_emperor.visualization.save(os.path.join(output_path, &#39;Raw-RPCA-biplot.qzv&#39;))</code></pre>
+<p>Now we can visualize the samples via RPCA</p>
+<p><img src="results/Raw-RPCA.png" /></p>
+<p>For comparison, we can observe the samples decontaminated by SCRuB. Note that the decontamination increased the observed separation between the plasma samples and the bacterial monocultures:</p>
+<pre class="python"><code># run RPCA and plot with emperor
+rpca_biplot, rpca_distance = rpca(scrubbed)
+rpca_biplot_emperor = biplot(rpca_biplot, metadata)
+
+# save the plots
+rpca_biplot_emperor.visualization.save(os.path.join(output_path, &#39;SCRuBbed-RPCA-biplot.qzv&#39;))</code></pre>
+<p><img src="results/SCRuBbed-RPCA.png" /></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

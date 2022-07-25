@@ -1,0 +1,87 @@
+---
+title: "Inputs & Outputs for SCRuB in R"
+output: 
+    html_document:
+       theme: darkly
+---
+<style>
+    body { background-color: #162138;
+            text-color: whitesmoke}
+</style>
+</center>
+<img src='images/SCRuB_logo.png' align="right" height="139" />
+--------------------------
+
+
+--------------------------
+
+# {.tabset}
+	
+## Inputs
+The required inputs to *SCRuB* are composed of one count matrix, and one metadata matrix (or data frame):
+
+(1)  **<span style="color:lightblue">data** - An ( `n_samples` + `n_controls` ) x `n_taxa `count matrix, where `n_samples` is the number of samples, `n_controls` is the number of negative controls, and `n_taxa` is the number of features in the count matrix. Row names are the sample ids. Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.
+
+
+count matrix (first 4 rows and columns):
+
+| | taxa_1 | taxa_2 | taxa_3 | taxa_4 |
+| ------------- | ------------- |------------- |------------- |------------- |
+| ERR525698  |  0 | 5 | 0|20 |
+| ERR525693  |  15 | 5 | 0|0 |
+| ERR525688  |  0 | 13 | 0| 200 |
+| ERR525699  |  4 | 5 | 0|0 |
+
+(2) **<span style="color:lightblue">metadata** - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.
+
+| | is_control | sample_type | sample_well |
+| ------------- | ------------- |------------- |------------- |
+| ERR525698  |  FALSE | plasma | A1|
+| ERR525693  |  FALSE | plasma | A2|
+| ERR525688  |  TRUE | extraction control | B1| 
+| ERR525699  |  FALSE | plasma | B2|
+
+(3) (optional) **<span style="color:lightblue">control_order** - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
+
+The below input indicates that decontamination from the "control blank DNA extraction" samples should be run first, followed by decontamination from the "control blank library prep" samples.
+
+```
+c("control blank DNA extraction", "control blank library prep")
+```
+
+
+## Outputs
+
+SCRuB outputs a list containing the following:
+
+(1) **<span style="color:lightblue">decontaminated_samples**
+
+| | taxa_1 | taxa_2 | taxa_3 | taxa_4 |
+| ------------- | ------------- |------------- |------------- |------------- |
+| ERR525698  |  0 | 4 | 0 | 0 |
+| ERR525693  |  15 | 5 | 0 | 0 |
+| ERR525699  |  4 | 5 | 0 | 0 |
+
+(2) **<span style="color:lightblue">p** - The estimated fraction of each sample that is not contamination
+```
+c(0.16, 1, 1)
+```
+(3) outputs from  **<span style="color:lightblue">inner SCRuB iterations**, which includes fitted (3.1)  **<span style="color:lightblue">decontaminated samples** and (3.2)  **<span style="color:lightblue">p**, as described above, in addition to:
+
+  (3.3) **<span style="color:lightblue">alpha** - the estimated composition of each control sample:
+
+| | ERR525698  | ERR525693 | ERR525699 | contaminant  |  
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| ERR525688 | 0.001 | 0.001 | 0.001 | 0.997 |
+
+
+
+  (3.4) **<span style="color:lightblue">gamma** - The estimated relative abundance of the contamination community
+```
+c(0, 0.05, 0, 0.95)
+```
+
+# 
+
+To see an example using SCRuB, refer to our [Tutorial](tutorial.html)
+

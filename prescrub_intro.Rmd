@@ -1,4 +1,3 @@
-
 ---
 title: 'preSCRuB: a model-informed framework for study design recommendations'
 output: 
@@ -16,27 +15,26 @@ output:
 
 --------------------------
 
-**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/korem-lab/SCRuB/issues).</span>**
-
---------------------------
 
 ## Welcome to preSCRuB
 
-`PreSCRuB` is a tool for producing **<span style="color:lightblue">study design recommendations**, in terms the **<span style="color:lightblue">number of control samples** to collect, and **<span style="color:lightblue">where to place them** on a sequencing plate. Use of `preSCRuB` during the study design process will allow for stronger downstream applications of `SCRuB`. These recommendations are computed by simulating thousands of microbiome batches, and **<span style="color:lightblue">identifying which scenarios `SCRuB` performs best for**
+`PreSCRuB` is a tool for producing **<span style="color:lightblue">study design recommendations**, in terms the **<span style="color:lightblue">number of control samples** to collect, and **<span style="color:lightblue">where to place them** on a sequencing plate. Use of `preSCRuB` during the study design process will allow for stronger downstream applications of `SCRuB`. These recommendations are computed by simulating thousands of microbiome batches, and **<span style="color:lightblue">identifying which scenarios `SCRuB` performs best for**.
 <br><br>
 To obtain `preSCRuB`'s recommendations, the minimum information needed is a set of assumptions regarding your data. More refined `preSCRuB` recommendations can be implemented through installing our `preSCRuB` package.
 <br>
+
 ## Getting started
+
 preSCRuB is currently available through two avenues:
 
-1) A publicly available **<span style="color:lightblue">Rshiny application**, hosted [here](). This is the fastest option, and recommended for first-time users. <br>
+1) A publicly available **<span style="color:lightblue">Rshiny application**, hosted [here](https://prescrub.shinyapps.io/shinyApp/). This is the fastest option, and recommended for first-time users. <br>
 2) A package, which can be used to **<span style="color:lightblue">locally host an Rshiny application** to run simulations for user-specific study parameters. While this option takes longer, it allows for user-inputted datasets to be incorporated during the simulations and highly personalized recommendations. 
 
 &nbsp;
 
 ## preSCRuB on Rshiny
 
-From the [Rshiny app](), users will observe the  user interface shown below. From adjusting the radio buttons, users can obtain our plate design recommendation (upper right-hand panel), and heatmaps summarizing the results across their simulation parameters. The user-facing parameters include the expected diversity of their samples of interest, the diversity of the contamination source, the expected taxonomic similarity between the contamination source and the samples of interests, and the levels of contamination and well-to-well leakage
+From the [Rshiny app](https://prescrub.shinyapps.io/shinyApp/), users will observe the  user interface shown below. From adjusting the radio buttons, users can obtain our plate design recommendation (upper right-hand panel), and heatmaps summarizing the results across their simulation parameters. The user-facing parameters include the expected diversity of their samples of interest, the diversity of the contamination source, the expected taxonomic similarity between the contamination source and the samples of interests, and the levels of contamination and well-to-well leakage
 ![](images/preSCRuB_shiny_screenshot.png)
 
 

@@ -1,0 +1,45 @@
+---
+title: "Inputs & Outputs for SCRuB in QIIME2"
+output: 
+    html_document:
+       theme: darkly
+---
+<style>
+    body { background-color: #162138;
+            text-color: whitesmoke}
+</style>
+</center>
+<img src='images/SCRuB_logo.png' align="right" height="139" />
+--------------------------
+
+# Environment setup
+To use SCRuB's Qiime2 plugin, you must have run both the SCRuB R and QIIME2 installation commands shown [here](index.html) from within a Qiime2 environment. The summary of the plugin's inputs and outputs are as follows:
+
+# {.tabset}
+	
+## Inputs
+
+1. **<span style="color:lightblue">table** 
+    - The table is of the Qiime2 type `FeatureTable[Frequency]`, where the rows are features (e.g. ASVs/microbes), the columns are samples, and the entries are the number of sequences for each sample-feature pair. This table must be of shape `n_taxa `x( `n_samples` + `n_controls` ), where `n_samples` is the number of samples, `n_controls` is the number of negative controls, and `n_taxa` is the number of features in the count matrix
+2. **<span style="color:lightblue">metadata**
+    - This is a QIIME2 formatted [metadata](https://docs.qiime2.org/2020.2/tutorials/metadata/) (e.g. tsv format) where the rows are samples matched to the (1) table and the columns are different sample data (e.g. time point).  
+3. ( _Optional_ ) **<span style="color:lightblue">control_idx_column**
+    - This is the name of the column in the (2) metadata that indicates the which samples should be treated as negative controls. If not specified, will identify negative controls by searching for a metadata column of 'empo_2' or 'qiita_empo_2', and identifying which entries contain the keyword 'negative'
+4. ( _Optional_ ) **<span style="color:lightblue">sample_type_column**
+    - This is the name of the column in the (2) metadata that indicates the sample type, which specifies the groupings of negative controls SCRuB should use for decontamination. Default is 'sample_type'
+5. ( _Optional_ ) **<span style="color:lightblue">well_location_column**
+    - This is the name of the column in the (2) metadata that indicates the well of each sample, which specifies the groupings of negative controls SCRuB should use for decontamination. Default is 'well_id'
+6. ( _Optional_ ) **<span style="color:lightblue">control_order**
+    - specifies the ordering which the negative controls from `sample_type` should be run. Default input (`NA`) uses the ordering in which the sample are found in the metadata table.
+7. **<span style="color:lightblue">output-dir**
+    - The desired location of the output file
+    
+    
+## Outputs
+  Depending on the interface, SCRuB's Qiime2 pliugin either: <br>
+  1) Writes the decontaminated .qza format table to the specified path (Qiime2 and Command line interface)<br>
+  2) returns a dataframe of decontaminated samples (Python interface)<br>
+  
+# 
+For more detail, please refer to the walkthroughs within the [`QIIME2 Plugin` documentation](Plasma-Tutorial-QIIME2-CLI.html), or refer to the jupyter notebooks found [here](https://github.com/korem-lab/q2-SCRuB/tree/master/ipynb).
+  

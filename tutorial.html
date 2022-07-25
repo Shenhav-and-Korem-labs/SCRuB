@@ -13,13 +13,13 @@
 
 <title>SCRuB Tutorial</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="tutorial_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="tutorial_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="tutorial_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="tutorial_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="tutorial_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="tutorial_files/navigation-1.1/tabsets.js"></script>
+<link href="tutorial_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="tutorial_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="tutorial_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="tutorial_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -247,12 +247,45 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="tutorial.html">
-    <span class="fa fa-book"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fab fa-r-project"></span>
      
-    Tutorial
+    Package
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="R-inputs.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="tutorial.html">Tutorial</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="glyphicon glyphicon-zoom-in"></span>
+     
+    QIIME2 Plugin
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="qiime2-intro.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-CLI.html">Command line interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-API.html">Qiime2 interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-standalone-API.html">Python interface</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="prescrub_intro.html">
@@ -263,21 +296,33 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-gear"></span>
+    <span class="fa fa-binoculars"></span>
      
-    Documentation
+    Related documents
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">SCRuB Manuscript</li>
+    <li>
+      <a href="www.google.com">SCRuB Manuscript</a>
+    </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="plans.html">
+    <span class="fa fa-sparkles"></span>
+     
+    Future developments
+  </a>
+</li>
+<li>
+  <a href="contribute.html">Contribute to SCRuB!</a>
+</li>
+<li>
   <a href="https://github.com/korem-lab/SCRuB/issues">
-    <span class="fa fa-question fa-lg"></span>
+    <span class="fa fa-comment"></span>
      
   </a>
 </li>
@@ -306,197 +351,124 @@ $(document).ready(function () {
             text-color: whitesmoke}
 </style>
 <p><img src='images/SCRuB_logo.png' align="right" height="139" /></p>
-<p>In this tutorial, we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.</p>
+<p>In this tutorial, we demonstrate how SCRuB should be used to remove
+contamination from microbial samples. All you need to run SCRuB is a
+count matrix of control and non-control samples. To run the SCRuB with
+its full spatial component, which is strongly recommended, the well
+locations of each sample must also be provided.</p>
 <hr />
 <div id="section" class="section level1 tabset">
 <h1 class="tabset"></h1>
 <div id="loading-the-data" class="section level2">
 <h2>Loading the data</h2>
-<p>The starting point for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample’s read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible, and so data should only be grouped to higher orders of phylogeny (e.g. genus, family…) <em>after</em> completing the SCRuB pipeline.</p>
-<p>We start by loading the necessary packages, such as <code>SCRUB</code>. We also include the use of <code>tidyverse</code> within our tutorial</p>
-<pre class="r"><code>library(tidyverse)
+<p>The starting point for SCRuB is a matrix, in which each row
+represents a sample, and each column represents each sample’s read
+counts that correspond to a certain taxa (e.g ASV, OTU, species). In
+general, we recommend to run SCRuB on the most granular version of the
+data possible, and so data should only be grouped to higher orders of
+phylogeny (e.g. genus, family…) <em>after</em> completing the SCRuB
+pipeline.</p>
+<p>We start by loading the necessary packages, such as
+<code>SCRUB</code>. We also include the use of <code>tidyverse</code>
+within our tutorial</p>
+<pre class="r"><code>set.seed(1)
+library(tidyverse)
 library(SCRuB)</code></pre>
-<p>As an example dataset, we use processed samples publicly available from Qiita (<strong>link</strong>), from a dataset of hospital samples, original from surfaces, patients, and blank controls. In the ensuing pipeline, we demonstrate how SCRuB can be used to remove the contamination from the hospital and patient samples. We demonstrates the SCRuB pipeline on one of the 6 plates from the dataset.</p>
-<pre class="r"><code>data &lt;- read.csv(&#39;tutorial_data/hospital.csv&#39;, row.names=1) %&gt;% as.matrix()
+<p>As an example dataset, we use processed samples publicly available
+from Qiita (<strong>link</strong>), from a dataset of plasma samples,
+made public by Poore et al. In the ensuing pipeline, we demonstrate how
+SCRuB can be used to remove the contamination from the plasma using the
+control samples, and pub liscly available metadata published by Poore et
+al.</p>
+<pre class="r"><code>data &lt;- read.csv(&#39;plasma_data.csv&#39;, row.names=1) %&gt;% as.matrix()
 dim(data)</code></pre>
-<pre><code>## [1]   95 9099</code></pre>
-<p>Let’s take a look at the row names, which in this case we will use to identify the control samples, which include <code>blank</code> in the row name.</p>
-<pre class="r"><code>row.names(data)</code></pre>
-<pre><code>##  [1] &quot;13092.000117069.covid&quot;  &quot;13092.000117067.covid&quot;  &quot;13092.000117455.covid&quot; 
-##  [4] &quot;13092.000117057.covid&quot;  &quot;13092.000117159.covid&quot;  &quot;13092.000117160.covid&quot; 
-##  [7] &quot;13092.000117228.covid&quot;  &quot;13092.000117229.covid&quot;  &quot;13092.000117246.covid&quot; 
-## [10] &quot;13092.000117260.covid&quot;  &quot;13092.000117263.covid&quot;  &quot;13092.000117438.covid&quot; 
-## [13] &quot;13092.000117450.covid&quot;  &quot;13092.000117055.covid&quot;  &quot;13092.000117755.covid&quot; 
-## [16] &quot;13092.000117089.covid&quot;  &quot;13092.000117258.covid&quot;  &quot;13092.000117374.covid&quot; 
-## [19] &quot;13092.000117445.covid&quot;  &quot;13092.000117756.covid&quot;  &quot;13092.000117462.covid&quot; 
-## [22] &quot;13092.000117394.covid&quot;  &quot;13092.000117519.covid&quot;  &quot;13092.000117059.covid&quot; 
-## [25] &quot;13092.000117090.covid&quot;  &quot;13092.000117434.covid&quot;  &quot;13092.v2.7.ZymoMock.B7&quot;
-## [28] &quot;13092.v2.7.ZymoMock.C7&quot; &quot;13092.000117521.covid&quot;  &quot;13092.v2.7.ZymoMock.A7&quot;
-## [31] &quot;13092.000117386.covid&quot;  &quot;13092.000117390.covid&quot;  &quot;13092.000117398.covid&quot; 
-## [34] &quot;13092.000117414.covid&quot;  &quot;13092.000117466.covid&quot;  &quot;13092.v2.7.ZymoMock.D7&quot;
-## [37] &quot;13092.000117402.covid&quot;  &quot;13092.000117407.covid&quot;  &quot;13092.000117422.covid&quot; 
-## [40] &quot;13092.000117458.covid&quot;  &quot;13092.000117470.covid&quot;  &quot;13092.000117517.covid&quot; 
-## [43] &quot;13092.000117248.covid&quot;  &quot;13092.000117494.covid&quot;  &quot;13092.000117513.covid&quot; 
-## [46] &quot;13092.000117060.covid&quot;  &quot;13092.000117523.covid&quot;  &quot;13092.000117056.covid&quot; 
-## [49] &quot;13092.000117410.covid&quot;  &quot;13092.000117068.covid&quot;  &quot;13092.000117087.covid&quot; 
-## [52] &quot;13092.000117257.covid&quot;  &quot;13092.000117261.covid&quot;  &quot;13092.000117426.covid&quot; 
-## [55] &quot;13092.000117506.covid&quot;  &quot;13092.000117065.covid&quot;  &quot;13092.000117070.covid&quot; 
-## [58] &quot;13092.87.covid&quot;         &quot;13092.000117259.covid&quot;  &quot;13092.000117053.covid&quot; 
-## [61] &quot;13092.000117454.covid&quot;  &quot;13092.000117247.covid&quot;  &quot;13092.000117418.covid&quot; 
-## [64] &quot;13092.000117524.covid&quot;  &quot;13092.000117498.covid&quot;  &quot;13092.000118432.covid&quot; 
-## [67] &quot;13092.000117088.covid&quot;  &quot;13092.000117054.covid&quot;  &quot;13092.000117757.covid&quot; 
-## [70] &quot;13092.000117086.covid&quot;  &quot;13092.84.covid&quot;         &quot;13092.85.covid&quot;        
-## [73] &quot;13092.v2.7.ZymoMock.H7&quot; &quot;13092.000117264.covid&quot;  &quot;13092.000117227.covid&quot; 
-## [76] &quot;13092.000117066.covid&quot;  &quot;13092.v2.7.ZymoMock.G7&quot; &quot;13092.v2.7.ZymoMock.E7&quot;
-## [79] &quot;13092.000117442.covid&quot;  &quot;13092.000117071.covid&quot;  &quot;13092.v2.7.ZymoMock.F7&quot;
-## [82] &quot;13092.v2.7.blank.C6&quot;    &quot;13092.v2.7.blank.E6&quot;    &quot;13092.v2.7.blank.F12&quot;  
-## [85] &quot;13092.v2.7.blank.A12&quot;   &quot;13092.v2.7.blank.D6&quot;    &quot;13092.v2.7.blank.E12&quot;  
-## [88] &quot;13092.v2.7.blank.H6&quot;    &quot;13092.v2.7.blank.H11&quot;   &quot;13092.v2.7.blank.B12&quot;  
-## [91] &quot;13092.v2.7.blank.C12&quot;   &quot;13092.v2.7.blank.A6&quot;    &quot;13092.v2.7.blank.F6&quot;   
-## [94] &quot;13092.v2.7.blank.B6&quot;    &quot;13092.v2.7.blank.D12&quot;</code></pre>
+<pre><code>## [1]  381 7777</code></pre>
+<p>Next, we load a metadta file, which is in the format required for
+<code>SCRuB</code>. Before running SCRuB, we recommend that users make
+sure their metadata file formats are aligned with the one shown
+here.</p>
+<pre class="r"><code>metadata &lt;- read.csv(&#39;plasma_metadata.csv&#39;, row.names=1)
+metadata %&gt;% head()</code></pre>
+<pre><code>##              is_control sample_type sample_well
+## 12692.150003      FALSE      plasma         H14
+## 12692.150005      FALSE      plasma         L14
+## 12692.150006      FALSE      plasma         B16
+## 12692.150007      FALSE      plasma         J14
+## 12692.150011      FALSE      plasma         J16
+## 12692.150013      FALSE      plasma         L16</code></pre>
 </div>
-<div id="scrub" class="section level2">
-<h2>SCRuB</h2>
-<div id="running-scrub" class="section level3">
-<h3>Running SCRuB</h3>
-<pre class="r"><code>control_indices &lt;- row.names(data) %&gt;% str_detect(&#39;blank&#39;)
-scr_out &lt;- SCRUB( samples = data[control_indices==F, ], 
-                  controls = data[control_indices, ],
-                  print_loglikelihood = T )</code></pre>
-<pre><code>## [1] &quot;Log-Likelihood of -4324736.96106286 after 1 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324054.73071944 after 2 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324027.87870818 after 3 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324012.5095419 after 4 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324007.85313632 after 5 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.77596403 after 6 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.50967902 after 7 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.43615226 after 8 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41649572 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41250882 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.4126404 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41351096 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41426722 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41478222 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4324006.41510251 after 501 iterations!&quot;</code></pre>
+<div id="running-scrub" class="section level2">
+<h2>Running SCRuB</h2>
+<pre class="r"><code>scr_out &lt;- SCRuB( data[,1:750], metadata ) # shortening feature space to shorten tutorial runtime...</code></pre>
+<pre><code>## [1] &quot;Incorporating the well metadata to track well-to-well leakage!&quot;
+## [1] &quot;SCRuBbing away contamination in the control blank DNA extraction controls...&quot;
+## [1] &quot;SCRuBbing away contamination in the control blank library prep controls...&quot;</code></pre>
 </div>
-<div id="evaluating-the-outputs" class="section level3">
-<h3>Evaluating the outputs</h3>
-<p>Let’s take a look at the results. The estimated level of contamination was very low, as the fitted <code>p</code> parameters indicate our samples are close to <code>0%</code> contamination.</p>
+<div id="evaluating-outputs" class="section level2">
+<h2>Evaluating outputs</h2>
+<p>Let’s take a look at the results. The estimated level of
+contamination was resonable, as the fitted <code>p</code> parameters
+indicate our samples are typically close to <code>3%</code>
+contamination.</p>
 <pre class="r"><code>scr_out$p %&gt;% boxplot()</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>To take a look at the cleaned samples, refer to the <code>decontaminated_samples</code> entry.</p>
+<p>To take a look at the cleaned samples, refer to the
+<code>decontaminated_samples</code> entry.</p>
 <pre class="r"><code>decontaminated_samples &lt;- scr_out$decontaminated_samples
-decontaminated_samples[1:5, 1:5]</code></pre>
-<pre><code>##                       X1124701 X4479944 X1050608 X1124709 X185100
-## 13092.000117069.covid        0        4        0        0       0
-## 13092.000117067.covid        0        1        0        0       0
-## 13092.000117455.covid        0      102        0        0       0
-## 13092.000117057.covid        0        0        2        0       0
-## 13092.000117159.covid        0        0        4       27       0</code></pre>
-<p>The last output of the SCRUB function is the <code>gamma</code> parameter, which is a vector representing the estimated relative abundance of the contamination community.</p>
-<pre class="r"><code>scr_out$gamma %&gt;% plot()</code></pre>
+decontaminated_samples[1:10, 25:40]</code></pre>
+<pre><code>##              G000006425 G000006445 G000006515 G000006565 G000006605 G000006685
+## 12692.150003          0          0          0        305          0          0
+## 12692.150005          0          0          0        441          0          0
+## 12692.150006          0          0          0      11235          0          0
+## 12692.150007          0          0          0       3888          0          0
+## 12692.150011          0          0          0         33          2          0
+## 12692.150013          0          0          0        215          0          0
+## 12692.150022          0          7          0        797          0          0
+## 12692.150031          0          0          0       9027          0          0
+## 12692.150032          0          0          0       1436          0          0
+## 12692.150080          0          0          0        223          0          0
+##              G000006725 G000006765 G000006925 G000006945 G000007065 G000007145
+## 12692.150003          0         26          0          0          0          0
+## 12692.150005          0         22          1          0          0          0
+## 12692.150006          0        142          0          0          0         30
+## 12692.150007          0         57          0          0          0          0
+## 12692.150011          0         23          0          0          0          4
+## 12692.150013          0         38          0          0          0          0
+## 12692.150022          0         26          0          0          0          0
+## 12692.150031          0         60          0          0          0          2
+## 12692.150032          0         55          0          0          0        274
+## 12692.150080          0         50          0          0          0          4
+##              G000007205 G000007225 G000007345 G000007605
+## 12692.150003          0          0          0          0
+## 12692.150005          0          0          0          0
+## 12692.150006          0          0          0          0
+## 12692.150007          0          0          0          0
+## 12692.150011          0          0          0          0
+## 12692.150013          0          0          0          0
+## 12692.150022          0          0          0          0
+## 12692.150031          0          0          0          0
+## 12692.150032          0          0          0          0
+## 12692.150080          0          0          0          0</code></pre>
+<p>An output from ever inner iteration of the SCRUB function is the
+<code>gamma</code> parameter, which is a vector representing the
+estimated relative abundance of a contamination community.</p>
+<pre class="r"><code>scr_out$inner_iterations$`control blank library prep`$gamma %&gt;% plot()</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-</div>
-</div>
-<div id="spatial-scrub" class="section level2">
-<h2>Spatial SCRuB</h2>
-<p>It is strongly recommended to incorporate the well metadata of each sample into SCRuB, as this makes it possible ot directly account for potential well leakage into negative controls, reducing the risk of wrongly removing certain species during decontamination.</p>
-<p>To start, we load the metadata and create a distance matrix between each sample, in which each row/column name corresponds to the rows identifying each sample from our data.</p>
-<pre class="r"><code>well_metadata &lt;- read.csv(&#39;tutorial_data/well_metadata.csv&#39;, row.names=2)[row.names(data), ] %&gt;% 
-        select(na_plate_location) %&gt;% 
-        mutate(well = na_plate_location %&gt;% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
-                               indices = na_plate_location %&gt;% sapply( function(x) substr(x, 2, 3) %&gt;% as.integer)
-                                 )
-
-print( well_metadata %&gt;% select(na_plate_location, well, indices) %&gt;% head() )</code></pre>
-<pre><code>##                       na_plate_location well indices
-## 13092.000117069.covid                B1    2       1
-## 13092.000117067.covid                D2    4       2
-## 13092.000117455.covid               H12    8      12
-## 13092.000117057.covid                C5    3       5
-## 13092.000117159.covid                B5    2       5
-## 13092.000117160.covid                H4    8       4</code></pre>
-<p>Let’s take a look at the negative controls placement strategy: <img src="tutorial_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>To build a distanct matrix, we use the <code>dist</code> function</p>
-<pre class="r"><code>distance_matrix &lt;- well_metadata %&gt;% select(well, indices) %&gt;%
-                      dist(method = &#39;euclidean&#39;) %&gt;% as.matrix() %&gt;% round(2)
-
-distance_matrix[1:5, 1:5]</code></pre>
-<pre><code>##                       13092.000117069.covid 13092.000117067.covid
-## 13092.000117069.covid                  0.00                  2.24
-## 13092.000117067.covid                  2.24                  0.00
-## 13092.000117455.covid                 12.53                 10.77
-## 13092.000117057.covid                  4.12                  3.16
-## 13092.000117159.covid                  4.00                  3.61
-##                       13092.000117455.covid 13092.000117057.covid
-## 13092.000117069.covid                 12.53                  4.12
-## 13092.000117067.covid                 10.77                  3.16
-## 13092.000117455.covid                  0.00                  8.60
-## 13092.000117057.covid                  8.60                  0.00
-## 13092.000117159.covid                  9.22                  1.00
-##                       13092.000117159.covid
-## 13092.000117069.covid                  4.00
-## 13092.000117067.covid                  3.61
-## 13092.000117455.covid                  9.22
-## 13092.000117057.covid                  1.00
-## 13092.000117159.covid                  0.00</code></pre>
-<pre class="r"><code>sp_scr_out &lt;- spatial_SCRUB(data = data, 
-                            is_control=control_indices, 
-                            well_dists = distance_matrix, 
-                            print_loglikelihood = TRUE
-                            )</code></pre>
-<pre><code>## [1] &quot;Log-Likelihood of -4394722.90077628 after 1 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393488.46293399 after 2 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393336.40817118 after 3 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393289.38406632 after 4 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393266.44018431 after 5 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393251.54155815 after 6 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393241.92771187 after 7 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393234.98360133 after 8 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393226.61081576 after 9 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393214.61968893 after 10 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393199.57896945 after 11 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393182.29747148 after 12 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393167.96369441 after 13 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393160.66267 after 14 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393158.32717576 after 15 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.80558162 after 16 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.70253607 after 17 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.64626962 after 18 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.60035511 after 19 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.56530844 after 20 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.50512679 after 21 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.48342376 after 22 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.4658192 after 23 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.44527668 after 24 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.4253292 after 25 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.39367513 after 26 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.38231273 after 27 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.3673961 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.35456551 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.33045369 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.32111877 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.3026215 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.29010296 after 28 iterations!&quot;
-## [1] &quot;Log-Likelihood of -4393157.27908531 after 501 iterations!&quot;</code></pre>
-<p>Let’s take a look at the results, 3 of which are the same as the output to the <code>SCRUB</code> function. The estimated level of contamination was very low, as the fitted <code>p</code> parameters indicate our samples are close to <code>0%</code> contamination.</p>
-<pre class="r"><code>sp_scr_out$p %&gt;% boxplot()</code></pre>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>To take a look at the cleaned samples, refer to the <code>decontaminated_samples</code> entry.</p>
-<pre class="r"><code>decontaminated_samples &lt;- sp_scr_out$decontaminated_samples
-decontaminated_samples[1:5, 1:5]</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]    0    4    0    0    0
-## [2,]    0    1    0    0    0
-## [3,]    0  102    0    0    0
-## [4,]    0    0    2    0    0
-## [5,]    0    0    4   27    0</code></pre>
-<p>The last output of the SCRUB function is the <code>gamma</code> parameter, which is a vector representing the estimated relative abundance of the contamination community.</p>
-<pre class="r"><code>sp_scr_out$gamma %&gt;% plot()</code></pre>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>One additional output is the <code>alpha</code> parameters, which is a <code>n_control</code> by <code>n_samples + 1</code> matrix that represents the estimated level of leakage into each control. The last column of the <code>alpha</code> matrix represents the estimated proportion of each control that originates from the contamination source. In this case, <code>SCRuB</code> estimated a high level of leakage for many samples, with a median estimated well-to-well leakge of <code>25%</code>.</p>
-<pre class="r"><code>boxplot( sp_scr_out$alpha[, ncol(sp_scr_out$alpha)] )</code></pre>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>It is strongly recommended to incorporate the well metadata of each
+sample into SCRuB, as this makes it possible ot directly account for
+potential well leakage into negative controls, reducing the risk of
+wrongly removing certain species during decontamination.</p>
+<p>One additional output when incoprorating the well metadata is the
+<code>alpha</code> parameters, which is a <code>n_control</code> by
+<code>n_samples + 1</code> matrix that represents the estimated level of
+leakage into each control. The last column of the <code>alpha</code>
+matrix represents the estimated proportion of each control that
+originates from the contamination source. In this case,
+<code>SCRuB</code> estimated a very high level of leakage for many DNA
+extraction samples, with a median estimated well-to-well leakage of
+<code>60%</code>.</p>
+<pre class="r"><code>boxplot( scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)] )</code></pre>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
 

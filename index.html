@@ -13,13 +13,13 @@
 
 <title>SCRuB: Source-tracking for Contamination Removal        in microBiomes</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="index_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="index_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="index_files/navigation-1.1/tabsets.js"></script>
+<link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="index_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="index_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="index_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -247,12 +247,45 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="tutorial.html">
-    <span class="fa fa-book"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fab fa-r-project"></span>
      
-    Tutorial
+    Package
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="R-inputs.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="tutorial.html">Tutorial</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="glyphicon glyphicon-zoom-in"></span>
+     
+    QIIME2 Plugin
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="qiime2-intro.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-CLI.html">Command line interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-API.html">Qiime2 interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-standalone-API.html">Python interface</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="prescrub_intro.html">
@@ -263,21 +296,33 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-gear"></span>
+    <span class="fa fa-binoculars"></span>
      
-    Documentation
+    Related documents
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">SCRuB Manuscript</li>
+    <li>
+      <a href="www.google.com">SCRuB Manuscript</a>
+    </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="plans.html">
+    <span class="fa fa-sparkles"></span>
+     
+    Future developments
+  </a>
+</li>
+<li>
+  <a href="contribute.html">Contribute to SCRuB!</a>
+</li>
+<li>
   <a href="https://github.com/korem-lab/SCRuB/issues">
-    <span class="fa fa-question fa-lg"></span>
+    <span class="fa fa-comment"></span>
      
   </a>
 </li>
@@ -296,7 +341,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">SCRuB: Source-tracking for Contamination Removal <br>      in <em>micro</em>Biomes</h1>
+<h1 class="title toc-ignore">SCRuB: Source-tracking for Contamination
+Removal <br>      in <em>micro</em>Biomes</h1>
 
 </div>
 
@@ -308,27 +354,61 @@ $(document).ready(function () {
 <p><img src='images/SCRuB_logo.png' align="right" height="300" /></p>
 </center>
 <hr />
-<p><strong><span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our <a href="https://github.com/korem-lab/SCRuB/issues">Issues Page</a>.</span></strong></p>
+<p><strong><span style="color:lightblue">We are currently in beta
+testing! Please report any issues you faced while using SCRuB in our <a
+href="https://github.com/korem-lab/SCRuB/issues">Issues Page</a>, or
+email <a href="gia2105@columbia.edu">gia2105@columbia.edu</a>
+.</span></strong></p>
 <hr />
-<p>Welcome to <code>SCRuB</code>! This is a software package designed to provide researchers with a state of the art tool to <strong><span style="color:lightblue">remove contamination</strong> from microbial datasets. <br></p>
-<p>In addition to the statistical framework of <code>SCRuB</code>, we provide <a href="prescrub_intro.html"><code>preSCRuB</code></a>, a personalized interface to offer user recommendations to <strong><span style="color:lightblue">optimize negative control strategies</strong> during study design processes. Effective use of <code>preSCRuB</code> will allow for even stronger decontamination using <code>SCRuB</code> in future analyses.</p>
+<p>Welcome to <a href="index.html"><code>SCRuB</code></a>! This is a
+software package designed to provide researchers with a state of the art
+tool to <strong><span style="color:lightblue">remove
+contamination</strong> from microbial datasets. <br></p>
+<p>In addition to the statistical framework of <code>SCRuB</code>, we
+provide <a href="prescrub_intro.html"><code>preSCRuB</code></a>, a
+personalized interface to offer user recommendations to
+<strong><span style="color:lightblue">optimize negative control
+strategies</strong> during study design processes. Effective use of
+<code>preSCRuB</code> will allow for even stronger decontamination using
+<code>SCRuB</code> in future analyses.</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>SCRuB is currently available through our <a href="https://github.com/korem-lab/SCRuB/%5D">github repository</a>, which can be installed using <code>devtools</code>. The main package requirements from SCRuB are <code>glmnet</code>, <code>torch</code>, and <code>tidyverse</code>, which can be installed with the following command:</p>
-<pre class="r"><code>install.packages( c(&#39;glmnet&#39;, &#39;torch&#39;, &#39;tidyverse&#39;) )</code></pre>
-<p>Once the dependencies are met, SCRuB can be installed using <code>devtools</code> as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;korem-lab/SCRuB&quot;)</code></pre>
+<p>SCRuB is currently available through our <a
+href="https://github.com/korem-lab/SCRuB/%5D">github repository</a>,
+which can be installed using <code>devtools</code>:</p>
+<pre class="r"><code>devtools::install_github(&quot;korem-lab/SCRuB&quot;)
+install_torch()</code></pre>
+<p>Additionally, we provide SCRuB as a QIIME2 plugin, which can be
+installed from a Qiime2 environment using pip:</p>
+<pre class="bash"><code>pip install git+https://github.com/korem-lab/q2-SCRuB.git</code></pre>
 <p> </p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-<p><strong><span style="color:lightblue">To start using SCRuB, we recommend to follow along with our <a href="tutorial.html">tutorial</a>, which demonstrates the data format needed to set up SCRuB, how to run SCRuB’s core funtions, and how to interpret its results.:</span></strong></p>
+<p><strong><span style="color:lightblue">To start using SCRuB, we
+recommend to follow along with either our <a href="tutorial.html">R
+tutorial</a> or our <a href="qiime2_intro.html">Qiime2 tutorial</a>,
+depending on the user’s preference. In either case, the tutorials
+demonstrates the data format needed to set up SCRuB, how to run SCRuB’s
+core funtions, and how to interpret its results.:</span></strong></p>
 <p> </p>
 </div>
 <div id="faqs" class="section level2">
 <h2>FAQs</h2>
 <p><em>Why SCRuB?</em></p>
+<p><code>SCRuB</code> offers the advantage of combing source-tracking
+approaches with contamination source modelling, while tracking for
+possible sources of well-to-well leakage. Thus, it provides an effective
+and low-risk approach to microbial decontamination, which has been shown
+to improve phenotype prediction in downtream applications.</p>
 <p> </p>
+<p><!-- badges: start --> <a
+href="https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml"><img
+src="https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg"
+alt="R-CMD-check" /></a> <a
+href="https://app.codecov.io/gh/korem-lab/SCRuB"><img
+src="https://codecov.io/gh/korem-lab/SCRuB/graph/badge.svg"
+alt="Codecov test coverage" /></a> <!-- badges: end --></p>
 </div>
 
 

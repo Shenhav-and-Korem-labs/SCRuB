@@ -13,13 +13,13 @@
 
 <title>preSCRuB: a model-informed framework for study design recommendations</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="prescrub_intro_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="prescrub_intro_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="prescrub_intro_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="prescrub_intro_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="prescrub_intro_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="prescrub_intro_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="prescrub_intro_files/navigation-1.1/tabsets.js"></script>
+<link href="prescrub_intro_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="prescrub_intro_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="prescrub_intro_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="prescrub_intro_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -247,12 +247,45 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="tutorial.html">
-    <span class="fa fa-book"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fab fa-r-project"></span>
      
-    Tutorial
+    Package
+     
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="R-inputs.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="tutorial.html">Tutorial</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="glyphicon glyphicon-zoom-in"></span>
+     
+    QIIME2 Plugin
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="qiime2-intro.html">Inputs &amp; Outputs</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-CLI.html">Command line interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-API.html">Qiime2 interface</a>
+    </li>
+    <li>
+      <a href="Plasma-Tutorial-QIIME2-standalone-API.html">Python interface</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="prescrub_intro.html">
@@ -263,21 +296,33 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="fa fa-gear"></span>
+    <span class="fa fa-binoculars"></span>
      
-    Documentation
+    Related documents
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">SCRuB Manuscript</li>
+    <li>
+      <a href="www.google.com">SCRuB Manuscript</a>
+    </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="plans.html">
+    <span class="fa fa-sparkles"></span>
+     
+    Future developments
+  </a>
+</li>
+<li>
+  <a href="contribute.html">Contribute to SCRuB!</a>
+</li>
+<li>
   <a href="https://github.com/korem-lab/SCRuB/issues">
-    <span class="fa fa-question fa-lg"></span>
+    <span class="fa fa-comment"></span>
      
   </a>
 </li>
@@ -296,7 +341,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">preSCRuB: a model-informed framework for study design recommendations</h1>
+<h1 class="title toc-ignore">preSCRuB: a model-informed framework for
+study design recommendations</h1>
 
 </div>
 
@@ -308,39 +354,89 @@ $(document).ready(function () {
 <p><img src='images/preSCRUB_logo.png' align="right" height="300" /></p>
 </center>
 <hr />
-<p><strong><span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our <a href="https://github.com/korem-lab/SCRuB/issues">Issues Page</a>.</span></strong></p>
-<hr />
 <div id="welcome-to-prescrub" class="section level2">
 <h2>Welcome to preSCRuB</h2>
-<p><code>PreSCRuB</code> is a tool for producing <strong><span style="color:lightblue">study design recommendations</strong>, in terms the <strong><span style="color:lightblue">number of control samples</strong> to collect, and <strong><span style="color:lightblue">where to place them</strong> on a sequencing plate. Use of <code>preSCRuB</code> during the study design process will allow for stronger downstream applications of <code>SCRuB</code>. These recommendations are computed by simulating thousands of microbiome batches, and <strong><span style="color:lightblue">identifying which scenarios <code>SCRuB</code> performs best for</strong> <br><br> To obtain <code>preSCRuB</code>’s recommendations, the minimum information needed is a set of assumptions regarding your data. More refined <code>preSCRuB</code> recommendations can be implemented through installing our <code>preSCRuB</code> package. <br> ## Getting started preSCRuB is currently available through two avenues:</p>
+<p><code>PreSCRuB</code> is a tool for producing
+<strong><span style="color:lightblue">study design
+recommendations</strong>, in terms the
+<strong><span style="color:lightblue">number of control samples</strong>
+to collect, and <strong><span style="color:lightblue">where to place
+them</strong> on a sequencing plate. Use of <code>preSCRuB</code> during
+the study design process will allow for stronger downstream applications
+of <code>SCRuB</code>. These recommendations are computed by simulating
+thousands of microbiome batches, and
+<strong><span style="color:lightblue">identifying which scenarios
+<code>SCRuB</code> performs best for</strong>. <br><br> To obtain
+<code>preSCRuB</code>’s recommendations, the minimum information needed
+is a set of assumptions regarding your data. More refined
+<code>preSCRuB</code> recommendations can be implemented through
+installing our <code>preSCRuB</code> package. <br></p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>preSCRuB is currently available through two avenues:</p>
 <ol style="list-style-type: decimal">
-<li>A publicly available <strong><span style="color:lightblue">Rshiny application</strong>, hosted <a href="">here</a>. This is the fastest option, and recommended for first-time users. <br></li>
-<li>A package, which can be used to <strong><span style="color:lightblue">locally host an Rshiny application</strong> to run simulations for user-specific study parameters. While this option takes longer, it allows for user-inputted datasets to be incorporated during the simulations and highly personalized recommendations.</li>
+<li>A publicly available <strong><span style="color:lightblue">Rshiny
+application</strong>, hosted <a
+href="https://prescrub.shinyapps.io/shinyApp/">here</a>. This is the
+fastest option, and recommended for first-time users. <br></li>
+<li>A package, which can be used to
+<strong><span style="color:lightblue">locally host an Rshiny
+application</strong> to run simulations for user-specific study
+parameters. While this option takes longer, it allows for user-inputted
+datasets to be incorporated during the simulations and highly
+personalized recommendations.</li>
 </ol>
 <p> </p>
 </div>
 <div id="prescrub-on-rshiny" class="section level2">
 <h2>preSCRuB on Rshiny</h2>
-<p>From the <a href="">Rshiny app</a>, users will observe the user interface shown below. From adjusting the radio buttons, users can obtain our plate design recommendation (upper right-hand panel), and heatmaps summarizing the results across their simulation parameters. The user-facing parameters include the expected diversity of their samples of interest, the diversity of the contamination source, the expected taxonomic similarity between the contamination source and the samples of interests, and the levels of contamination and well-to-well leakage <img src="images/preSCRuB_shiny_screenshot.png" /></p>
+<p>From the <a href="https://prescrub.shinyapps.io/shinyApp/">Rshiny
+app</a>, users will observe the user interface shown below. From
+adjusting the radio buttons, users can obtain our plate design
+recommendation (upper right-hand panel), and heatmaps summarizing the
+results across their simulation parameters. The user-facing parameters
+include the expected diversity of their samples of interest, the
+diversity of the contamination source, the expected taxonomic similarity
+between the contamination source and the samples of interests, and the
+levels of contamination and well-to-well leakage <img
+src="images/preSCRuB_shiny_screenshot.png" /></p>
 </div>
 <div id="prescrub-on-your-machine" class="section level2">
 <h2>preSCRuB on your machine</h2>
 <div id="starting-prescrub-locally" class="section level3">
 <h3>Starting preSCRuB Locally</h3>
-<p>To run preSCRuB on your machine, begin by installing the SCRuB package, as described on the <a href="index.html">home page</a>. Next, from an R environment, run the following:</p>
+<p>To run preSCRuB on your machine, begin by installing the SCRuB
+package, as described on the <a href="index.html">home page</a>. Next,
+from an R environment, run the following:</p>
 <pre class="r"><code>library(SCRuB)
 preSCRuB()</code></pre>
-<p>The following window will pop up. This window contains the same set of parameters in the public Rshiny app, with the additions of 1) free text inputs for other parameters, 2) optional upload button to run simulations on data similar to the subject of the <code>preSCRuB</code> users’ prospective study, and 3) a bar to control the number of simulations to run.</p>
+<p>The following window will pop up. This window contains the same set
+of parameters in the public Rshiny app, with the additions of 1) free
+text inputs for other parameters, 2) optional upload button to run
+simulations on data similar to the subject of the <code>preSCRuB</code>
+users’ prospective study, and 3) a bar to control the number of
+simulations to run.</p>
 <p><img src="images/preSCRuB_package_initial.png" /></p>
 </div>
 <div id="uploading-user-samples" class="section level3">
 <h3>Uploading user samples</h3>
-<p>For a user to upload sample, select the browse button to search through their local machine and choose a file of sample read counts in <code>.csv</code> file, in in a 1-row-per-sample format. In this example, we use the hosptial data from the SCRuB tutorial (available in our <a href="https://github.com/korem-lab/SCRuB/%5D">github repository</a>). We recommend that users ensure their data foramt matches those that we supply.</p>
+<p>For a user to upload sample, select the browse button to search
+through their local machine and choose a file of sample read counts in
+<code>.csv</code> file, in in a 1-row-per-sample format. In this
+example, we use the hosptial data from the SCRuB tutorial (available in
+our <a href="https://github.com/korem-lab/SCRuB/%5D">github
+repository</a>). We recommend that users ensure their data foramt
+matches those that we supply.</p>
 <p><img src="images/preSCRuB_package_sample_upload.png" /></p>
 </div>
 <div id="running-simulations" class="section level3">
 <h3>Running simulations</h3>
-<p>One content with the specified <code>preSCRuB</code> parameters, users can click on the <code>Compute Plate Recommendations</code> to start running the simulations to evalute SCRuB’s performance across different plate design parameters. While the simulations are running, a loading icon will be displayed as follows:</p>
+<p>One content with the specified <code>preSCRuB</code> parameters,
+users can click on the <code>Compute Plate Recommendations</code> to
+start running the simulations to evalute SCRuB’s performance across
+different plate design parameters. While the simulations are running, a
+loading icon will be displayed as follows:</p>
 <p><img src="images/preSCRuB_package_in_progess.png" /></p>
 </div>
 </div>

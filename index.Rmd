@@ -1,4 +1,3 @@
-
 ---
 title: 'SCRuB: Source-tracking for Contamination Removal <br> &emsp;&emsp;&emsp;&emsp; in *micro*Biomes'
 output: 
@@ -16,38 +15,47 @@ output:
 
 --------------------------
 
-**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/korem-lab/SCRuB/issues).</span>**
+**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/korem-lab/SCRuB/issues), or email [gia2105@columbia.edu](gia2105@columbia.edu) .</span>**
 
 --------------------------
 
-Welcome to `SCRuB`! This is a software package designed to provide researchers with a state of the art tool to **<span style="color:lightblue">remove contamination** from microbial datasets.  <br>
+Welcome to [`SCRuB`](index.html)! This is a software package designed to provide researchers with a state of the art tool to **<span style="color:lightblue">remove contamination** from microbial datasets.  <br>
 
 In addition to the statistical framework of `SCRuB`, we provide [`preSCRuB`](prescrub_intro.html), a personalized interface to offer user recommendations to **<span style="color:lightblue">optimize negative control strategies** during study design processes. Effective use of `preSCRuB` will allow for even stronger decontamination using `SCRuB` in future analyses.  
 
 ## Installation
 
-SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB/]), which can be installed using `devtools`. The main package requirements from SCRuB are `glmnet`, `torch`, and `tidyverse`, which can be installed with the following command:
-
-```{r, eval=FALSE}
-install.packages( c('glmnet', 'torch', 'tidyverse') )
-```
-
-Once the dependencies are met, SCRuB can be installed using `devtools` as follows:
+SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB/]), which can be installed using `devtools`:
 ```{r, eval=FALSE}
 devtools::install_github("korem-lab/SCRuB")
+install_torch()
+```
+
+Additionally, we provide SCRuB as a QIIME2 plugin, which can be installed from a Qiime2 environment using pip:
+```bash
+pip install git+https://github.com/korem-lab/q2-SCRuB.git
 ```
 
 &nbsp;
 
+
 ## Getting started
 
-**<span style="color:lightblue">To start using SCRuB, we recommend to follow along with our [tutorial](tutorial.html), which demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.:</span>** 
+**<span style="color:lightblue">To start using SCRuB, we recommend to follow along with either our [R tutorial](tutorial.html) or our [Qiime2 tutorial](qiime2_intro.html), depending on the user's preference. In either case, the tutorials demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.:</span>** 
 
 &nbsp;
 
 ## FAQs
 *Why SCRuB?*
 
+`SCRuB` offers the advantage of combing source-tracking approaches with contamination source modelling, while tracking for possible sources of well-to-well leakage. Thus, it provides an effective and low-risk approach to microbial decontamination, which has been shown to improve phenotype prediction in downtream applications.
 
 &nbsp;
 
+
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml)
+  [![Codecov test
+coverage](https://codecov.io/gh/korem-lab/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/korem-lab/SCRuB)
+  <!-- badges: end -->
+  

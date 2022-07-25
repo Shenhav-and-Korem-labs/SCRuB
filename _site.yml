@@ -1,21 +1,43 @@
 name: SCRuB
 output_dir: '.'
+favicon: images/scrub_logo.png
 navbar:
   title: SCRuB
+  icon: fa-book
   left:
-  - text: Tutorial
-    href: tutorial.html
-    icon: fa-book
+  - text: Package
+    icon: fab fa-r-project
+    menu:
+    - text: Inputs & Outputs
+      href: R-inputs.html
+    - text: Tutorial
+      href: tutorial.html
+  - text: QIIME2 Plugin
+    icon: glyphicon-zoom-in
+    menu:
+    - text: Inputs & Outputs
+      href: qiime2-intro.html
+    - text: Command line interface
+      href: Plasma-Tutorial-QIIME2-CLI.html
+    - text: Qiime2 interface
+      href: Plasma-Tutorial-QIIME2-API.html
+    - text: Python interface
+      href: Plasma-Tutorial-QIIME2-standalone-API.html
   - text: preSCRuB
     href: prescrub_intro.html
     icon: fa-object-group
-  - text: Documentation
-    icon: fa-gear
+  - text: Related documents
+    icon: fa-binoculars
     menu:
     - text: SCRuB Manuscript
-      href: 
+      href: www.google.com
   right:
-  - icon: fa-question fa-lg
+  - text: Future developments
+    href: plans.html
+    icon: fa-sparkles
+  - text: Contribute to SCRuB!
+    href: contribute.html
+  - icon: fa-comment
     href: https://github.com/korem-lab/SCRuB/issues
   - icon: fa-github fa-lg
     href: https://github.com/korem-lab/SCRuB/
@@ -23,4 +45,5 @@ output:
   html_document:
     theme: darkly
     self_contained: no
+
 
