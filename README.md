@@ -41,11 +41,11 @@ As an expectation-maximization model, SCRuB is highly efficient, with very low c
 
 
 Usage
-___________________
+--------------------
 
 ### As input, *SCRuB* takes arguments:
 
- _data_ - An ( n_samples + n_controls ) x n_taxa count matrix.
+ _data_ - An ( n_samples + n_controls ) x n_taxa count matrix. We recommend supplying SCRuB with the most granular phylogenetic level possible - e.g., ASV, OTU, mOTU2, etc.
  
 _metadata_ - a metadata matrix of 2 columns (and a third optional column), where each row name is aligned to the `data` parameter row name. 
 The first metadata column is boolean, denoting `TRUE` if the corresponding `data` row belongs to a sample representing a contamination source, and `FALSE` otherwise. 
@@ -55,18 +55,18 @@ This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
  
 (optional) _control_order_ - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
 
-(optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5.
+(optional) _dist_threshold_ float - Determines the maximum distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5. If the provided metadata contains samples' well locations, this parameter determines how SCRuB de-leaks the controls and refines the estimated contamination sources.
 
 
-#### As output, *SCRuB* returns a list containing:
+### As output, *SCRuB* returns a list containing:
 
-1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
+1) decontaminated_samples - decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated taxonomic compositions.
  
 2) p - The fitted p parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
 
 3) inner_iterations -- results from SCRuB's intermediary steps, which includes one list entry per type of control. Each iteration contains:
 
-	- 3.1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples.
+	- 3.1).1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the taxonomic composition of the samples after that round of decontamination.
  
  	- 3.2) p - The fitted $p$ parameter, as described in SCRuB's methods. An n_sample vector representing the estimate proportion of each observe sample that was not contamination. A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0.
  
@@ -109,7 +109,7 @@ Input format
 -----------------------
 The required input to *SCRuB* is composed of one count matrix, and one metadata matrix (or data frame):
 
-(1) data - ( n_samples + n_controls ) x n_taxa count matrix, where m is the number samples and n is the number of taxa. Row names are the sample ids ('SampleID'). Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.
+(1) data - ( n_samples + n_controls ) x n_taxa count matrix, where m is the number samples and n is the number of taxa. Row names are the sample ids ('SampleID'). Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be consistent between the samples and metadata.
 
 
 count matrix (first 4 rows and columns):
