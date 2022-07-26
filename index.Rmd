@@ -19,7 +19,7 @@ output:
 
 --------------------------
 
-Welcome to [SCRuB](index.html)! his is a software package for in silico **<span style="color:lightblue"removal of contamination** from microbial datasets using process controls.
+Welcome to [SCRuB](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls.
   <br>
 
 In addition to the statistical framework of SCRuB, we provide [preSCRuB](prescrub_intro.html), a personalized interface which offers recommendations for **<span style="color:lightblue">placement of controls** during experimental design processes. Effective use of preSCRuB will allow for even stronger decontamination using SCRuB in future analyses.  
