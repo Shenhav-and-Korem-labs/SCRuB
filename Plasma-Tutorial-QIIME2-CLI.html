@@ -13,13 +13,13 @@
 
 <title>SCRuB QIIME2 Plugin Tutorial</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="Plasma-Tutorial-QIIME2-CLI_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="Plasma-Tutorial-QIIME2-CLI_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="Plasma-Tutorial-QIIME2-CLI_files/navigation-1.1/tabsets.js"></script>
+<link href="Plasma-Tutorial-QIIME2-CLI_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="Plasma-Tutorial-QIIME2-CLI_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="Plasma-Tutorial-QIIME2-CLI_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="Plasma-Tutorial-QIIME2-CLI_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -354,18 +354,33 @@ $(document).ready(function () {
 <hr />
 <div id="getting-ready" class="section level1">
 <h1>Getting ready</h1>
-<p>In this tutorial we use <em>SCRuB</em> to decontaminate a dataset comparing the plasma samples of cancer and control subejcts published in <a href="https://www.nature.com/articles/s41586-020-2095-1">Poore et al</a>. This data can be downloaded with the following links:</p>
+<p>In this tutorial we use <em>SCRuB</em> to decontaminate a dataset
+comparing the plasma samples of cancer and control subejcts published in
+<a href="https://www.nature.com/articles/s41586-020-2095-1">Poore et
+al</a>. This data can be downloaded with the following links:</p>
 <ul>
-<li><strong>Table</strong> (table.qza) | <a href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/table.qza">download</a></li>
-<li><strong>Sample Metadata</strong> (metadata.tsv) | <a href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/metadata.tsv">download</a></li>
+<li><strong>Table</strong> (table.qza) | <a
+href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/table.qza">download</a></li>
+<li><strong>Sample Metadata</strong> (metadata.tsv) | <a
+href="https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/metadata.tsv">download</a></li>
 </ul>
-<p><strong>Note</strong>: This tutorial assumes you have installed <a href="https://qiime2.org/">QIIME2</a> using one of the procedures in the <a href="https://docs.qiime2.org/2020.2/install/">install documents</a>. This tutorial also assumed you have installed <a href="https://korem-lab.github.io/SCRuB/">SCRuB</a>.</p>
-<p>First, we will make a tutorial directory and download the data above and move the files to the <code>plasma-data</code> directory:</p>
+<p><strong>Note</strong>: This tutorial assumes you have installed <a
+href="https://qiime2.org/">QIIME2</a> using one of the procedures in the
+<a href="https://docs.qiime2.org/2020.2/install/">install documents</a>.
+This tutorial also assumes you have installed <a
+href="https://korem-lab.github.io/SCRuB/">SCRuB</a>.</p>
+<p>First, we will make a tutorial directory and download the data above
+and move the files to the <code>plasma-data</code> directory:</p>
 <pre class="bash"><code>mkdir plasma-data</code></pre>
 </div>
 <div id="decontaminating" class="section level1">
 <h1>Decontaminating</h1>
-<p>To run SCRuB we only need a single command, whose inputs and parameters are described <a href="qiime2-intro.html">here</a>. In this tutorial our control_idx_column parameter is <code>is_control</code>, our sample_type_column is <code>sample_type</code>, and our well_location_column is <code>well_id</code>. Now we are ready to SCRuB away the contamination:</p>
+<p>To run SCRuB we only need a single command, whose inputs and
+parameters are described <a href="qiime2-intro.html">here</a>. In this
+tutorial our control_idx_column parameter is <code>is_control</code>,
+our sample_type_column is <code>sample_type</code>, and our
+well_location_column is <code>well_id</code>. Now we are ready to SCRuB
+away the contamination:</p>
 <pre class="python"><code>!qiime SCRuB SCRuB \\
     --i-table plasma-data/table.qza \\
     --m-metadata-file plasma-data/metadata.tsv \\
@@ -405,7 +420,9 @@ if os.path.isdir(output_path)==False:
 rpca_biplot_emperor.visualization.save(os.path.join(output_path, &#39;Raw-RPCA-biplot.qzv&#39;))</code></pre>
 <p>Now we can visualize the samples via RPCA</p>
 <p><img src="results/Raw-RPCA.png" /></p>
-<p>For comparison, we can observe the samples decontaminated by SCRuB. Note that the decontamination increased the observed separation between the plasma samples and the bacterial monocultures:</p>
+<p>For comparison, we can observe the samples decontaminated by SCRuB.
+Note that the decontamination increased the observed separation between
+the plasma samples and the bacterial monocultures:</p>
 <pre class="python"><code># run RPCA and plot with emperor
 rpca_biplot, rpca_distance = rpca(scrubbed)
 rpca_biplot_emperor = biplot(rpca_biplot, metadata)

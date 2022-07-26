@@ -1,5 +1,5 @@
 ---
-title: 'SCRuB Tutorial'
+title: 'SCRuB R Tutorial'
 output: 
     html_document:
        theme: darkly
@@ -11,7 +11,7 @@ output:
 <img src='images/SCRuB_logo.png' align="right" height="139" />
 
 
-In this tutorial,  we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.
+In this tutorial, we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.
 
 -----------------------
 
@@ -19,7 +19,7 @@ In this tutorial,  we demonstrate how SCRuB should be used to remove contaminati
 
 ## Loading the data
 
-The starting point for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample's read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible, and so data should only be grouped to higher orders of phylogeny (e.g. genus, family...) *after* completing the SCRuB pipeline. 
+The starting point for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample's read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible (e.g., ASV, OTU, mOTU), and so data should only be grouped to higher orders of phylogeny (e.g. genus, family...) *after* completing the SCRuB pipeline. 
 
 We start by loading the necessary packages, such as `SCRUB`. We also include the use of `tidyverse` within our tutorial
 ```{r, message=FALSE}
@@ -28,7 +28,7 @@ library(tidyverse)
 library(SCRuB)
 ```
 
-As an example dataset, we use processed samples publicly available from Qiita (**link**), from a dataset of plasma samples, made public by Poore et al. In the ensuing pipeline, we demonstrate how SCRuB can be used to remove the contamination from the plasma using the control samples, and pub liscly available metadata published by Poore et al.
+As an example dataset, we use processed samples publicly available from [Qiita](https://qiita.ucsd.edu/), from a dataset of plasma samples, made public by [Poore et al](https://www.nature.com/articles/s41586-020-2095-1). In the ensuing code, we demonstrate how SCRuB can be used to remove contamination from these plasma samples using control samples and publicly available metadata provided by the authors.
 
 ```{r}
 data <- read.csv('plasma_data.csv', row.names=1) %>% as.matrix()
@@ -46,26 +46,29 @@ metadata %>% head()
 ## Running SCRuB
 
 ```{r}
-scr_out <- SCRuB( data[,1:750], metadata ) # shortening feature space to shorten tutorial runtime...
+scr_out <- SCRuB( data[,1:750], # temporarily shortening feature space to shorten tutorial runtime as the documentation is being developped...
+                  metadata, 
+                  control_order = c("control blank DNA extraction", "control blank library prep" )
+                  )
 ```
 
 ## Evaluating outputs
 
 Let's take a look at the results. The estimated level of contamination was resonable, as the fitted `p` parameters indicate our samples are typically close to `3%` contamination.
 ```{r}
-scr_out$p %>% boxplot()
+(1 - scr_out$p) %>% boxplot(ylab='Level of contamination')
 ```
 
-To take a look at the cleaned samples, refer to the `decontaminated_samples` entry. 
+To take a look at the cleaned samples, refer to the `decontaminated_samples` entry. In most cases, this is what you are interested in for downstream analyses.
 ```{r}
 decontaminated_samples <- scr_out$decontaminated_samples
 decontaminated_samples[1:10, 25:40]
 ```
 
 
-An output from ever inner iteration of the SCRUB function is the `gamma` parameter, which is a vector representing the estimated relative abundance of a contamination community.
+An output from every inner iteration of the SCRUB function is the `gamma` parameter, which is a vector representing the estimated relative abundance of a contamination community.
 ```{r}
-scr_out$inner_iterations$`control blank library prep`$gamma %>% plot()
+scr_out$inner_iterations$`control blank library prep`$gamma %>% plot(ylab='Relative abundance', xlab='Different OTUs in contamination source')
 ```
 
 
@@ -75,7 +78,8 @@ It is strongly recommended to incorporate the well metadata of each sample into 
 One additional output when incoprorating the well metadata is the `alpha` parameters, which is a `n_control` by `n_samples + 1` matrix that represents the estimated level of leakage into each control. The last column of the `alpha` matrix represents the estimated proportion of each control that originates from the contamination source. In this case, `SCRuB` estimated a very high level of leakage for many DNA extraction samples, with a median estimated well-to-well leakage of `60%`. 
 
 ```{r}
-boxplot( scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)] )
+boxplot( 1 - scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)], 
+         ylab='Level of well leakage in process controls')
 ```
 
 

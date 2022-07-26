@@ -11,7 +11,7 @@
 
 
 
-<title>SCRuB Tutorial</title>
+<title>SCRuB R Tutorial</title>
 
 <script src="tutorial_files/header-attrs-2.14/header-attrs.js"></script>
 <script src="tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -341,7 +341,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">SCRuB Tutorial</h1>
+<h1 class="title toc-ignore">SCRuB R Tutorial</h1>
 
 </div>
 
@@ -365,9 +365,9 @@ locations of each sample must also be provided.</p>
 represents a sample, and each column represents each sample’s read
 counts that correspond to a certain taxa (e.g ASV, OTU, species). In
 general, we recommend to run SCRuB on the most granular version of the
-data possible, and so data should only be grouped to higher orders of
-phylogeny (e.g. genus, family…) <em>after</em> completing the SCRuB
-pipeline.</p>
+data possible (e.g., ASV, OTU, mOTU), and so data should only be grouped
+to higher orders of phylogeny (e.g. genus, family…) <em>after</em>
+completing the SCRuB pipeline.</p>
 <p>We start by loading the necessary packages, such as
 <code>SCRUB</code>. We also include the use of <code>tidyverse</code>
 within our tutorial</p>
@@ -375,11 +375,12 @@ within our tutorial</p>
 library(tidyverse)
 library(SCRuB)</code></pre>
 <p>As an example dataset, we use processed samples publicly available
-from Qiita (<strong>link</strong>), from a dataset of plasma samples,
-made public by Poore et al. In the ensuing pipeline, we demonstrate how
-SCRuB can be used to remove the contamination from the plasma using the
-control samples, and pub liscly available metadata published by Poore et
-al.</p>
+from <a href="https://qiita.ucsd.edu/">Qiita</a>, from a dataset of
+plasma samples, made public by <a
+href="https://www.nature.com/articles/s41586-020-2095-1">Poore et
+al</a>. In the ensuing code, we demonstrate how SCRuB can be used to
+remove contamination from these plasma samples using control samples and
+publicly available metadata provided by the authors.</p>
 <pre class="r"><code>data &lt;- read.csv(&#39;plasma_data.csv&#39;, row.names=1) %&gt;% as.matrix()
 dim(data)</code></pre>
 <pre><code>## [1]  381 7777</code></pre>
@@ -399,7 +400,10 @@ metadata %&gt;% head()</code></pre>
 </div>
 <div id="running-scrub" class="section level2">
 <h2>Running SCRuB</h2>
-<pre class="r"><code>scr_out &lt;- SCRuB( data[,1:750], metadata ) # shortening feature space to shorten tutorial runtime...</code></pre>
+<pre class="r"><code>scr_out &lt;- SCRuB( data[,1:750], # temporarily shortening feature space to shorten tutorial runtime as the documentation is being developped...
+                  metadata, 
+                  control_order = c(&quot;control blank DNA extraction&quot;, &quot;control blank library prep&quot; )
+                  )</code></pre>
 <pre><code>## [1] &quot;Incorporating the well metadata to track well-to-well leakage!&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank DNA extraction controls...&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank library prep controls...&quot;</code></pre>
@@ -410,10 +414,11 @@ metadata %&gt;% head()</code></pre>
 contamination was resonable, as the fitted <code>p</code> parameters
 indicate our samples are typically close to <code>3%</code>
 contamination.</p>
-<pre class="r"><code>scr_out$p %&gt;% boxplot()</code></pre>
+<pre class="r"><code>(1 - scr_out$p) %&gt;% boxplot(ylab=&#39;Level of contamination&#39;)</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>To take a look at the cleaned samples, refer to the
-<code>decontaminated_samples</code> entry.</p>
+<code>decontaminated_samples</code> entry. In most cases, this is what
+you are interested in for downstream analyses.</p>
 <pre class="r"><code>decontaminated_samples &lt;- scr_out$decontaminated_samples
 decontaminated_samples[1:10, 25:40]</code></pre>
 <pre><code>##              G000006425 G000006445 G000006515 G000006565 G000006605 G000006685
@@ -449,10 +454,10 @@ decontaminated_samples[1:10, 25:40]</code></pre>
 ## 12692.150031          0          0          0          0
 ## 12692.150032          0          0          0          0
 ## 12692.150080          0          0          0          0</code></pre>
-<p>An output from ever inner iteration of the SCRUB function is the
+<p>An output from every inner iteration of the SCRUB function is the
 <code>gamma</code> parameter, which is a vector representing the
 estimated relative abundance of a contamination community.</p>
-<pre class="r"><code>scr_out$inner_iterations$`control blank library prep`$gamma %&gt;% plot()</code></pre>
+<pre class="r"><code>scr_out$inner_iterations$`control blank library prep`$gamma %&gt;% plot(ylab=&#39;Relative abundance&#39;, xlab=&#39;Different OTUs in contamination source&#39;)</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>It is strongly recommended to incorporate the well metadata of each
 sample into SCRuB, as this makes it possible ot directly account for
@@ -467,7 +472,8 @@ originates from the contamination source. In this case,
 <code>SCRuB</code> estimated a very high level of leakage for many DNA
 extraction samples, with a median estimated well-to-well leakage of
 <code>60%</code>.</p>
-<pre class="r"><code>boxplot( scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)] )</code></pre>
+<pre class="r"><code>boxplot( 1 - scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)], 
+         ylab=&#39;Level of well leakage in process controls&#39;)</code></pre>
 <p><img src="tutorial_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>

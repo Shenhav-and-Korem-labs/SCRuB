@@ -348,7 +348,8 @@ Removal <br>      in <em>micro</em>Biomes</h1>
 
 
 <style>
-    body { background-color: #162138;
+    body { 
+        background-color: #162138;
             text-color: whitesmoke}
 </style>
 <p><img src='images/SCRuB_logo.png' align="right" height="300" /></p>
@@ -360,22 +361,22 @@ href="https://github.com/korem-lab/SCRuB/issues">Issues Page</a>, or
 email <a href="gia2105@columbia.edu">gia2105@columbia.edu</a>
 .</span></strong></p>
 <hr />
-<p>Welcome to <a href="index.html"><code>SCRuB</code></a>! This is a
-software package designed to provide researchers with a state of the art
-tool to <strong><span style="color:lightblue">remove
-contamination</strong> from microbial datasets. <br></p>
-<p>In addition to the statistical framework of <code>SCRuB</code>, we
-provide <a href="prescrub_intro.html"><code>preSCRuB</code></a>, a
-personalized interface to offer user recommendations to
-<strong><span style="color:lightblue">optimize negative control
-strategies</strong> during study design processes. Effective use of
-<code>preSCRuB</code> will allow for even stronger decontamination using
-<code>SCRuB</code> in future analyses.</p>
+<p>Welcome to <a href="index.html">SCRuB</a>! his is a software package
+for in silico <strong>&lt;span style=“color:lightblue”removal of
+contamination</strong> from microbial datasets using process controls.
+<br></p>
+<p>In addition to the statistical framework of SCRuB, we provide <a
+href="prescrub_intro.html">preSCRuB</a>, a personalized interface which
+offers recommendations for
+<strong><span style="color:lightblue">placement of controls</strong>
+during experimental design processes. Effective use of preSCRuB will
+allow for even stronger decontamination using SCRuB in future
+analyses.</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <p>SCRuB is currently available through our <a
-href="https://github.com/korem-lab/SCRuB/%5D">github repository</a>,
-which can be installed using <code>devtools</code>:</p>
+href="https://github.com/korem-lab/SCRuB/%5D">github repository</a>, and
+can be installed using <code>devtools</code>:</p>
 <pre class="r"><code>devtools::install_github(&quot;korem-lab/SCRuB&quot;)
 install_torch()</code></pre>
 <p>Additionally, we provide SCRuB as a QIIME2 plugin, which can be
@@ -385,22 +386,67 @@ installed from a Qiime2 environment using pip:</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-<p><strong><span style="color:lightblue">To start using SCRuB, we
-recommend to follow along with either our <a href="tutorial.html">R
-tutorial</a> or our <a href="qiime2_intro.html">Qiime2 tutorial</a>,
-depending on the user’s preference. In either case, the tutorials
-demonstrates the data format needed to set up SCRuB, how to run SCRuB’s
-core funtions, and how to interpret its results.:</span></strong></p>
+To start using SCRuB, follow along one of the following links, according
+to your preferences: <br>
+<center>
+<b> <font size="5"> <a href="tutorial.html">R tutorial</a></font> </b>
+<br> <b> <font size="5"> <a href="qiime2_intro.html">Qiime2
+tutorial</a></font> </b> <br>
+</center>
+<p>These tutorials demonstrates the data format needed to set up SCRuB,
+how to run SCRuB’s core funtions, and how to interpret its
+results.</span></p>
 <p> </p>
+<!-- To start using SCRuB, we recommend to follow along with either our [R tutorial](tutorial.html) or our [Qiime2 tutorial](qiime2_intro.html), depending -->
 </div>
 <div id="faqs" class="section level2">
 <h2>FAQs</h2>
-<p><em>Why SCRuB?</em></p>
-<p><code>SCRuB</code> offers the advantage of combing source-tracking
-approaches with contamination source modelling, while tracking for
-possible sources of well-to-well leakage. Thus, it provides an effective
-and low-risk approach to microbial decontamination, which has been shown
-to improve phenotype prediction in downtream applications.</p>
+<!-- *Why SCRuB?* -->
+<!-- `SCRuB` offers the advantage of combing source-tracking approaches with contamination source modelling, while tracking for possible sources of well-to-well leakage. Thus, it provides an effective and low-risk approach to microbial decontamination, which has been shown to improve phenotype prediction in downtream applications. -->
+<p><em><span style="color:lightblue">Why SCRuB?</em> <br> Instead of
+trying to identify whether a taxa is categorically a contaminant, SCRuB
+models the composition of each contamination source (kit contamination,
+water contamination, etc.). We assume that taxa present together in a
+contamination source will be introduced together to other samples, and
+in similar proportions as in the contamination source. Therefore, if a
+control sample contains multiple bacteria, and a sample of interest
+contains only one of them and at high counts, that one bacteria is
+likely not a contaminant. This allows a more accurate and specific
+decontamination.</p>
+<p><em><span style="color:lightblue">Should I use SCRuB only if I
+believe that there is substantial contamination?</em> <br> Our results
+demonstrate that SCRuB will not erroneously remove taxa if provided with
+unrelated controls. We therefore support incorporating SCRuB into your
+day-to-day analysis pipeline.</p>
+<p><em><span style="color:lightblue">What does SCRuB do with the
+locations of the samples on the wells?</em><br> SCRuB uses these
+location to handle the important and common phenomenon of well-to-well
+leakage, in which material from biological samples leaks into controls
+during experimental procedures. Using the locations of samples during
+processing allows us to detect these cases.</p>
+<p><em><span style="color:lightblue">What do I do if I have more than
+one type of control?</em><br> SCRuB supports multiple types of controls,
+and performs serial decontamination - each time performing
+decontamination using a different type of control. You can specify the
+order of decontamination yourself; we recommend to perform
+decontamination in the order in which contaminants are introduced.</p>
+<p><em><span style="color:lightblue">We sequenced samples from two
+different studies on the same batch / plate / sequencing run. Should I
+run SCRuB just on the data from my study?</em><br> One of the key
+advantages of SCRuB is that it uses the shared information across all
+samples affected by a certain contamination source (e.g., an extraction
+batch). We therefore recommend that you supply SCRuB with <em>all</em>
+the relevant samples, including ones that are not related to a
+particular study - SCRuB uses the information in those samples to
+perform better decontamination.</p>
+<p><em><span style="color:lightblue">Is there any benefit in providing
+SCRuB with more than one control sample?</em><br> Yes! SCRuB uses each
+control sample as an independent realization of the contamination source
+it represents. More samples allow us to infer the latent composition of
+these source more accurately. We recommend at least 2 controls per
+source, and you can use <preSCRuB> to get recommendations that are
+tailored to your experiment - often, even more than 2 controls would be
+appropriate.</p>
 <p> </p>
 <p><!-- badges: start --> <a
 href="https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml"><img
