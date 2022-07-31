@@ -30,7 +30,11 @@ mkdir plasma-data
 
 # Decontaminating 
 
-To run SCRuB we only need a single command, whose inputs and parameters are described [here](qiime2-intro.html). In this tutorial our control_idx_column parameter is `is_control`, our sample_type_column is `sample_type`, and our well_location_column is `well_id`. Now we are ready to SCRuB away the contamination:
+To run SCRuB we only need a single command, whose inputs and parameters are described [here](qiime2-intro.html). In this tutorial our control_idx_column parameter is `is_control`, our sample_type_column is `sample_type`, and our well_location_column is `well_id`. Now we are ready to SCRuB away the contamination. This can be accomplished through three interfaces, which we provide below:
+
+# {.tabset}
+
+## Command line
 
 ```{python, eval=FALSE}
 !qiime SCRuB SCRuB \\
@@ -44,10 +48,7 @@ To run SCRuB we only need a single command, whose inputs and parameters are desc
 ```
 
 
-# Assessing output
-
-Now we can compare the raw table and SCRuB's output:
-
+Next we load all samples to produce a few visualizations:
 ```{python, eval=FALSE}
 import os
 import warnings
@@ -65,6 +66,72 @@ scrubbed = q2.Artifact.load('results/scrubbed.qza')
 
 ```
 
+## Qiime2
+First we will import our data with the QIIME2 Python API
+```{python, eval=FALSE}
+import os
+import warnings
+import qiime2 as q2
+from qiime2.plugins.SCRuB.methods import SCRuB
+# hide pandas Future/Deprecation Warning(s) for tutorial
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+# import table
+table = q2.Artifact.load('plasma-data/table.qza')\
+# import metadata
+metadata = q2.Metadata.load('plasma-data/metadata.tsv')
+```
+
+Next, we will run SCRuB on this dataset:
+```{python, eval=FALSE}
+scrubbed = SCRuB(table, 
+                 metadata, 
+                'is_control', # specifies metadata column where True denotes the negative controls
+                'sample_type', # specifies metadata column denoting the sample type
+                'well_id' # specifies metadata column representing samples location, in 'A11','B10' format
+                )
+```
+
+
+
+
+## Python
+
+```{python, eval=FALSE}
+import os
+import warnings
+import pandas as pd
+import numpy as np
+from q2_SCRuB import SCRuB
+# hide pandas Future/Deprecation Warning(s) for tutorial
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+# import table
+table =pd.read_csv('plasma-data/table.tsv', sep='\t', index_col=0)
+# import metadata
+metadata = pd.read_csv('plasma-data/metadata.tsv', sep='\t', index_col=0)
+
+```
+
+
+Now, we can run SCRuB:
+```{python, eval=FALSE}
+scrubbed = SCRuB(table, 
+                 metadata, 
+                'is_control', # specifies metadata column where True denotes the negative controls
+                'sample_type', # specifies metadata column denoting the sample type
+                'well_id', # specifies metadata column representing samples location, in 'A11','B10' format
+                ['control blank DNA extraction','control blank library prep']
+                )
+```
+
+
+
+# Assessing output
+
+Now we can compare the raw table and SCRuB's output:
 
 
 ```{python, eval=FALSE}

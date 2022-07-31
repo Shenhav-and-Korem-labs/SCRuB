@@ -1,0 +1,146 @@
+---
+title: 'SCRuB R Tutorial'
+output: 
+    html_document:
+       theme: darkly
+---
+<style>
+    body { background-color: #162138;
+            text-color: whitesmoke}
+</style>
+<img src='images/SCRuB_logo.png' align="right" height="139" />
+
+
+In this tutorial, we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.
+
+-----------------------
+
+
+# Getting ready
+
+We start by loading the necessary packages, such as `SCRUB`. We also include the use of `tidyverse` within our tutorial
+```{r, message=FALSE}
+set.seed(1)
+library(tidyverse)
+library(SCRuB)
+```
+
+
+The primary input  for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample's read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible (e.g., ASV, OTU, mOTU), and so data should only be grouped to higher orders of phylogeny (e.g. genus, family...) *after* completing the SCRuB pipeline. 
+
+Within this tutorial, we use processed samples publicly available from [Qiita](https://qiita.ucsd.edu/), from a dataset of plasma samples, made public by [Poore et al](https://www.nature.com/articles/s41586-020-2095-1). In the ensuing code, we demonstrate how SCRuB can be used to remove contamination from these plasma samples using control samples and publicly available metadata provided by the authors.
+
+
+
+# {.tabset}
+
+## Inputs
+
+The required inputs to *SCRuB* are composed of one count matrix, and one metadata matrix (or data frame):
+
+(1)  **<span style="color:lightblue">data** - An ( `n_samples` + `n_controls` ) x `n_taxa `count matrix, where `n_samples` is the number of samples, `n_controls` is the number of negative controls, and `n_taxa` is the number of features in the count matrix. Row names are the sample ids. Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.
+
+
+count matrix (first 4 rows and columns):
+```{r}
+data <- read.csv('plasma_data.csv', row.names=1) %>% as.matrix()
+data[30:42, 20:24]
+```
+
+(2) **<span style="color:lightblue">metadata** - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.
+
+```{r}
+metadata <- read.csv('plasma_metadata.csv', row.names=1)
+metadata[30:42,]
+```
+
+
+(3) (optional) **<span style="color:lightblue">control_order** - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. In thise example, our dataset includes the following types of controls:
+```{r}
+metadata %>% filter(is_control) %>% pull(sample_type) %>% unique()
+```
+
+Based on the analysis from SCRuB's manuscript, we recommend to perform decontamination in the order in which contaminants are introduced. In this case, this corresponds to the following control order:
+```{r}
+control_order <- c("control blank library prep", "control blank DNA extraction")
+```
+
+
+## Running SCRuB
+
+To run SCRuB, we only need to execute a single function:
+
+```{r}
+scr_out <- SCRuB( data[,1:750], # temporarily shortening feature space to shorten tutorial runtime as the documentation is being developped...
+                  metadata, 
+                  control_order = control_order
+                  )
+```
+
+
+## Outputs
+
+SCRuB outputs a list containing the following components:
+
+(1) **<span style="color:lightblue">decontaminated_samples** - an n_samples x n_taxa count matrix, representing the decontaminated taxonomic compositions. In most cases, this is what you are interested in for downstream analyses. 
+
+```{r}
+decontaminated_samples <- scr_out$decontaminated_samples
+decontaminated_samples[30:41, 20:24]
+```
+
+
+(2) **<span style="color:lightblue">p** - an n_samples vector representing the estimate proportion of each observed sample that was not contamination, as described in SCRuB's methods. A dataset that had no contamination would have a`p` of 1s, while a dataset of entirely contamination would have a `p` of 0.
+
+```{r}
+(1 - scr_out$p) %>% 
+  boxplot(ylab='Level of contamination')
+```
+
+
+(3) **<span style="color:lightblue">inner_iterations** - results from SCRuB's intermediary steps, which includes one list entry per type of control. Each iteration contains:
+
+
+(3.1)  **<span style="color:lightblue">decontaminated_samples** - a n_samples x n_taxa count matrix, representing the taxonomic composition of the samples after the specified round of decontamination.
+```{r}
+scr_out$inner_iterations$`control blank DNA extraction`$decontaminated_samples[30:41,20:24]
+```
+
+
+
+(3.2)  **<span style="color:lightblue">p** -- an n_sample vector representing the estimate proportion of each observed sample that was not contamination, based on the specified type of process control
+```{r}
+scr_out$inner_iterations$`control blank DNA extraction`$p %>%
+  boxplot(ylab='Level of contamination')
+```
+
+
+
+(3.3)  **<span style="color:lightblue">alpha**  - an n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of alpha sums to 1, with each entry of the (n_sample + 1)th column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage. It is strongly recommended to incorporate the well metadata of each sample into SCRuB, as this makes it possible ot directly account for potential well leakage into negative controls, reducing the risk of wrongly removing certain species during decontamination.
+
+In this case, `SCRuB` estimated a very high level of leakage for many DNA extraction samples, with a median estimated well-to-well leakage of `60%`. 
+
+```{r}
+boxplot( 1 - scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)], 
+         ylab='Level of well leakage in process controls')
+```
+
+
+
+(3.4)  **<span style="color:lightblue">gamma** an n_taxa vector representing the estimated relative abundance of the contamination community, as described in SCRuB's methods.
+
+```{r}
+scr_out$inner_iterations$`control blank DNA extraction`$gamma %>% 
+  plot(ylab='Relative abundance', xlab='Different OTUs in contamination source')
+```
+
+(3.5) **<span style="color:lightblue">loglikelihood** - float. The layer-specific log-likelihood of the inputted dataset based on SCRuB's fitted parameters.
+
+```{r}
+scr_out$inner_iterations$`control blank DNA extraction`$loglikelihood
+```
+
+
+
+
+

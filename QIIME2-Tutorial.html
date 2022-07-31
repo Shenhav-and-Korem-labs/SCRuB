@@ -13,13 +13,13 @@
 
 <title>SCRuB QIIME2 Plugin Tutorial</title>
 
-<script src="Plasma-Tutorial-QIIME2-CLI_files/header-attrs-2.14/header-attrs.js"></script>
-<script src="Plasma-Tutorial-QIIME2-CLI_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="QIIME2-Tutorial_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="QIIME2-Tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="Plasma-Tutorial-QIIME2-CLI_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="QIIME2-Tutorial_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="QIIME2-Tutorial_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="QIIME2-Tutorial_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="QIIME2-Tutorial_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="Plasma-Tutorial-QIIME2-CLI_files/navigation-1.1/tabsets.js"></script>
-<link href="Plasma-Tutorial-QIIME2-CLI_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="Plasma-Tutorial-QIIME2-CLI_files/highlightjs-9.12.0/highlight.js"></script>
-<link href="Plasma-Tutorial-QIIME2-CLI_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="Plasma-Tutorial-QIIME2-CLI_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="QIIME2-Tutorial_files/navigation-1.1/tabsets.js"></script>
+<link href="QIIME2-Tutorial_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="QIIME2-Tutorial_files/highlightjs-9.12.0/highlight.js"></script>
+<link href="QIIME2-Tutorial_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="QIIME2-Tutorial_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -257,10 +257,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="R-inputs.html">Inputs &amp; Outputs</a>
-    </li>
-    <li>
-      <a href="tutorial.html">Tutorial</a>
+      <a href="R-tutorial.html">Tutorial</a>
     </li>
   </ul>
 </li>
@@ -277,13 +274,7 @@ $(document).ready(function () {
       <a href="qiime2-intro.html">Inputs &amp; Outputs</a>
     </li>
     <li>
-      <a href="Plasma-Tutorial-QIIME2-CLI.html">Command line interface</a>
-    </li>
-    <li>
-      <a href="Plasma-Tutorial-QIIME2-API.html">Qiime2 interface</a>
-    </li>
-    <li>
-      <a href="Plasma-Tutorial-QIIME2-standalone-API.html">Python interface</a>
+      <a href="QIIME2-Tutorial.html">Tutorial</a>
     </li>
   </ul>
 </li>
@@ -311,14 +302,11 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="plans.html">
-    <span class="fa fa-sparkles"></span>
+  <a href="contribute.html">
+    <span class="fa fa-shower"></span>
      
-    Future developments
+    Contribute to SCRuB!
   </a>
-</li>
-<li>
-  <a href="contribute.html">Contribute to SCRuB!</a>
 </li>
 <li>
   <a href="https://github.com/korem-lab/SCRuB/issues">
@@ -380,7 +368,13 @@ parameters are described <a href="qiime2-intro.html">here</a>. In this
 tutorial our control_idx_column parameter is <code>is_control</code>,
 our sample_type_column is <code>sample_type</code>, and our
 well_location_column is <code>well_id</code>. Now we are ready to SCRuB
-away the contamination:</p>
+away the contamination. This can be accomplished through three
+interfaces, which we provide below:</p>
+</div>
+<div id="section" class="section level1 tabset">
+<h1 class="tabset"></h1>
+<div id="command-line" class="section level2">
+<h2>Command line</h2>
 <pre class="python"><code>!qiime SCRuB SCRuB \\
     --i-table plasma-data/table.qza \\
     --m-metadata-file plasma-data/metadata.tsv \\
@@ -389,10 +383,7 @@ away the contamination:</p>
     --p-well-location-column well_id \\
     --p-control-order NA \\
     --o-scrubbed results/scrubbed.qza</code></pre>
-</div>
-<div id="assessing-output" class="section level1">
-<h1>Assessing output</h1>
-<p>Now we can compare the raw table and SCRuB’s output:</p>
+<p>Next we load all samples to produce a few visualizations:</p>
 <pre class="python"><code>import os
 import warnings
 import qiime2 as q2
@@ -406,6 +397,58 @@ table = q2.Artifact.load(&#39;plasma-data/table.qza&#39;)\
 metadata = q2.Metadata.load(&#39;plasma-data/metadata.tsv&#39;)
 # import SCRuB output
 scrubbed = q2.Artifact.load(&#39;results/scrubbed.qza&#39;)</code></pre>
+</div>
+<div id="qiime2" class="section level2">
+<h2>Qiime2</h2>
+<p>First we will import our data with the QIIME2 Python API</p>
+<pre class="python"><code>import os
+import warnings
+import qiime2 as q2
+from qiime2.plugins.SCRuB.methods import SCRuB
+# hide pandas Future/Deprecation Warning(s) for tutorial
+warnings.filterwarnings(&quot;ignore&quot;, category=DeprecationWarning) 
+warnings.simplefilter(action=&#39;ignore&#39;, category=FutureWarning)
+
+# import table
+table = q2.Artifact.load(&#39;plasma-data/table.qza&#39;)\
+# import metadata
+metadata = q2.Metadata.load(&#39;plasma-data/metadata.tsv&#39;)</code></pre>
+<p>Next, we will run SCRuB on this dataset:</p>
+<pre class="python"><code>scrubbed = SCRuB(table, 
+                 metadata, 
+                &#39;is_control&#39;, # specifies metadata column where True denotes the negative controls
+                &#39;sample_type&#39;, # specifies metadata column denoting the sample type
+                &#39;well_id&#39; # specifies metadata column representing samples location, in &#39;A11&#39;,&#39;B10&#39; format
+                )</code></pre>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<pre class="python"><code>import os
+import warnings
+import pandas as pd
+import numpy as np
+from q2_SCRuB import SCRuB
+# hide pandas Future/Deprecation Warning(s) for tutorial
+warnings.filterwarnings(&quot;ignore&quot;, category=DeprecationWarning) 
+warnings.simplefilter(action=&#39;ignore&#39;, category=FutureWarning)
+
+# import table
+table =pd.read_csv(&#39;plasma-data/table.tsv&#39;, sep=&#39;\t&#39;, index_col=0)
+# import metadata
+metadata = pd.read_csv(&#39;plasma-data/metadata.tsv&#39;, sep=&#39;\t&#39;, index_col=0)</code></pre>
+<p>Now, we can run SCRuB:</p>
+<pre class="python"><code>scrubbed = SCRuB(table, 
+                 metadata, 
+                &#39;is_control&#39;, # specifies metadata column where True denotes the negative controls
+                &#39;sample_type&#39;, # specifies metadata column denoting the sample type
+                &#39;well_id&#39;, # specifies metadata column representing samples location, in &#39;A11&#39;,&#39;B10&#39; format
+                [&#39;control blank DNA extraction&#39;,&#39;control blank library prep&#39;]
+                )</code></pre>
+</div>
+</div>
+<div id="assessing-output" class="section level1">
+<h1>Assessing output</h1>
+<p>Now we can compare the raw table and SCRuB’s output:</p>
 <pre class="python"><code>from qiime2.plugins.deicode.actions import rpca
 from qiime2.plugins.emperor.actions import (plot, biplot)</code></pre>
 <pre class="python"><code># run RPCA and plot with emperor

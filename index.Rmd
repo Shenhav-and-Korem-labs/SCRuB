@@ -4,14 +4,17 @@ output:
     html_document:
        theme: darkly
 ---
+
 <style>
     body { 
         background-color: #162138;
-            text-color: whitesmoke}
+            text-color: whitesmoke
+            }
 </style>
 <img src='Images/SCRuB_logo.png' align="right" height="300" />
-
+<link rel="icon" type="image/png" href="images/SCRuB_logo.png" />
 </center>
+
 
 --------------------------
 
@@ -22,17 +25,17 @@ output:
 Welcome to [SCRuB](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls.
   <br>
 
-In addition to the statistical framework of SCRuB, we provide [preSCRuB](prescrub_intro.html), a personalized interface which offers recommendations for **<span style="color:lightblue">placement of controls** during experimental design processes. Effective use of preSCRuB will allow for even stronger decontamination using SCRuB in future analyses.  
+In addition to the statistical framework of SCRuB, we provide [preSCRuB](prescrub_intro.html), a personalized interface which offers recommendations for **<span style="color:lightblue">placement of controls** during experimental design processes. 
 
 ## Installation
 
 SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB/]), and can be installed using `devtools`:
 ```{r, eval=FALSE}
 devtools::install_github("korem-lab/SCRuB")
-install_torch()
+torch::install_torch()
 ```
 
-Additionally, we provide SCRuB as a QIIME2 plugin, which can be installed from a Qiime2 environment using pip:
+Additionally, we provide SCRuB as a QIIME2 plugin, which can be installed from a QIIME2 environment using pip:
 ```bash
 pip install git+https://github.com/korem-lab/q2-SCRuB.git
 ```
@@ -44,20 +47,16 @@ pip install git+https://github.com/korem-lab/q2-SCRuB.git
 
 To start using SCRuB, follow along one of the following links, according to your preferences: <br>
 <center>
- <b> <font size="5"> [R tutorial](tutorial.html)</font> </b> <br>
-  <b> <font size="5"> [Qiime2 tutorial](qiime2_intro.html)</font> </b>
+ <b> <font size="5"> [R tutorial](R-tutorial.html)</font> </b> <br>
+  <b> <font size="5"> [Qiime2 tutorial](qiime2-intro.html)</font> </b>
 <br>
 </center>
 These tutorials demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.</span>
 
 &nbsp;
 
-<!-- To start using SCRuB, we recommend to follow along with either our [R tutorial](tutorial.html) or our [Qiime2 tutorial](qiime2_intro.html), depending -->
+
 ## FAQs
-<!-- *Why SCRuB?* -->
-
-<!-- `SCRuB` offers the advantage of combing source-tracking approaches with contamination source modelling, while tracking for possible sources of well-to-well leakage. Thus, it provides an effective and low-risk approach to microbial decontamination, which has been shown to improve phenotype prediction in downtream applications. -->
-
 
 *<span style="color:lightblue">Why SCRuB?* <br>
 Instead of trying to identify whether a taxa is categorically a contaminant, SCRuB models the composition of each contamination source (kit contamination, water contamination, etc.). We assume that taxa present together in a contamination source will be introduced together to other samples, and in similar proportions as in the contamination source. Therefore, if a control sample contains multiple bacteria, and a sample of interest contains only one of them and at high counts, that one bacteria is likely not a contaminant. This allows a more accurate and specific decontamination.

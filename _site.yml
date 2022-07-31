@@ -8,21 +8,15 @@ navbar:
   - text: Package
     icon: fab fa-r-project
     menu:
-    - text: Inputs & Outputs
-      href: R-inputs.html
     - text: Tutorial
-      href: tutorial.html
+      href: R-tutorial.html
   - text: QIIME2 Plugin
     icon: glyphicon-zoom-in
     menu:
     - text: Inputs & Outputs
       href: qiime2-intro.html
-    - text: Command line interface
-      href: Plasma-Tutorial-QIIME2-CLI.html
-    - text: Qiime2 interface
-      href: Plasma-Tutorial-QIIME2-API.html
-    - text: Python interface
-      href: Plasma-Tutorial-QIIME2-standalone-API.html
+    - text: Tutorial
+      href: QIIME2-Tutorial.html
   - text: preSCRuB
     href: prescrub_intro.html
     icon: fa-object-group
@@ -32,18 +26,18 @@ navbar:
     - text: SCRuB Manuscript
       href: www.google.com
   right:
-  - text: Future developments
-    href: plans.html
-    icon: fa-sparkles
   - text: Contribute to SCRuB!
     href: contribute.html
+    icon: fa-shower
   - icon: fa-comment
     href: https://github.com/korem-lab/SCRuB/issues
   - icon: fa-github fa-lg
     href: https://github.com/korem-lab/SCRuB/
+
 output:
   html_document:
     theme: darkly
     self_contained: no
+    in_header: images/SCRuB_logo.pngs
 
 
