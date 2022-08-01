@@ -22,20 +22,20 @@ output:
 
 --------------------------
 
-Welcome to [SCRuB](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls.
+Welcome to [_SCRuB_](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls.
   <br>
 
-In addition to the statistical framework of SCRuB, we provide [preSCRuB](prescrub_intro.html), a personalized interface which offers recommendations for **<span style="color:lightblue">placement of controls** during experimental design processes. 
+In addition to the statistical framework of _SCRuB_, we provide [_preSCRuB_](prescrub_intro.html), a personalized interface which offers recommendations for **<span style="color:lightblue">placement of controls** during experimental design processes. 
 
 ## Installation
 
-SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB/]), and can be installed using `devtools`:
+SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB]), and can be installed using `devtools`:
 ```{r, eval=FALSE}
 devtools::install_github("korem-lab/SCRuB")
 torch::install_torch()
 ```
 
-Additionally, we provide SCRuB as a QIIME2 plugin, which can be installed from a QIIME2 environment using pip:
+Additionally, we provide _SCRuB_ as a QIIME2 plugin, which can be installed from a QIIME2 environment using pip:
 ```bash
 pip install git+https://github.com/korem-lab/q2-SCRuB.git
 ```
@@ -45,10 +45,10 @@ pip install git+https://github.com/korem-lab/q2-SCRuB.git
 
 ## Getting started
 
-To start using SCRuB, follow along one of the following links, according to your preferences: <br>
+To start using _SCRuB_, follow along one of the following links, according to your preferences: <br>
 <center>
  <b> <font size="5"> [R tutorial](R-tutorial.html)</font> </b> <br>
-  <b> <font size="5"> [Qiime2 tutorial](qiime2-intro.html)</font> </b>
+  <b> <font size="5"> [QIIME2 tutorial](qiime2-intro.html)</font> </b>
 <br>
 </center>
 These tutorials demonstrates the data format needed to set up SCRuB, how to run SCRuB's core funtions, and how to interpret its results.</span>

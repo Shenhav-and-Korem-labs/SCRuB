@@ -110,7 +110,7 @@ scr_out$inner_iterations$`control blank DNA extraction`$decontaminated_samples[3
 
 (3.2)  **<span style="color:lightblue">p** -- an n_sample vector representing the estimate proportion of each observed sample that was not contamination, based on the specified type of process control
 ```{r}
-scr_out$inner_iterations$`control blank DNA extraction`$p %>%
+(1 - scr_out$inner_iterations$`control blank DNA extraction`$p ) %>%
   boxplot(ylab='Level of contamination')
 ```
 

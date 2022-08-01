@@ -43,7 +43,7 @@ To run SCRuB we only need a single command, whose inputs and parameters are desc
     --p-control-idx-column is_control \\
     --p-sample-type-column sample_type \\
     --p-well-location-column well_id \\
-    --p-control-order NA \\
+    --p-control-order "control blank library prep,control blank DNA extraction" \\
     --o-scrubbed results/scrubbed.qza
 ```
 
@@ -66,7 +66,7 @@ scrubbed = q2.Artifact.load('results/scrubbed.qza')
 
 ```
 
-## Qiime2
+## QIIME2
 First we will import our data with the QIIME2 Python API
 ```{python, eval=FALSE}
 import os
@@ -78,7 +78,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # import table
-table = q2.Artifact.load('plasma-data/table.qza')\
+table = q2.Artifact.load('plasma-data/table.qza')
 # import metadata
 metadata = q2.Metadata.load('plasma-data/metadata.tsv')
 ```
@@ -87,9 +87,10 @@ Next, we will run SCRuB on this dataset:
 ```{python, eval=FALSE}
 scrubbed = SCRuB(table, 
                  metadata, 
-                'is_control', # specifies metadata column where True denotes the negative controls
-                'sample_type', # specifies metadata column denoting the sample type
-                'well_id' # specifies metadata column representing samples location, in 'A11','B10' format
+                'is_control', #specifies metadata column where True denotes the negative controls
+                'sample_type', #specifies metadata column denoting the sample type
+                'well_id', #specifies metadata column representing samples location in 'A11','B10' format
+                'control blank library prep,control blank DNA extraction' # order of decontamination
                 )
 ```
 
@@ -120,9 +121,9 @@ Now, we can run SCRuB:
 ```{python, eval=FALSE}
 scrubbed = SCRuB(table, 
                  metadata, 
-                'is_control', # specifies metadata column where True denotes the negative controls
-                'sample_type', # specifies metadata column denoting the sample type
-                'well_id', # specifies metadata column representing samples location, in 'A11','B10' format
+                'is_control', #specifies metadata column where True denotes the negative controls
+                'sample_type', #specifies metadata column denoting the sample type
+                'well_id', #specifies metadata column representing samples location in 'A11','B10' format
                 ['control blank DNA extraction','control blank library prep']
                 )
 ```
