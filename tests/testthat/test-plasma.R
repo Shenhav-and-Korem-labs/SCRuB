@@ -22,7 +22,7 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             scr_out_3 <- SCRuB( 100*data[c(1:50, 80), 1:n_feats_considered], metadata[c(1:50, 80),1:2], verbose=F) 
             
             
-            scr_out_4 <- SCRuB(input_data = paste0(test_path(), '/table.biom'), paste0(test_path(), '/plasma_metadata.csv'))
+            scr_out_4 <- SCRuB(input_data = paste0(test_path(), '/small_table.biom'), paste0(test_path(), '/plasma_metadata.csv'))
             
             expect_type(scr_out_1, 'list')
             expect_type(scr_out_1$inner_iterations,  'list' )
