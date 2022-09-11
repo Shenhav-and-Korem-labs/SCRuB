@@ -115,7 +115,9 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 
 #' Decontaminate a set of samples
 #' SCRuB removes contamination from an inputted set of samples using microbial source-tracking techniques. 
-#' @param data ( n_samples + n_controls ) x n_taxa -- a count matrix representing the observed reads from the controls, and the samples to be decontaminated
+#' @param input_data ( n_samples + n_controls ) x n_taxa -- a count matrix representing the observed reads from the controls, and the samples to be decontaminated. 
+#' Can accept any of the following input formats: 1) an R count matrix; 2) a biom object; 3) a path to load the input data from, accepting files in `.biom`, `.tsv`, or `.csv` format.
+#' If the input is a biom object and no entry is specified in the `metadata` input, SCRuB will look for the sample metadata within the biom object.
 #' @param metadata a metadata matrix of 2 columns (and a third optional column), where each row name is aligned to the `data` parameter row name. 
 #' The first metadata column is boolean, denoting `TRUE` if the corresponding `data` row belongs to a sample representing a contamination source, and `FALSE` otherwise. 
 #' The second column is a string, identifying the type of each sample, such that SCRuB can identifying which control samples should be grouped together. 
@@ -132,13 +134,41 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' A dataset that had no contamination would have a p of 1s, while a dataset of entirely contamination would have a p of 0
 #' 3) inner_iterations -- results from SCRuB's intermediary steps, see the `Spatial_SCRUB` and `SCRUB_no_spatial` documentation for more information
 #' @export
-SCRuB <- function(data, 
-                  metadata, 
+SCRuB <- function(input_data, 
+                  metadata = NULL, 
                   control_order=NA,
                   dist_threshold=1.5, 
                   dist_metric='euclidean',
                   verbose=F
                   ){
+  if( typeof(input_data)=='character'){
+    if(str_ends(input_data, '.csv')){ 
+      input_data <- read.csv(input_data, row.names = 1)
+    } else if(str_ends(input_data, '.tsv')){
+      input_data <- read.csv(input_data, row.names=1, sep='\t')
+    }else if(str_ends(input_data, '.biom')){
+       input_data <-  read_biom(biom_file = input_data)
+    }else{stop("Couldn't recognize `input_data` file format; filepath must end with `.biom`, `.tsv`, or `.csv`.")}
+  }
+  
+  if( typeof(metadata)=='character'){
+    if(str_ends(metadata, '.csv')){ 
+      metadata <- read.csv(metadata, row.names = 1)
+    } else if(str_ends(metadata, '.tsv')){
+      metadata <- read.csv(metadata, row.names=1, sep='\t')
+      } else{ stop("Couldn't recognize `metadata` file format; filepath must end with `.tsv`, or `.csv`.") }
+  }
+  
+  if( typeof(input_data) == 'list' ){ 
+                data <- biom_data( input_data ) %>% as.matrix() %>% t() 
+                if( ( is.null( input_data$sample_metadata) == F )&( is.null(metadata) ) ){
+                metadata <- data.frame( input_data$sample_metadata )
+                }
+  }else if ( is.matrix(input_data) ){ 
+                data <- input_data
+                      }
+  
+  
   
   if( ( row.names(data) == row.names(metadata) ) %>% mean() < 1 ){
     stop("The row names of the `data` and `metadata` inputs must be equivalent!")
@@ -147,7 +177,7 @@ SCRuB <- function(data,
   metadata <- as.data.frame(metadata)
   
   if(is.vector(control_order)&(max(is.na(control_order))==F)){
-    if(length(control_order) !=length(unique(control_order))) stop('All entries within `control_order` must be unique!')
+    if(length(control_order) !=length(unique(control_order))){ stop('All entries within `control_order` must be unique!') }
     for(cont_tp in control_order){
       if( F == (cont_tp %in% metadata[metadata[,1]==T, 2 ] %>% unique() ) ){
         stop(paste0( "All entries in `control_order` must be found in the `metadata` rows where `is_contaminant` is TRUE. No such entries found for `", 
@@ -187,4 +217,5 @@ SCRuB <- function(data,
     print('Did not find well metadata, running SCRuB without the spatial component')
     return(SCRuB_wrapper_no_spatial(data = data, control_mat, verbose = verbose))
   }
-}
+  }
+  

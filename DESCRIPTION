@@ -18,7 +18,8 @@ Depends:
     tidyverse,
     dplyr,
     magrittr,
-    rlang
+    rlang,
+    biomformat
 Suggests:
     knitr,
     covr,
