@@ -97,6 +97,10 @@ spatial_SCRUB <- function(data,
   
   
   samples <- data[is_control == FALSE, ]
+  if(sum(is_control==F)==1){ 
+      samples <- t(samples)
+      row.names(samples) <- c(row.names(data)[is_control==F])
+  }
   controls <- data[is_control, ]
   
   if(sum(is_control)==1){ 
@@ -106,6 +110,10 @@ spatial_SCRUB <- function(data,
     row.names(cont_samp_dists) <- row.names(controls)
   }else{
     cont_samp_dists <- well_dists[row.names(controls),row.names(samples)]
+    if(nrow(samples)==1){ 
+        cont_samp_dists <- t(cont_samp_dists) %>% t()
+        colnames(cont_samp_dists) <-row.names(samples)
+        }
   }
 
   w2w_inits <- initialize_w2w_params(samples,
