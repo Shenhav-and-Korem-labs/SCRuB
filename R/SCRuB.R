@@ -14,7 +14,7 @@ NULL
 SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
   samples <- data[any_cont_type==F, ]
-  if(sum(any_cont_type==F)){
+  if(sum(any_cont_type==F)==1){
     samples <- t(samples)
     row.names(samples) <- c(row.names(data)[any_cont_type==F])
   }
@@ -64,7 +64,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
   
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
   samples <- data[any_cont_type==F, ]
-  if(sum(any_cont_type==F)){
+  if(sum(any_cont_type==F)==1){
     samples <- t(samples)
     row.names(samples) <- c(row.names(data)[any_cont_type==F])
   }
