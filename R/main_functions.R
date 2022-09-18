@@ -33,6 +33,10 @@ LSQ_init <- function(sinks, sources, COVERAGE=10000){
     )
     
     alpha_inits[i, ] <- inits$alpha
+    
+    ## correcting potential nans introduced durign initialization
+    if(sum(inits$unknown)==0) inits$unknown <- inits$unknown <- sinks[i,]
+    
     S_unk_obs[i, ] <- rescale( inits$unknown )  * COVERAGE
   }
   
