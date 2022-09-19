@@ -21,7 +21,6 @@ In this tutorial, we demonstrate how SCRuB should be used to remove contaminatio
 We start by loading the necessary packages, such as `SCRUB`. We also include the use of `tidyverse` within our tutorial
 ```{r, message=FALSE}
 set.seed(1)
-library(tidyverse)
 library(SCRuB)
 ```
 
@@ -40,6 +39,8 @@ The required inputs to *SCRuB* are composed of one count matrix, and one metadat
 
 (1)  **<span style="color:lightblue">data** - An ( `n_samples` + `n_controls` ) x `n_taxa `count matrix, where `n_samples` is the number of samples, `n_controls` is the number of negative controls, and `n_taxa` is the number of features in the count matrix. Row names are the sample ids. Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.
 
+Alternatively, SCRuB supports inputs as 1) a biom object, which contains the x `n_taxa` x ( `n_samples` + `n_controls` ) read count matrix; if no metadata input is specified directly in the function call, `SCRuB` will check for a metadata table within the biom object; 2) a `character` input specifying the path to a file where the data object is stored; SCRuB supports `.biom`, `.tsv`, and `.csv` files. 
+
 
 count matrix (first 4 rows and columns):
 ```{r}
@@ -48,6 +49,8 @@ data[30:42, 20:24]
 ```
 
 (2) **<span style="color:lightblue">metadata** - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.
+
+Alternatively, SCRuB will accept a `character` path to a `.csv` or `.tsv` file containing the metadata. 
 
 ```{r}
 metadata <- read.csv('plasma_metadata.csv', row.names=1)
@@ -77,6 +80,15 @@ scr_out <- SCRuB( data[,1:750], # temporarily shortening feature space to shorte
                   )
 ```
 
+Alternatively, SCRuB can be run using `biom` objects, and by inputting the paths to the input files. The file formats for the inputs can be found [here](https://github.com/korem-lab/SCRuB/tree/gh-pages_tmp). 
+```{r}
+scr_out <- SCRuB( 'plasma-data.biom',
+                  'plasma_metadata.csv', 
+                  control_order =  c('control blank library prep', 'control blank DNA extraction')
+                  )
+```
+
+scr_out <- SCRuB( 'plasma-data.biom', 'plasma_metadata.csv', control_order =  c('control blank library prep', 'control blank DNA extraction') )
 
 ## Outputs
 
