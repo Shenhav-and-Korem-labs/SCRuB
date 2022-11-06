@@ -150,16 +150,17 @@ SCRuB <- function(input_data,
                   verbose=F
                   ){
   
-  
+  using_biom <- F
   if(is.data.frame(input_data)){
     data <- as.matrix(input_data)
   }else if( typeof(input_data)=='character'){
     if(str_ends(input_data, '.csv')){ 
-      input_data <- read.csv(input_data, row.names = 1)
+      data <- read.csv(input_data, row.names = 1) %>% as.matrix
     } else if(str_ends(input_data, '.tsv')){
-      input_data <- read.csv(input_data, row.names=1, sep='\t')
+      data <- read.csv(input_data, row.names=1, sep='\t') %>% as.matrix
     }else if(str_ends(input_data, '.biom')){
-       input_data <-  read_biom(biom_file = input_data)
+      input_data <-  read_biom(biom_file = input_data)
+      using_biom <- T
     }else{stop("Couldn't recognize `input_data` file format; filepath must end with `.biom`, `.tsv`, or `.csv`.")}
   }else if( typeof(input_data) == 'list' ){ 
     data <- biom_data( input_data ) %>% as.matrix() %>% t() 
@@ -168,6 +169,13 @@ SCRuB <- function(input_data,
     }
   }else if ( is.matrix(input_data) ){ 
     data <- input_data
+  }
+  
+  if( using_biom ){ 
+    data <- biom_data( input_data ) %>% as.matrix() %>% t() 
+    if( ( is.null( input_data$sample_metadata) == F )&( is.null(metadata) ) ){
+      metadata <- data.frame( input_data$sample_metadata )
+    }
   }
   
   if( typeof(metadata)=='character'){
@@ -187,6 +195,7 @@ SCRuB <- function(input_data,
   #               stop(paste0('Sample type', overlapped, 'is denoted as both a control and a sample. ', 
   #                           'If this is intentional, refine the description of the sampel types') ) }
   # 
+  
   if( ( row.names(data) == row.names(metadata) ) %>% mean() < 1 ){
     stop("The row names of the `data` and `metadata` inputs must be equivalent!")
   }
