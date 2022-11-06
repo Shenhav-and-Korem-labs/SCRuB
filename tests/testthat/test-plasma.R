@@ -11,10 +11,9 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             metadata <- read.csv( paste0( test_path(), '/plasma_metadata.csv'), row.names=1)
             
             set.seed(1)
-
             scr_out_1 <- SCRuB( data[, 1:n_feats_considered], metadata, c("control blank DNA extraction", "control blank library prep") )
             scr_out_2 <- SCRuB( data[, 1:n_feats_considered], metadata[,1:2], "control blank library prep") 
-            scr_out_2 <- SCRuB( data[, 1:n_feats_considered], metadata[,1:2],  c("control blank DNA extraction", "control blank library prep") ) 
+            scr_out_2 <- SCRuB( data.frmae(data[, 1:n_feats_considered]), metadata[,1:2],  c("control blank DNA extraction", "control blank library prep") ) 
            
             print('Testing shortened data')
             scr_out_3 <- SCRuB( 100*data[c(1:50, 81, 54), 1:n_feats_considered], metadata[c(1:50, 81, 54),], verbose=T) 
@@ -26,6 +25,8 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             
             expect_type(scr_out_1, 'list')
             expect_type(scr_out_1$inner_iterations,  'list' )
+            
+            print(nrow(scr_out_1$decontaminated_samples) )
             
             expect_true( nrow(scr_out_1$decontaminated_samples) == sum( F == metadata$is_control ) )
             expect_true( nrow(scr_out_1$decontaminated_samples) == length(scr_out_1$p))

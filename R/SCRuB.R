@@ -149,7 +149,11 @@ SCRuB <- function(input_data,
                   dist_metric='euclidean',
                   verbose=F
                   ){
-  if( typeof(input_data)=='character'){
+  
+  
+  if(is.data.frame(input_data)){
+    data <- as.matrix(input_data)
+  }else if( typeof(input_data)=='character'){
     if(str_ends(input_data, '.csv')){ 
       input_data <- read.csv(input_data, row.names = 1)
     } else if(str_ends(input_data, '.tsv')){
@@ -157,6 +161,13 @@ SCRuB <- function(input_data,
     }else if(str_ends(input_data, '.biom')){
        input_data <-  read_biom(biom_file = input_data)
     }else{stop("Couldn't recognize `input_data` file format; filepath must end with `.biom`, `.tsv`, or `.csv`.")}
+  }else if( typeof(input_data) == 'list' ){ 
+    data <- biom_data( input_data ) %>% as.matrix() %>% t() 
+    if( ( is.null( input_data$sample_metadata) == F )&( is.null(metadata) ) ){
+      metadata <- data.frame( input_data$sample_metadata )
+    }
+  }else if ( is.matrix(input_data) ){ 
+    data <- input_data
   }
   
   if( typeof(metadata)=='character'){
@@ -167,17 +178,15 @@ SCRuB <- function(input_data,
       } else{ stop("Couldn't recognize `metadata` file format; filepath must end with `.tsv`, or `.csv`.") }
   }
   
-  if( typeof(input_data) == 'list' ){ 
-                data <- biom_data( input_data ) %>% as.matrix() %>% t() 
-                if( ( is.null( input_data$sample_metadata) == F )&( is.null(metadata) ) ){
-                metadata <- data.frame( input_data$sample_metadata )
-                }
-  }else if ( is.matrix(input_data) ){ 
-                data <- input_data
-                      }
+ 
   
-  
-  
+  # cont_type_overlap <- metadata %>% filter(is_control) %>% pull(Groups) %>% unique() %in% 
+  #                           ( metadata %>% filter(is_control==F) %>% pull(Groups) %>% unique )
+  # if( sum(cont_type_overlap >= 1)){
+  #   overlapped <- ( metadata %>% filter(is_control) %>% pull(Groups) %>% unique() )[cont_type_overlap][1]
+  #               stop(paste0('Sample type', overlapped, 'is denoted as both a control and a sample. ', 
+  #                           'If this is intentional, refine the description of the sampel types') ) }
+  # 
   if( ( row.names(data) == row.names(metadata) ) %>% mean() < 1 ){
     stop("The row names of the `data` and `metadata` inputs must be equivalent!")
   }
@@ -213,7 +222,7 @@ SCRuB <- function(input_data,
     
     well_dists <- metadata %>%
       mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
-             indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, 3) %>% as.integer)
+             indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, nchar(x)) %>% as.integer)
       ) %>% 
       select(as.symbol('well'), as.symbol('indices') ) %>% 
       dist(method=dist_metric) %>% as.matrix()

@@ -95,7 +95,6 @@ spatial_SCRUB <- function(data,
                           print_loglikelihood=F
                           ){
   
-  
   samples <- data[is_control == FALSE, ]
   if(sum(is_control==F)==1){ 
       samples <- t(samples)
@@ -120,6 +119,7 @@ spatial_SCRUB <- function(data,
                                      controls, 
                                      cont_samp_dists, 
                                      dist_threshold)
+  
   alpha <- w2w_inits$alpha
   tmp_controls <- w2w_inits$cont_tmp
   if(sum(tmp_controls) == 0 ) print("Controls' LSQ init removed everything from a control -- will instead set initialization to the observed control")
@@ -148,6 +148,7 @@ spatial_SCRUB <- function(data,
   patience <- 0
   max_iters <- 500
   a <- 0
+  
   while(a<max_iters){
     out <- spatial_SCRUB_EM_update(X, Y, gb, G, p, alpha, n, m)
     diff <- torch_dist(G, out$G, p=1)$item()
@@ -170,11 +171,21 @@ spatial_SCRUB <- function(data,
                                            'after', a, 'iterations!') )
     
   }
+  
+  # set names of well leakage matrix
+  alpha <- as.matrix(alpha)
+  colnames(alpha) <- c( row.names(samples), 'gamma')
+  row.names(alpha) <- row.names(controls)
+  
+  # set p names
+  p_out <- p %>% as.matrix() %>% c()
+  names(p_out) <- row.names(samples)
+  
   return( list( 
               decontaminated_samples = as.matrix(G) %>% 
                   sweep(MARGIN=1, samples %>% apply(MARGIN = 1, sum) %>% as.vector(), `*` ) %>% round(), 
-               p = p %>% as.matrix() %>% c(),
-               alpha=as.matrix(alpha),
+               p = p_out,
+               alpha=alpha,
                gamma = gb %>% as.matrix() %>% c(), 
                loglikelihood=log_likelihood_spatial_SCRUB(X, Y, G, gb, p, alpha)
   ))
