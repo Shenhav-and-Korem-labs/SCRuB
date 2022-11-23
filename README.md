@@ -1,9 +1,9 @@
 # SCRuB: Source-tracking for Contamination Removal in *micro*Biomes
 
  <!-- badges: start -->
-  [![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml)
+  [![R-CMD-check](https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml)
   [![Codecov test
-coverage](https://codecov.io/gh/korem-lab/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/korem-lab/SCRuB)
+coverage](https://codecov.io/gh/Shenhav-and-Korem-labs/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/Shenhav-and-Korem-labs/SCRuB)
   <!-- badges: end -->
 
 <img src='Images/SCRuB_logo.png' align="right" height="139" />
@@ -14,7 +14,7 @@ SCRuB is a tool designed to help researchers address the common issue of contami
 Support
 -----------------------
 
-For support using SCRuB, please use our <a href="https://github.com/korem-lab/SCRuB/issues">issues page</a> or email: gia2105@columbia.edu.
+For support using SCRuB, please use our <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/issues">issues page</a> or email: gia2105@columbia.edu.
 
 
 Software Requirements and dependencies
@@ -32,7 +32,7 @@ Installation
 
 *SCRuB* will be available on QIIME 2 very soon. Until then you can you can simply install *SCRuB* using **devtools**: 
 ```
-devtools::install_github("korem-lab/SCRuB")
+devtools::install_github("shenhav-and-korem-labs/SCRuB")
 ```
 
 Runtime 
@@ -77,7 +77,7 @@ This must be in a standard *\[LETTER\]\[NUMBER\]* format, i.e. A3, B12, D4...
 
 Demo
 -----------------------
-We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/korem-lab/SCRuB/blob/master/tutorial/">here</a>. We provide an rmarkdown notebook <a href="https://github.com/korem-lab/SCRuB/blob/master/tutorial/tutorial.Rmd">here</a> to follow along with the example below.
+We provide a dataset for an example of *SCRuB* usage. Download the demo files <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/blob/master/tutorial/">here</a>. We provide an rmarkdown notebook <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/blob/master/tutorial/tutorial.Rmd">here</a> to follow along with the example below.
 
 First load the **SCRuB** packages into R:
 ```
