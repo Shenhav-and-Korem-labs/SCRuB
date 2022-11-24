@@ -22,7 +22,7 @@ To use SCRuB's QIIME2 plugin, you must have run both the SCRuB R and QIIME2 inst
 1. **<span style="color:lightblue">table** 
     - The table is of the Qiime2 type `FeatureTable[Frequency]`, where the rows are features (e.g. ASVs/microbes), the columns are samples, and the entries are the number of sequences for each sample-feature pair. This table must be of shape `n_taxa `x( `n_samples` + `n_controls` ), where `n_samples` is the number of samples, `n_controls` is the number of negative controls, and `n_taxa` is the number of features in the count matrix
 2. **<span style="color:lightblue">metadata**
-    - This is a QIIME2 formatted [metadata](https://docs.qiime2.org/2020.2/tutorials/metadata/) (e.g. tsv format) where the rows are samples matched to the (1) table and the columns are different sample data (e.g. time point).  
+    - This is a QIIME2 formatted [metadata](https://docs.qiime2.org/2022.8/tutorials/metadata/) (e.g. tsv format) where the rows are samples matched to the (1) table and the columns are different sample data (e.g. time point).  
 3. ( _Optional_ ) **<span style="color:lightblue">control_idx_column**
     - This is the name of the column in the (2) metadata that indicates the which samples should be treated as negative controls. If not specified, will identify negative controls by searching for a metadata column of 'empo_2' or 'qiita_empo_2', and identifying which entries contain the keyword 'negative'
 4. ( _Optional_ ) **<span style="color:lightblue">sample_type_column**

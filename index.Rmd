@@ -29,7 +29,7 @@ In addition to the statistical framework of _SCRuB_, we provide [_preSCRuB_](pre
 
 ## Installation
 
-SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB]), and can be installed using `devtools`:
+SCRuB is currently available through our [github repository](https://github.com/Shenhav-and-Korem-labs/SCRuB]), and can be installed using `devtools`:
 ```{r, eval=FALSE}
 devtools::install_github("Shenhav-and-Korem-labs/SCRuB")
 torch::install_torch()
