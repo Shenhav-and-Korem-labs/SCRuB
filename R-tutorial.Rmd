@@ -80,7 +80,7 @@ scr_out <- SCRuB( data[,1:750], # temporarily shortening feature space to shorte
                   )
 ```
 
-Alternatively, SCRuB can be run using `biom` objects, and by inputting the paths to the input files. The file formats for the inputs can be found [here](https://github.com/korem-lab/SCRuB/tree/gh-pages_tmp). 
+Alternatively, SCRuB can be run using `biom` objects, and by inputting the paths to the input files. The file formats for the inputs can be found [here](https://github.com/Shenhav-and-Korem-labs/SCRuB/tree/gh-pages_tmp). 
 ```{r}
 scr_out <- SCRuB( 'plasma-data.biom',
                   'plasma_metadata.csv', 

@@ -30,9 +30,9 @@ navbar:
     href: contribute.html
     icon: fa-shower
   - icon: fa-comment
-    href: https://github.com/korem-lab/SCRuB/issues
+    href: https://github.com/Shenhav-and-Korem-labs/SCRuB/issues
   - icon: fa-github fa-lg
-    href: https://github.com/korem-lab/SCRuB/
+    href: https://github.com/Shenhav-and-Korem-labs/SCRuB/
 
 output:
   html_document:

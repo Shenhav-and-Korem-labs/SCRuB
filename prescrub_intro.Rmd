@@ -50,7 +50,7 @@ devtools::install_github('biobakery/SparseDOSSA2')
 
 Once the prerequisites are installed, from the command line you can clone the preSCRuB repository, and run the application:
 ```bash
-git clone https://github.com/korem-lab/preSCRuB.git
+git clone https://github.com/Shenhav-and-Korem-labs/preSCRuB.git
 Rscript -e 'library(methods); shiny::runApp("preSCRuB/ShinyApp/", launch.browser = TRUE)'
 ```
 The following window will pop up. This window contains the same set of parameters in the public Rshiny app, with the additions of 1) free text inputs for other parameters, 2) optional upload button to run simulations on data similar to your data of interest (e.g., pilot data), and 3) a bar to control the number of simulations to run.
@@ -58,7 +58,7 @@ The following window will pop up. This window contains the same set of parameter
 ![](images/preSCRuB_package_initial.png)
 
 ### Uploading user samples
-For a user to upload samples, select the browse button to search through your local machine and choose a file of sample read counts in `.csv` file, in in a 1-row-per-sample format. In this example, we use the plasma data from the SCRuB tutorial (available in our [github repository](https://github.com/korem-lab/SCRuB/])). We recommend that users ensure their data format matches those that we supply.
+For a user to upload samples, select the browse button to search through your local machine and choose a file of sample read counts in `.csv` file, in in a 1-row-per-sample format. In this example, we use the plasma data from the SCRuB tutorial (available in our [github repository](https://github.com/Shenhav-and-Korem-labs/SCRuB/])). We recommend that users ensure their data format matches those that we supply.
 
 ![](images/preSCRuB_package_sample_upload.png)
 

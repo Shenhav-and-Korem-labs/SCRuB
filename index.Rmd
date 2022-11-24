@@ -18,7 +18,7 @@ output:
 
 --------------------------
 
-**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/korem-lab/SCRuB/issues), or email [gia2105@columbia.edu](gia2105@columbia.edu) .</span>**
+**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/Shenhav-and-Korem-labs/SCRuB/issues), or email [gia2105@columbia.edu](gia2105@columbia.edu) .</span>**
 
 --------------------------
 
@@ -31,13 +31,13 @@ In addition to the statistical framework of _SCRuB_, we provide [_preSCRuB_](pre
 
 SCRuB is currently available through our [github repository](https://github.com/korem-lab/SCRuB]), and can be installed using `devtools`:
 ```{r, eval=FALSE}
-devtools::install_github("korem-lab/SCRuB")
+devtools::install_github("Shenhav-and-Korem-labs/SCRuB")
 torch::install_torch()
 ```
 
 Additionally, we provide _SCRuB_ as a QIIME2 plugin, which can be installed from a QIIME2 environment using pip:
 ```bash
-pip install git+https://github.com/korem-lab/q2-SCRuB.git
+pip install git+https://github.com/Shenhav-and-Korem-labs/q2-SCRuB.git
 ```
 
 &nbsp;
@@ -79,9 +79,9 @@ Yes! SCRuB uses each control sample as an independent realization of the contami
 &nbsp;
 
  <!-- badges: start -->
-  [![R-CMD-check](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/korem-lab/SCRuB/actions/workflows/check-standard.yaml)
+  [![R-CMD-check](https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml)
   [![Codecov test
-coverage](https://codecov.io/gh/korem-lab/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/korem-lab/SCRuB)
+coverage](https://codecov.io/gh/Shenhav-and-Korem-labs/SCRuB/graph/badge.svg)](https://app.codecov.io/gh/Shenhav-and-Korem-labs/SCRuB)
   <!-- badges: end -->
   
   

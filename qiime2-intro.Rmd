@@ -41,5 +41,5 @@ To use SCRuB's QIIME2 plugin, you must have run both the SCRuB R and QIIME2 inst
   2) returns a dataframe of decontaminated samples (Python interface)<br>
   
 # 
-For more detail, please refer to the [QIIME2 Tutorial](QIIME2-Tutorial.html), or refer to the jupyter notebooks found [here](https://github.com/korem-lab/q2-SCRuB/tree/master/ipynb).
+For more detail, please refer to the [QIIME2 Tutorial](QIIME2-Tutorial.html), or refer to the jupyter notebooks found [here](https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/tree/master/ipynb).
   

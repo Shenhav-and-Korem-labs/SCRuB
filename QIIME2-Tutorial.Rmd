@@ -16,11 +16,11 @@ output:
 
 In this tutorial we use _SCRuB_ to decontaminate a dataset comparing the plasma samples of cancer and control subejcts published in [Poore et al](https://www.nature.com/articles/s41586-020-2095-1). This data can be downloaded with the following links:
 
-* **Table** (table.qza) | [download](https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/table.qza)
-* **Sample Metadata** (metadata.tsv) | [download](https://github.com/korem-lab/q2-SCRuB/blob/master/ipynb/plasma-data/metadata.tsv)
+* **Table** (table.qza) | [download](https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/blob/master/ipynb/plasma-data/table.qza)
+* **Sample Metadata** (metadata.tsv) | [download](https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/blob/master/ipynb/plasma-data/metadata.tsv)
 
 
-**Note**: This tutorial assumes you have installed [QIIME2](https://qiime2.org/) using one of the procedures in the [install documents](https://docs.qiime2.org/2020.2/install/). This tutorial also assumes you have installed [SCRuB](https://korem-lab.github.io/SCRuB/).
+**Note**: This tutorial assumes you have installed [QIIME2](https://qiime2.org/) using one of the procedures in the [install documents](https://docs.qiime2.org/2020.2/install/). This tutorial also assumes you have installed [SCRuB](https://Shenhav-and-Korem-labs.github.io/SCRuB/).
 
 First, we will make a tutorial directory and download the data above and move the files to the `plasma-data` directory:
 
