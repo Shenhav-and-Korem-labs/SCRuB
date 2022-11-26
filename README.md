@@ -8,7 +8,7 @@ coverage](https://codecov.io/gh/Shenhav-and-Korem-labs/SCRuB/graph/badge.svg)](h
 
 <img src='Images/SCRuB_logo.png' align="right" height="139" />
 
-SCRuB is a tool designed to help researchers address the common issue of contamination in microbial studies. This package provides an easy to use framework to apply SCRuB to your projects. All you need to get started are n samples x m taxa count matrices for both your samples and controls. 
+SCRuB is a tool designed to help researchers address the common issue of contamination in microbial studies. This package provides an easy to use framework to apply SCRuB to your projects. All you need to get started are n samples x m taxa count matrices for both your samples and controls. To begin, we recommend working through our documentation pages <a href="https://shenhav-and-korem-labs.github.io/SCRuB/">here</a>.
 
 
 Support
