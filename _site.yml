@@ -17,9 +17,6 @@ navbar:
       href: qiime2-intro.html
     - text: Tutorial
       href: QIIME2-Tutorial.html
-  - text: preSCRuB
-    href: prescrub_intro.html
-    icon: fa-object-group
   - text: Related documents
     icon: fa-binoculars
     menu:
