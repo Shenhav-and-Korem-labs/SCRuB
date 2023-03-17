@@ -21,7 +21,7 @@ navbar:
     icon: fa-binoculars
     menu:
     - text: SCRuB Manuscript
-      href: www.google.com
+      href: https://www.nature.com/articles/s41587-023-01696-w
   right:
   - text: Contribute to SCRuB!
     href: contribute.html
