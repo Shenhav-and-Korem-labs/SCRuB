@@ -74,9 +74,13 @@ One of the key advantages of SCRuB is that it uses the shared information across
 *<span style="color:lightblue">Is there any benefit in providing SCRuB with more than one control sample?*<br>
 Yes! SCRuB uses each control sample as an independent realization of the contamination source it represents. More samples allow us to infer the latent composition of these source more accurately. We recommend at least 2 controls per source, although more than two controls would often be appropriate.
 
+*<span style="color:lightblue"> Does SCRuB work equally well on relative abundances vs compositional counts?*<br>
+While SCRuB is expected to work with relative abundance or subsampled/rarefied counts, we recommend using raw counts. Using relative abundances gives all samples the same power to share information; while this assumption can be reasonable, it does deviate slightly from SCRuB's validations.
 
 *<span style="color:lightblue"> How can I resolve issues setting up SCRuB on my machine?*<br>
 While we encourage all users to contact us for assistance via our issues pages or via email, we can offer a few general suggestions to address some common issues: 1) To accommodate SCRuB’s dependencies, we require `R >= 3.6`. If a user’s analysis requires an older version of R, we recommend maintaining two separate R environments on your machine. 2) A common issue with running the torch package can be resolved by running the R command `torch::install_torch()`. 3) We have implemented unit tests that successfully deploy SCRuB on five separate machines; upon request, we will be happy to provide assistance with information specific to your machine.
+
+
 
 &nbsp;
 
