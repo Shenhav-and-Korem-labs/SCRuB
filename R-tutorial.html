@@ -13,13 +13,13 @@
 
 <title>SCRuB R Tutorial</title>
 
-<script src="R-tutorial_files/header-attrs-2.14/header-attrs.js"></script>
-<script src="R-tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="R-tutorial_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="R-tutorial_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="R-tutorial_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="R-tutorial_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="R-tutorial_files/navigation-1.1/tabsets.js"></script>
-<link href="R-tutorial_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="R-tutorial_files/highlightjs-9.12.0/highlight.js"></script>
-<link href="R-tutorial_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="R-tutorial_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -332,58 +332,25 @@ $(document).ready(function () {
             text-color: whitesmoke}
 </style>
 <p><img src='images/SCRuB_logo.png' align="right" height="139" /></p>
-<p>In this tutorial, we demonstrate how SCRuB should be used to remove
-contamination from microbial samples. All you need to run SCRuB is a
-count matrix of control and non-control samples. To run the SCRuB with
-its full spatial component, which is strongly recommended, the well
-locations of each sample must also be provided.</p>
+<p>In this tutorial, we demonstrate how SCRuB should be used to remove contamination from microbial samples. All you need to run SCRuB is a count matrix of control and non-control samples. To run the SCRuB with its full spatial component, which is strongly recommended, the well locations of each sample must also be provided.</p>
 <hr />
 <div id="getting-ready" class="section level1">
 <h1>Getting ready</h1>
-<p>We start by loading the necessary packages, such as
-<code>SCRUB</code>. We also include the use of <code>tidyverse</code>
-within our tutorial</p>
+<p>We start by loading the necessary packages, such as <code>SCRUB</code>. We also include the use of <code>tidyverse</code> within our tutorial</p>
 <pre class="r"><code>set.seed(1)
 library(SCRuB)</code></pre>
-<p>The primary input for SCRuB is a matrix, in which each row represents
-a sample, and each column represents each sample’s read counts that
-correspond to a certain taxa (e.g ASV, OTU, species). In general, we
-recommend to run SCRuB on the most granular version of the data possible
-(e.g., ASV, OTU, mOTU), and so data should only be grouped to higher
-orders of phylogeny (e.g. genus, family…) <em>after</em> completing the
-SCRuB pipeline.</p>
-<p>Within this tutorial, we use processed samples publicly available
-from <a href="https://qiita.ucsd.edu/">Qiita</a>, from a dataset of
-plasma samples, made public by <a
-href="https://www.nature.com/articles/s41586-020-2095-1">Poore et
-al</a>. In the ensuing code, we demonstrate how SCRuB can be used to
-remove contamination from these plasma samples using control samples and
-publicly available metadata provided by the authors.</p>
+<p>The primary input for SCRuB is a matrix, in which each row represents a sample, and each column represents each sample’s read counts that correspond to a certain taxa (e.g ASV, OTU, species). In general, we recommend to run SCRuB on the most granular version of the data possible (e.g., ASV, OTU, mOTU), and so data should only be grouped to higher orders of phylogeny (e.g. genus, family…) <em>after</em> completing the SCRuB pipeline.</p>
+<p>Within this tutorial, we use processed samples publicly available from <a href="https://qiita.ucsd.edu/">Qiita</a>, from a dataset of plasma samples, made public by <a href="https://www.nature.com/articles/s41586-020-2095-1">Poore et al</a>. In the ensuing code, we demonstrate how SCRuB can be used to remove contamination from these plasma samples using control samples and publicly available metadata provided by the authors.</p>
 </div>
 <div id="section" class="section level1 tabset">
 <h1 class="tabset"></h1>
 <div id="inputs" class="section level2">
 <h2>Inputs</h2>
-<p>The required inputs to <em>SCRuB</em> are composed of one count
-matrix, and one metadata matrix (or data frame):</p>
+<p>The required inputs to <em>SCRuB</em> are composed of one count matrix, and one metadata matrix (or data frame):</p>
 <ol style="list-style-type: decimal">
-<li><strong><span style="color:lightblue">data</strong> - An (
-<code>n_samples</code> + <code>n_controls</code> ) x
-<code>n_taxa</code>count matrix, where <code>n_samples</code> is the
-number of samples, <code>n_controls</code> is the number of negative
-controls, and <code>n_taxa</code> is the number of features in the count
-matrix. Row names are the sample ids. Column names are the taxa ids.
-Every consecutive column contains read counts for each sample. Note that
-this order must be respected.</li>
+<li><strong><span style="color:lightblue">data</strong> - An ( <code>n_samples</code> + <code>n_controls</code> ) x <code>n_taxa</code>count matrix, where <code>n_samples</code> is the number of samples, <code>n_controls</code> is the number of negative controls, and <code>n_taxa</code> is the number of features in the count matrix. Row names are the sample ids. Column names are the taxa ids. Every consecutive column contains read counts for each sample. Note that this order must be respected.</li>
 </ol>
-<p>Alternatively, SCRuB supports inputs as 1) a biom object, which
-contains the x <code>n_taxa</code> x ( <code>n_samples</code> +
-<code>n_controls</code> ) read count matrix; if no metadata input is
-specified directly in the function call, <code>SCRuB</code> will check
-for a metadata table within the biom object; 2) a <code>character</code>
-input specifying the path to a file where the data object is stored;
-SCRuB supports <code>.biom</code>, <code>.tsv</code>, and
-<code>.csv</code> files.</p>
+<p>Alternatively, SCRuB supports inputs as 1) a biom object, which contains the x <code>n_taxa</code> x ( <code>n_samples</code> + <code>n_controls</code> ) read count matrix; if no metadata input is specified directly in the function call, <code>SCRuB</code> will check for a metadata table within the biom object; 2) a <code>character</code> input specifying the path to a file where the data object is stored; SCRuB supports <code>.biom</code>, <code>.tsv</code>, and <code>.csv</code> files.</p>
 <p>count matrix (first 4 rows and columns):</p>
 <pre class="r"><code>data &lt;- read.csv(&#39;plasma_data.csv&#39;, row.names=1) %&gt;% as.matrix()
 data[30:42, 20:24]</code></pre>
@@ -402,16 +369,9 @@ data[30:42, 20:24]</code></pre>
 ## 12692.150242             3          0          0          0          1
 ## 12692.Control.1          9          0          0          0          3</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><strong><span style="color:lightblue">metadata</strong> - (n_samples
-+ n_controls x 2, or (n_samples + n_controls x 3. The columns must be
-ordered as described below, with the third column being optional. The
-three columns are 1) a boolean indicator identifying which entries
-correspond to control samples; 2) a string column denoting the types of
-control samples; and (optionally) 3) the plate location of each
-sample.</li>
+<li><strong><span style="color:lightblue">metadata</strong> - (n_samples + n_controls x 2, or (n_samples + n_controls x 3. The columns must be ordered as described below, with the third column being optional. The three columns are 1) a boolean indicator identifying which entries correspond to control samples; 2) a string column denoting the types of control samples; and (optionally) 3) the plate location of each sample.</li>
 </ol>
-<p>Alternatively, SCRuB will accept a <code>character</code> path to a
-<code>.csv</code> or <code>.tsv</code> file containing the metadata.</p>
+<p>Alternatively, SCRuB will accept a <code>character</code> path to a <code>.csv</code> or <code>.tsv</code> file containing the metadata.</p>
 <pre class="r"><code>metadata &lt;- read.csv(&#39;plasma_metadata.csv&#39;, row.names=1)
 metadata[30:42,]</code></pre>
 <pre><code>##                 is_control                  sample_type sample_well
@@ -429,21 +389,11 @@ metadata[30:42,]</code></pre>
 ## 12692.150242         FALSE                       plasma         D24
 ## 12692.Control.1       TRUE control blank DNA extraction          A3</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li>(optional)
-<strong><span style="color:lightblue">control_order</strong> - vector,
-default NA. If specified, outlines the order of controls to run
-decontamination in. Input as a vector, of which each element must also
-be found in the metadata’s second column. If not specified, all control
-types found in <code>metadata</code> will be run sequentially based on
-their order from that table. In thise example, our dataset includes the
-following types of controls:</li>
+<li>(optional) <strong><span style="color:lightblue">control_order</strong> - vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata’s second column. If not specified, all control types found in <code>metadata</code> will be run sequentially based on their order from that table. In thise example, our dataset includes the following types of controls:</li>
 </ol>
 <pre class="r"><code>metadata %&gt;% filter(is_control) %&gt;% pull(sample_type) %&gt;% unique()</code></pre>
 <pre><code>## [1] &quot;control blank DNA extraction&quot; &quot;control blank library prep&quot;</code></pre>
-<p>Based on the analysis from SCRuB’s manuscript, we recommend to
-perform decontamination in the order in which contaminants are
-introduced. In this case, this corresponds to the following control
-order:</p>
+<p>Based on the analysis from SCRuB’s manuscript, we recommend to perform decontamination in the order in which contaminants are introduced. In this case, this corresponds to the following control order:</p>
 <pre class="r"><code>control_order &lt;- c(&quot;control blank library prep&quot;, &quot;control blank DNA extraction&quot;)</code></pre>
 </div>
 <div id="running-scrub" class="section level2">
@@ -456,10 +406,7 @@ order:</p>
 <pre><code>## [1] &quot;Incorporating the well metadata to track well-to-well leakage!&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank library prep controls...&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank DNA extraction controls...&quot;</code></pre>
-<p>Alternatively, SCRuB can be run using <code>biom</code> objects, and
-by inputting the paths to the input files. The file formats for the
-inputs can be found <a
-href="https://github.com/Shenhav-and-Korem-labs/SCRuB/tree/gh-pages_tmp">here</a>.</p>
+<p>Alternatively, SCRuB can be run using <code>biom</code> objects, and by inputting the paths to the input files. The file formats for the inputs can be found <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/tree/gh-pages_tmp">here</a>.</p>
 <pre class="r"><code>scr_out &lt;- SCRuB( &#39;plasma-data.biom&#39;,
                   &#39;plasma_metadata.csv&#39;, 
                   control_order =  c(&#39;control blank library prep&#39;, &#39;control blank DNA extraction&#39;)
@@ -467,18 +414,12 @@ href="https://github.com/Shenhav-and-Korem-labs/SCRuB/tree/gh-pages_tmp">here</a
 <pre><code>## [1] &quot;Incorporating the well metadata to track well-to-well leakage!&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank library prep controls...&quot;
 ## [1] &quot;SCRuBbing away contamination in the control blank DNA extraction controls...&quot;</code></pre>
-<p>scr_out &lt;- SCRuB( ‘plasma-data.biom’, ‘plasma_metadata.csv’,
-control_order = c(‘control blank library prep’, ‘control blank DNA
-extraction’) )</p>
 </div>
 <div id="outputs" class="section level2">
 <h2>Outputs</h2>
 <p>SCRuB outputs a list containing the following components:</p>
 <ol style="list-style-type: decimal">
-<li><strong><span style="color:lightblue">decontaminated_samples</strong>
-- an n_samples x n_taxa count matrix, representing the decontaminated
-taxonomic compositions. In most cases, this is what you are interested
-in for downstream analyses.</li>
+<li><strong><span style="color:lightblue">decontaminated_samples</strong> - an n_samples x n_taxa count matrix, representing the decontaminated taxonomic compositions. In most cases, this is what you are interested in for downstream analyses.</li>
 </ol>
 <pre class="r"><code>decontaminated_samples &lt;- scr_out$decontaminated_samples
 decontaminated_samples[30:41, 20:24]</code></pre>
@@ -496,25 +437,15 @@ decontaminated_samples[30:41, 20:24]</code></pre>
 ## 12692.150238          0          0          0          0          0
 ## 12692.150242          0          0          0          0          0</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><strong><span style="color:lightblue">p</strong> - an n_samples
-vector representing the estimate proportion of each observed sample that
-was not contamination, as described in SCRuB’s methods. A dataset that
-had no contamination would have a<code>p</code> of 1s, while a dataset
-of entirely contamination would have a <code>p</code> of 0.</li>
+<li><strong><span style="color:lightblue">p</strong> - an n_samples vector representing the estimate proportion of each observed sample that was not contamination, as described in SCRuB’s methods. A dataset that had no contamination would have a<code>p</code> of 1s, while a dataset of entirely contamination would have a <code>p</code> of 0.</li>
 </ol>
 <pre class="r"><code>(1 - scr_out$p) %&gt;% 
   boxplot(ylab=&#39;Level of contamination&#39;)</code></pre>
 <p><img src="R-tutorial_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
-<li><strong><span style="color:lightblue">inner_iterations</strong> -
-results from SCRuB’s intermediary steps, which includes one list entry
-per type of control. Each iteration contains:</li>
+<li><strong><span style="color:lightblue">inner_iterations</strong> - results from SCRuB’s intermediary steps, which includes one list entry per type of control. Each iteration contains:</li>
 </ol>
-<p>(3.1)
-<strong><span style="color:lightblue">decontaminated_samples</strong> -
-a n_samples x n_taxa count matrix, representing the taxonomic
-composition of the samples after the specified round of
-decontamination.</p>
+<p>(3.1) <strong><span style="color:lightblue">decontaminated_samples</strong> - a n_samples x n_taxa count matrix, representing the taxonomic composition of the samples after the specified round of decontamination.</p>
 <pre class="r"><code>scr_out$inner_iterations$`control blank DNA extraction`$decontaminated_samples[30:41,20:24]</code></pre>
 <pre><code>##              G000005845 G000006275 G000006335 G000006355 G000006405
 ## 12692.150171          0          0          0          0          0
@@ -529,40 +460,20 @@ decontamination.</p>
 ## 12692.150230          0          0          0          0          0
 ## 12692.150238          0          0          0          0          0
 ## 12692.150242          0          0          0          0          0</code></pre>
-<p>(3.2) <strong><span style="color:lightblue">p</strong> – an n_sample
-vector representing the estimate proportion of each observed sample that
-was not contamination, based on the specified type of process
-control</p>
+<p>(3.2) <strong><span style="color:lightblue">p</strong> – an n_sample vector representing the estimate proportion of each observed sample that was not contamination, based on the specified type of process control</p>
 <pre class="r"><code>(1 - scr_out$inner_iterations$`control blank DNA extraction`$p ) %&gt;%
   boxplot(ylab=&#39;Level of contamination&#39;)</code></pre>
 <p><img src="R-tutorial_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>(3.3) <strong><span style="color:lightblue">alpha</strong> - an
-n_control x ( n_sample + 1 ) matrix, representing the estimated
-contribution of the contaminant and each sample to each control, where
-the (n_sample + 1)th column represents the contribution from the
-contamination to the control. Each row of alpha sums to 1, with each
-entry of the (n_sample + 1)th column being 1 means there is zero
-estimated well leakage, while entries close to zero would indicate there
-is a high level of well leakage. It is strongly recommended to
-incorporate the well metadata of each sample into SCRuB, as this makes
-it possible ot directly account for potential well leakage into negative
-controls, reducing the risk of wrongly removing certain species during
-decontamination.</p>
-<p>In this case, <code>SCRuB</code> estimated a very high level of
-leakage for many DNA extraction samples, with a median estimated
-well-to-well leakage of <code>60%</code>.</p>
+<p>(3.3) <strong><span style="color:lightblue">alpha</strong> - an n_control x ( n_sample + 1 ) matrix, representing the estimated contribution of the contaminant and each sample to each control, where the (n_sample + 1)th column represents the contribution from the contamination to the control. Each row of alpha sums to 1, with each entry of the (n_sample + 1)th column being 1 means there is zero estimated well leakage, while entries close to zero would indicate there is a high level of well leakage. It is strongly recommended to incorporate the well metadata of each sample into SCRuB, as this makes it possible ot directly account for potential well leakage into negative controls, reducing the risk of wrongly removing certain species during decontamination.</p>
+<p>In this case, <code>SCRuB</code> estimated a very high level of leakage for many DNA extraction samples, with a median estimated well-to-well leakage of <code>60%</code>.</p>
 <pre class="r"><code>boxplot( 1 - scr_out$inner_iterations$`control blank DNA extraction`$alpha[, ncol(scr_out$inner_iterations$`control blank DNA extraction`$alpha)], 
          ylab=&#39;Level of well leakage in process controls&#39;)</code></pre>
 <p><img src="R-tutorial_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>(3.4) <strong><span style="color:lightblue">gamma</strong> an n_taxa
-vector representing the estimated relative abundance of the
-contamination community, as described in SCRuB’s methods.</p>
+<p>(3.4) <strong><span style="color:lightblue">gamma</strong> an n_taxa vector representing the estimated relative abundance of the contamination community, as described in SCRuB’s methods.</p>
 <pre class="r"><code>scr_out$inner_iterations$`control blank DNA extraction`$gamma %&gt;% 
   plot(ylab=&#39;Relative abundance&#39;, xlab=&#39;Different OTUs in contamination source&#39;)</code></pre>
 <p><img src="R-tutorial_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>(3.5) <strong><span style="color:lightblue">loglikelihood</strong> -
-float. The layer-specific log-likelihood of the inputted dataset based
-on SCRuB’s fitted parameters.</p>
+<p>(3.5) <strong><span style="color:lightblue">loglikelihood</strong> - float. The layer-specific log-likelihood of the inputted dataset based on SCRuB’s fitted parameters.</p>
 <pre class="r"><code>scr_out$inner_iterations$`control blank DNA extraction`$loglikelihood</code></pre>
 <pre><code>## [1] -734444161</code></pre>
 </div>

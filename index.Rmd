@@ -77,6 +77,14 @@ Yes! SCRuB uses each control sample as an independent realization of the contami
 *<span style="color:lightblue"> Does SCRuB work equally well on relative abundances vs compositional counts?*<br>
 While SCRuB is expected to work with relative abundance or subsampled/rarefied counts, we recommend using raw counts. Using relative abundances gives all samples the same power to share information; while this assumption can be reasonable, it does deviate slightly from SCRuB's validations.
 
+*<span style="color:lightblue"> How should I run SCRuB on a large dataset spanning multiple plates?*<br>
+SCRuB infers and removes one contamination source at a time. For every dataset, but particularly large ones, we recommend that you first consider the experimental design and the type of process controls collected. Then, run SCRuB separately for each contamination source. For example, if you have collected and sequenced empty collection kits, these likely apply to the entire study: use them to SCRuB the entire dataset, indicating the plate location of the relevant plate in which the controls were located. If you have collected and sequenced negative extraction controls, these likely apply to a specific plate / sequencing batch. Run SCRuB using these controls to decontaminate only the relevant plate / sequencing batch; to accomplish this, the SCRuB function should be called separately, once for each plate / batch.
+
+
+*<span style="color:lightblue"> How should I run SCRuB if my samples' well locations changed across processing stages?*<br>
+If your plate structure varies across different processing stages (i.e. extraction vs amplification) and you have controls relevant to each, we recommend running the SCRuB function in multiple stages to account for the different spatial structures. SCRuB should be run separately for each set of relevant controls, and each sample should be SCRuB-ed once per contamination layer.
+
+
 *<span style="color:lightblue"> How can I resolve issues setting up SCRuB on my machine?*<br>
 While we encourage all users to contact us for assistance via our issues pages or via email, we can offer a few general suggestions to address some common issues: 1) To accommodate SCRuB’s dependencies, we require `R >= 3.6`. If a user’s analysis requires an older version of R, we recommend maintaining two separate R environments on your machine. 2) A common issue with running the torch package can be resolved by running the R command `torch::install_torch()`. 3) We have implemented unit tests that successfully deploy SCRuB on five separate machines; upon request, we will be happy to provide assistance with information specific to your machine.
 

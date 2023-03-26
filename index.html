@@ -13,13 +13,13 @@
 
 <title>SCRuB: Source-tracking for Contamination Removal        in microBiomes</title>
 
-<script src="index_files/header-attrs-2.14/header-attrs.js"></script>
-<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="index_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
-<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -29,11 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="index_files/navigation-1.1/tabsets.js"></script>
-<link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="index_files/highlightjs-9.12.0/highlight.js"></script>
-<link href="index_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="index_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -322,8 +322,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">SCRuB: Source-tracking for Contamination
-Removal <br>      in <em>micro</em>Biomes</h1>
+<h1 class="title toc-ignore">SCRuB: Source-tracking for Contamination Removal <br>      in <em>micro</em>Biomes</h1>
 
 </div>
 
@@ -334,117 +333,44 @@ Removal <br>      in <em>micro</em>Biomes</h1>
             text-color: whitesmoke
             }
 </style>
-<img src='images/SCRuB_logo.png' align="right" height="300" />
-<link rel="icon" type="image/png" href="images/SCRuB_logo.png" />
+<img src='images/SCRuB_logo.png' align="right" height="300" /> <link rel="icon" type="image/png" href="images/SCRuB_logo.png" />
 </center>
 <hr />
-<p><strong><span style="color:lightblue">We are currently in beta
-testing! Please report any issues you faced while using SCRuB in our <a
-href="https://github.com/Shenhav-and-Korem-labs/SCRuB/issues">Issues
-Page</a>, or email <a
-href="gia2105@columbia.edu">gia2105@columbia.edu</a>
-.</span></strong></p>
+<p><strong><span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/issues">Issues Page</a>, or email <a href="gia2105@columbia.edu">gia2105@columbia.edu</a> .</span></strong></p>
 <hr />
-<p>Welcome to <a href="index.html"><em>SCRuB</em></a>! This is a
-software package for in silico
-<strong><span style="color:lightblue">removal of contamination</strong>
-from microbial datasets using process controls. <br></p>
+<p>Welcome to <a href="index.html"><em>SCRuB</em></a>! This is a software package for in silico <strong><span style="color:lightblue">removal of contamination</strong> from microbial datasets using process controls. <br></p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>SCRuB is currently available through our <a
-href="https://github.com/Shenhav-and-Korem-labs/SCRuB">github
-repository</a>, and can be installed using <code>devtools</code>:</p>
+<p>SCRuB is currently available through our <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB">github repository</a>, and can be installed using <code>devtools</code>:</p>
 <pre class="r"><code>devtools::install_github(&quot;Shenhav-and-Korem-labs/SCRuB&quot;)
 torch::install_torch()</code></pre>
-<p>Additionally, we provide <em>SCRuB</em> as a QIIME2 plugin, which can
-be installed from a QIIME2 environment using pip:</p>
+<p>Additionally, we provide <em>SCRuB</em> as a QIIME2 plugin, which can be installed from a QIIME2 environment using pip:</p>
 <pre class="bash"><code>pip install git+https://github.com/Shenhav-and-Korem-labs/q2-SCRuB.git</code></pre>
 <p> </p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-To start using <em>SCRuB</em>, follow along one of the following links,
-according to your preferences: <br>
+To start using <em>SCRuB</em>, follow along one of the following links, according to your preferences: <br>
 <center>
-<b> <font size="5"> <a href="R-tutorial.html">R tutorial</a></font> </b>
-<br> <b> <font size="5"> <a href="qiime2-intro.html">QIIME2
-tutorial</a></font> </b> <br>
+<b> <font size="5"> <a href="R-tutorial.html">R tutorial</a></font> </b> <br> <b> <font size="5"> <a href="qiime2-intro.html">QIIME2 tutorial</a></font> </b> <br>
 </center>
-<p>These tutorials demonstrates the data format needed to set up SCRuB,
-how to run SCRuB’s core funtions, and how to interpret its
-results.</span></p>
+<p>These tutorials demonstrates the data format needed to set up SCRuB, how to run SCRuB’s core funtions, and how to interpret its results.</span></p>
 <p> </p>
 </div>
 <div id="faqs" class="section level2">
 <h2>FAQs</h2>
-<p><em><span style="color:lightblue">Why SCRuB?</em> <br> Instead of
-trying to identify whether a taxa is categorically a contaminant, SCRuB
-models the composition of each contamination source (kit contamination,
-water contamination, etc.). We assume that taxa present together in a
-contamination source will be introduced together to other samples, and
-in similar proportions as in the contamination source. Therefore, if a
-control sample contains multiple bacteria, and a sample of interest
-contains only one of them and at high counts, that one bacteria is
-likely not a contaminant. This allows a more accurate and specific
-decontamination.</p>
-<p><em><span style="color:lightblue">Should I use SCRuB only if I
-believe that there is substantial contamination?</em> <br> Our results
-demonstrate that SCRuB will not erroneously remove taxa if provided with
-unrelated controls. We therefore support incorporating SCRuB into your
-day-to-day analysis pipeline.</p>
-<p><em><span style="color:lightblue">What does SCRuB do with the
-locations of the samples on the wells?</em><br> SCRuB uses these
-location to handle the important and common phenomenon of well-to-well
-leakage, in which material from biological samples leaks into controls
-during experimental procedures. Using the locations of samples during
-processing allows us to detect these cases.</p>
-<p><em><span style="color:lightblue">What do I do if I have more than
-one type of control?</em><br> SCRuB supports multiple types of controls,
-and performs serial decontamination - each time performing
-decontamination using a different type of control. You can specify the
-order of decontamination yourself; we recommend to perform
-decontamination in the order in which contaminants are introduced.</p>
-<p><em><span style="color:lightblue">We sequenced samples from two
-different studies on the same batch / plate / sequencing run. Should I
-run SCRuB just on the data from my study?</em><br> One of the key
-advantages of SCRuB is that it uses the shared information across all
-samples affected by a certain contamination source (e.g., an extraction
-batch). We therefore recommend that you supply SCRuB with <em>all</em>
-the relevant samples, including ones that are not related to a
-particular study - SCRuB uses the information in those samples to
-perform better decontamination.</p>
-<p><em><span style="color:lightblue">Is there any benefit in providing
-SCRuB with more than one control sample?</em><br> Yes! SCRuB uses each
-control sample as an independent realization of the contamination source
-it represents. More samples allow us to infer the latent composition of
-these source more accurately. We recommend at least 2 controls per
-source, although more than two controls would often be appropriate.</p>
-<p><em><span style="color:lightblue"> Does SCRuB work equally well on
-relative abundances vs compositional counts?</em><br> While SCRuB is
-expected to work with relative abundance or subsampled/rarefied counts,
-we recommend using raw counts. Using relative abundances gives all
-samples the same power to share information; while this assumption can
-be reasonable, it does deviate slightly from SCRuB’s validations.</p>
-<p><em><span style="color:lightblue"> How can I resolve issues setting
-up SCRuB on my machine?</em><br> While we encourage all users to contact
-us for assistance via our issues pages or via email, we can offer a few
-general suggestions to address some common issues: 1) To accommodate
-SCRuB’s dependencies, we require <code>R &gt;= 3.6</code>. If a user’s
-analysis requires an older version of R, we recommend maintaining two
-separate R environments on your machine. 2) A common issue with running
-the torch package can be resolved by running the R command
-<code>torch::install_torch()</code>. 3) We have implemented unit tests
-that successfully deploy SCRuB on five separate machines; upon request,
-we will be happy to provide assistance with information specific to your
-machine.</p>
+<p><em><span style="color:lightblue">Why SCRuB?</em> <br> Instead of trying to identify whether a taxa is categorically a contaminant, SCRuB models the composition of each contamination source (kit contamination, water contamination, etc.). We assume that taxa present together in a contamination source will be introduced together to other samples, and in similar proportions as in the contamination source. Therefore, if a control sample contains multiple bacteria, and a sample of interest contains only one of them and at high counts, that one bacteria is likely not a contaminant. This allows a more accurate and specific decontamination.</p>
+<p><em><span style="color:lightblue">Should I use SCRuB only if I believe that there is substantial contamination?</em> <br> Our results demonstrate that SCRuB will not erroneously remove taxa if provided with unrelated controls. We therefore support incorporating SCRuB into your day-to-day analysis pipeline.</p>
+<p><em><span style="color:lightblue">What does SCRuB do with the locations of the samples on the wells?</em><br> SCRuB uses these location to handle the important and common phenomenon of well-to-well leakage, in which material from biological samples leaks into controls during experimental procedures. Using the locations of samples during processing allows us to detect these cases.</p>
+<p><em><span style="color:lightblue">What do I do if I have more than one type of control?</em><br> SCRuB supports multiple types of controls, and performs serial decontamination - each time performing decontamination using a different type of control. You can specify the order of decontamination yourself; we recommend to perform decontamination in the order in which contaminants are introduced.</p>
+<p><em><span style="color:lightblue">We sequenced samples from two different studies on the same batch / plate / sequencing run. Should I run SCRuB just on the data from my study?</em><br> One of the key advantages of SCRuB is that it uses the shared information across all samples affected by a certain contamination source (e.g., an extraction batch). We therefore recommend that you supply SCRuB with <em>all</em> the relevant samples, including ones that are not related to a particular study - SCRuB uses the information in those samples to perform better decontamination.</p>
+<p><em><span style="color:lightblue">Is there any benefit in providing SCRuB with more than one control sample?</em><br> Yes! SCRuB uses each control sample as an independent realization of the contamination source it represents. More samples allow us to infer the latent composition of these source more accurately. We recommend at least 2 controls per source, although more than two controls would often be appropriate.</p>
+<p><em><span style="color:lightblue"> Does SCRuB work equally well on relative abundances vs compositional counts?</em><br> While SCRuB is expected to work with relative abundance or subsampled/rarefied counts, we recommend using raw counts. Using relative abundances gives all samples the same power to share information; while this assumption can be reasonable, it does deviate slightly from SCRuB’s validations.</p>
+<p><em><span style="color:lightblue"> How should I run SCRuB on a large dataset spanning multiple plates?</em><br> SCRuB infers and removes one contamination source at a time. For every dataset, but particularly large ones, we recommend that you first consider the experimental design and the type of process controls collected. Then, run SCRuB separately for each contamination source. For example, if you have collected and sequenced empty collection kits, these likely apply to the entire study: use them to SCRuB the entire dataset, indicating the plate location of the relevant plate in which the controls were located. If you have collected and sequenced negative extraction controls, these likely apply to a specific plate / sequencing batch. Run SCRuB using these controls to decontaminate only the relevant plate / sequencing batch; to accomplish this, the SCRuB function should be called separately, once for each plate / batch.</p>
+<p><em><span style="color:lightblue"> How should I run SCRuB if my samples’ well locations changed across processing stages?</em><br> If your plate structure varies across different processing stages (i.e. extraction vs amplification) and you have controls relevant to each, we recommend running the SCRuB function in multiple stages to account for the different spatial structures. SCRuB should be run separately for each set of relevant controls, and each sample should be SCRuB-ed once per contamination layer.</p>
+<p><em><span style="color:lightblue"> How can I resolve issues setting up SCRuB on my machine?</em><br> While we encourage all users to contact us for assistance via our issues pages or via email, we can offer a few general suggestions to address some common issues: 1) To accommodate SCRuB’s dependencies, we require <code>R &gt;= 3.6</code>. If a user’s analysis requires an older version of R, we recommend maintaining two separate R environments on your machine. 2) A common issue with running the torch package can be resolved by running the R command <code>torch::install_torch()</code>. 3) We have implemented unit tests that successfully deploy SCRuB on five separate machines; upon request, we will be happy to provide assistance with information specific to your machine.</p>
 <p> </p>
-<p><!-- badges: start --> <a
-href="https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml"><img
-src="https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml/badge.svg"
-alt="R-CMD-check" /></a> <a
-href="https://app.codecov.io/gh/Shenhav-and-Korem-labs/SCRuB"><img
-src="https://codecov.io/gh/Shenhav-and-Korem-labs/SCRuB/graph/badge.svg"
-alt="Codecov test coverage" /></a> <!-- badges: end --></p>
+<p><!-- badges: start --> <a href="https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml"><img src="https://github.com/Shenhav-and-Korem-labs/SCRuB/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check" /></a> <a href="https://app.codecov.io/gh/Shenhav-and-Korem-labs/SCRuB"><img src="https://codecov.io/gh/Shenhav-and-Korem-labs/SCRuB/graph/badge.svg" alt="Codecov test coverage" /></a> <!-- badges: end --></p>
 </div>
 
 

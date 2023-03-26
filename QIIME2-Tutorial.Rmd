@@ -22,10 +22,17 @@ In this tutorial we use _SCRuB_ to decontaminate a dataset comparing the plasma 
 
 **Note**: This tutorial assumes you have installed [QIIME2](https://qiime2.org/) using one of the procedures in the [install documents](https://docs.qiime2.org/2020.2/install/). This tutorial also assumes you have installed [SCRuB](https://Shenhav-and-Korem-labs.github.io/SCRuB/).
 
-First, we will make a tutorial directory and download the data above and move the files to the `plasma-data` directory:
+
+First, we make a tutorial directory and download the data specified above to the `plasma-data` directory:
 
 ```bash
-mkdir plasma-data
+mkdir SCRuB-example
+mkdir SCRuB-example/plasma-data
+mkdir SCRuB-example/results
+cd SCRuB-example/plasma-data
+wget https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/raw/main/ipynb/plasma-data/table.qza
+wget https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/raw/main/ipynb/plasma-data/metadata.tsv
+cd ..
 ```
 
 # Decontaminating 
@@ -36,17 +43,9 @@ To run SCRuB we only need a single command, whose inputs and parameters are desc
 
 ## Command line
 
-```{python, eval=FALSE}
-!qiime SCRuB SCRuB \\
-    --i-table plasma-data/table.qza \\
-    --m-metadata-file plasma-data/metadata.tsv \\
-    --p-control-idx-column is_control \\
-    --p-sample-type-column sample_type \\
-    --p-well-location-column well_id \\
-    --p-control-order "control blank library prep,control blank DNA extraction" \\
-    --o-scrubbed results/scrubbed.qza
+```bash
+qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order "control blank library prep,control blank DNA extraction" --o-scrubbed results/scrubbed.qza
 ```
-
 
 Next we load all samples to produce a few visualizations:
 ```{python, eval=FALSE}

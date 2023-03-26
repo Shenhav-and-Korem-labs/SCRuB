@@ -88,7 +88,6 @@ scr_out <- SCRuB( 'plasma-data.biom',
                   )
 ```
 
-scr_out <- SCRuB( 'plasma-data.biom', 'plasma_metadata.csv', control_order =  c('control blank library prep', 'control blank DNA extraction') )
 
 ## Outputs
 

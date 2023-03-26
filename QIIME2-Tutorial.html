@@ -13,7 +13,7 @@
 
 <title>SCRuB QIIME2 Plugin Tutorial</title>
 
-<script src="QIIME2-Tutorial_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="QIIME2-Tutorial_files/header-attrs-2.20/header-attrs.js"></script>
 <script src="QIIME2-Tutorial_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="QIIME2-Tutorial_files/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
@@ -143,11 +143,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -176,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -185,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -350,9 +347,15 @@ href="https://qiime2.org/">QIIME2</a> using one of the procedures in the
 <a href="https://docs.qiime2.org/2020.2/install/">install documents</a>.
 This tutorial also assumes you have installed <a
 href="https://Shenhav-and-Korem-labs.github.io/SCRuB/">SCRuB</a>.</p>
-<p>First, we will make a tutorial directory and download the data above
-and move the files to the <code>plasma-data</code> directory:</p>
-<pre class="bash"><code>mkdir plasma-data</code></pre>
+<p>First, we make a tutorial directory and download the data specified
+above to the <code>plasma-data</code> directory:</p>
+<pre class="bash"><code>mkdir SCRuB-example
+mkdir SCRuB-example/plasma-data
+mkdir SCRuB-example/results
+cd SCRuB-example/plasma-data
+wget https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/raw/main/ipynb/plasma-data/table.qza
+wget https://github.com/Shenhav-and-Korem-labs/q2-SCRuB/raw/main/ipynb/plasma-data/metadata.tsv
+cd ..</code></pre>
 </div>
 <div id="decontaminating" class="section level1">
 <h1>Decontaminating</h1>
@@ -368,14 +371,7 @@ interfaces, which we provide below:</p>
 <h1 class="tabset"></h1>
 <div id="command-line" class="section level2">
 <h2>Command line</h2>
-<pre class="python"><code>!qiime SCRuB SCRuB \\
-    --i-table plasma-data/table.qza \\
-    --m-metadata-file plasma-data/metadata.tsv \\
-    --p-control-idx-column is_control \\
-    --p-sample-type-column sample_type \\
-    --p-well-location-column well_id \\
-    --p-control-order &quot;control blank library prep,control blank DNA extraction&quot; \\
-    --o-scrubbed results/scrubbed.qza</code></pre>
+<pre class="bash"><code>qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order &quot;control blank library prep,control blank DNA extraction&quot; --o-scrubbed results/scrubbed.qza</code></pre>
 <p>Next we load all samples to produce a few visualizations:</p>
 <pre class="python"><code>import os
 import warnings
