@@ -8,6 +8,7 @@
 
 library(testthat)
 library(SCRuB)
-install_torch()
+Sys.setenv(TORCH_INSTALL=1)
+# install_torch() Instead using environment variable following the error described here: https://github.com/mlverse/torch/issues/1017
 
 test_check("SCRuB")
