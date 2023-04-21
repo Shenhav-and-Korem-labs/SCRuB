@@ -229,6 +229,8 @@ SCRuB <- function(input_data,
            )
     }
     
+    if(is.factor(metadata[, 3])) metadata[, 3] <- metadata[, 3] %>% as.character()
+    
     well_dists <- metadata %>%
       mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
              indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, nchar(x)) %>% as.integer)

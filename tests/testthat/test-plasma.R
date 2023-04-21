@@ -6,6 +6,13 @@ context('test-plasma.R')
 
 test_that(desc = 'testing SCRuB variations on plasma dataset',
           {
+            if( torch::torch_is_installed() == F){
+                      torch::install_torch()
+                      detach('package:SCRuB', unload=TRUE)
+                      detach('package:torch', unload=TRUE)
+                      library(SCRuB)
+                      library(torch) 
+                      }
             n_feats_considered=100 # to avoid memory errors on GHA
             data <- (read.csv( paste0( test_path(), '/plasma_data.csv'), row.names=1) %>% as.matrix() )[,1:n_feats_considered]
             metadata <- read.csv( paste0( test_path(), '/plasma_metadata.csv'), row.names=1)
@@ -22,6 +29,12 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             
             
             scr_out_4 <- SCRuB(input_data = paste0(test_path(), '/small_table.biom'), paste0(test_path(), '/plasma_metadata.csv'))
+            
+            ## adding check for different column types in metadata
+            tmp_metadata <- metadata
+            tmp_metadata$sample_type <- as.factor(tmp_metadata$sample_type)
+            tmp_metadata$sample_well <- as.factor(tmp_metadata$sample_well)
+            scr_out_2 <- SCRuB( data[, 1:n_feats_considered], tmp_metadata,  c("control blank DNA extraction", "control blank library prep") ) 
             
             expect_type(scr_out_1, 'list')
             expect_type(scr_out_1$inner_iterations,  'list' )
