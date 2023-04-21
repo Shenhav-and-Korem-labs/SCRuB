@@ -6,6 +6,13 @@ context('test-plasma.R')
 
 test_that(desc = 'testing SCRuB variations on plasma dataset',
           {
+            if( torch::torch_is_installed() == F){
+                      torch::install_torch()
+                      detach('package:SCRuB', unload=TRUE)
+                      detach('package:torch', unload=TRUE)
+                      library(SCRuB)
+                      library(torch) 
+                      }
             n_feats_considered=100 # to avoid memory errors on GHA
             data <- (read.csv( paste0( test_path(), '/plasma_data.csv'), row.names=1) %>% as.matrix() )[,1:n_feats_considered]
             metadata <- read.csv( paste0( test_path(), '/plasma_metadata.csv'), row.names=1)

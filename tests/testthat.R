@@ -8,8 +8,4 @@
 
 library(testthat)
 library(SCRuB)
-library(torch)
-Sys.setenv(TORCH_INSTALL=1)
-install_torch()
-
 test_check("SCRuB")
