@@ -171,11 +171,7 @@ c(0.16, 1, 1)
 c(0, 0.05, 0, 0.95)
 ```
 
-
-
-
-
-
-
-
+Citing SCRuB
+-----------------------
+Austin, G.I., Park, H., Meydan, Y. et al. Contamination source modeling with SCRuB improves cancer phenotype prediction from microbiome data. Nat Biotechnol (2023). https://doi.org/10.1038/s41587-023-01696-w
 
