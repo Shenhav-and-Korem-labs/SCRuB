@@ -30,7 +30,8 @@ install.packages( c('glmnet', 'torch', 'tidyverse') )
 Installation
 ---------------------------
 
-*SCRuB* will be available on QIIME 2 very soon. Until then you can you can simply install *SCRuB* using **devtools**: 
+A QIIME 2 plugin for *SCRuB* is <a href="https://github.com/Shenhav-and-Korem-labs/q2-SCRuB">available here</a>.
+You can also install *SCRuB* using **devtools**: 
 ```
 devtools::install_github("shenhav-and-korem-labs/SCRuB")
 ```
