@@ -188,7 +188,7 @@ SCRUB_no_spatial <- function(samples,
   
   return( list(p = p,
                decontaminated_samples = G  %>%
-                 sweep(MARGIN=1, samples %>% apply(MARGIN = 1, sum) %>% as.vector(), `*` ) %>% round(),
+                 sweep(MARGIN=1, (samples %>% apply(MARGIN = 1, sum) %>% as.vector() ) * p, `*` ) %>% round(),
                gamma = gb,
                loglikelihood=log_likelihood_SCRUB(X, L, G, gb, p )
   ))

@@ -183,7 +183,7 @@ spatial_SCRUB <- function(data,
   
   return( list( 
               decontaminated_samples = as.matrix(G) %>% 
-                  sweep(MARGIN=1, samples %>% apply(MARGIN = 1, sum) %>% as.vector(), `*` ) %>% round(), 
+                  sweep(MARGIN=1, ( samples %>% apply(MARGIN = 1, sum) %>% as.vector() ) * p_out, `*` ) %>% round(), 
                p = p_out,
                alpha=alpha,
                gamma = gb %>% as.matrix() %>% c(), 
