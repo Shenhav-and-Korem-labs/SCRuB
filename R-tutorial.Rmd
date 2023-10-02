@@ -65,7 +65,7 @@ metadata %>% filter(is_control) %>% pull(sample_type) %>% unique()
 
 Based on the analysis from SCRuB's manuscript, we recommend to perform decontamination in the order in which contaminants are introduced. In this case, this corresponds to the following control order:
 ```{r}
-control_order <- c("control blank library prep", "control blank DNA extraction")
+control_order <- c("control blank DNA extraction", "control blank library prep")
 ```
 
 
@@ -84,7 +84,7 @@ Alternatively, SCRuB can be run using `biom` objects, and by inputting the paths
 ```{r}
 scr_out <- SCRuB( 'plasma-data.biom',
                   'plasma_metadata.csv', 
-                  control_order =  c('control blank library prep', 'control blank DNA extraction')
+                  control_order =  c('control blank DNA extraction', 'control blank library prep')
                   )
 ```
 

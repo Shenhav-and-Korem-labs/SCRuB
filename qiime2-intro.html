@@ -364,17 +364,15 @@ href="https://docs.qiime2.org/2022.8/tutorials/metadata/">metadata</a>
 and the columns are different sample data (e.g. time point).<br />
 </li>
 </ul></li>
-<li>( <em>Optional</em> )
-<strong><span style="color:lightblue">control_idx_column</strong>
+<li><strong><span style="color:lightblue">control_idx_column</strong>
 <ul>
 <li>This is the name of the column in the (2) metadata that indicates
-the which samples should be treated as negative controls. If not
-specified, will identify negative controls by searching for a metadata
-column of ‘empo_2’ or ‘qiita_empo_2’, and identifying which entries
-contain the keyword ‘negative’</li>
+the which samples should be treated as negative controls. If no input is
+specified, SCRuB will try to identify negative controls by searching for
+a metadata column of ‘empo_2’ or ‘qiita_empo_2’, and identifying which
+entries contain the keyword ‘negative’</li>
 </ul></li>
-<li>( <em>Optional</em> )
-<strong><span style="color:lightblue">sample_type_column</strong>
+<li><strong><span style="color:lightblue">sample_type_column</strong>
 <ul>
 <li>This is the name of the column in the (2) metadata that indicates
 the sample type, which specifies the groupings of negative controls

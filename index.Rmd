@@ -18,12 +18,13 @@ output:
 
 --------------------------
 
-**<span style="color:lightblue">We are currently in beta testing! Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/Shenhav-and-Korem-labs/SCRuB/issues), or email [gia2105@columbia.edu](gia2105@columbia.edu) .</span>**
+Welcome to [_SCRuB_](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls. 
+
+
+Please report any issues you faced while using SCRuB in our [Issues Page](https://github.com/Shenhav-and-Korem-labs/SCRuB/issues), or email [gia2105@columbia.edu](gia2105@columbia.edu). 
 
 --------------------------
 
-Welcome to [_SCRuB_](index.html)! This is a software package for in silico **<span style="color:lightblue">removal of contamination** from microbial datasets using process controls.
-  <br>
 
 ## Installation
 

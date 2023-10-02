@@ -44,7 +44,7 @@ To run SCRuB we only need a single command, whose inputs and parameters are desc
 ## Command line
 
 ```bash
-qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order "control blank library prep,control blank DNA extraction" --o-scrubbed results/scrubbed.qza
+qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order "control blank DNA extraction,control blank library prep" --o-scrubbed results/scrubbed.qza
 ```
 
 Next we load all samples to produce a few visualizations:
@@ -89,7 +89,7 @@ scrubbed = SCRuB(table,
                 'is_control', #specifies metadata column where True denotes the negative controls
                 'sample_type', #specifies metadata column denoting the sample type
                 'well_id', #specifies metadata column representing samples location in 'A11','B10' format
-                'control blank library prep,control blank DNA extraction' # order of decontamination
+                'control blank DNA extraction,control blank library prep' # order of decontamination
                 )
 ```
 

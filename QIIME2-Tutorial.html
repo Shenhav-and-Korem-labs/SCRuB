@@ -371,7 +371,7 @@ interfaces, which we provide below:</p>
 <h1 class="tabset"></h1>
 <div id="command-line" class="section level2">
 <h2>Command line</h2>
-<pre class="bash"><code>qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order &quot;control blank library prep,control blank DNA extraction&quot; --o-scrubbed results/scrubbed.qza</code></pre>
+<pre class="bash"><code>qiime SCRuB SCRuB --i-table plasma-data/table.qza --m-metadata-file plasma-data/metadata.tsv --p-control-idx-column is_control --p-sample-type-column sample_type --p-well-location-column well_id --p-control-order &quot;control blank DNA extraction,control blank library prep&quot; --o-scrubbed results/scrubbed.qza</code></pre>
 <p>Next we load all samples to produce a few visualizations:</p>
 <pre class="python"><code>import os
 import warnings
@@ -408,7 +408,7 @@ metadata = q2.Metadata.load(&#39;plasma-data/metadata.tsv&#39;)</code></pre>
                 &#39;is_control&#39;, #specifies metadata column where True denotes the negative controls
                 &#39;sample_type&#39;, #specifies metadata column denoting the sample type
                 &#39;well_id&#39;, #specifies metadata column representing samples location in &#39;A11&#39;,&#39;B10&#39; format
-                &#39;control blank library prep,control blank DNA extraction&#39; # order of decontamination
+                &#39;control blank DNA extraction,control blank library prep&#39; # order of decontamination
                 )</code></pre>
 </div>
 <div id="python" class="section level2">
