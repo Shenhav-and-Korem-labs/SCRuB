@@ -30,6 +30,15 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             
             scr_out_4 <- SCRuB(input_data = paste0(test_path(), '/small_table.biom'), paste0(test_path(), '/plasma_metadata.csv'))
             
+            ## testing the manually specified list of control leakers as an input
+            manual_leaker_override <- list('12692.Control.1'=c("12667.X3097210",
+                                                               "12667.X2342267"),
+                                           "12691.Control.44"=c("12667.X2056691",
+                                                                "12691.PC14", 
+                                                                "12667.X2105130",
+                                                                "12692.150178" ) )
+            scr_out_5 <- SCRuB( data[, 1:n_feats_considered], metadata, manual_leaker_override=manual_leaker_override)
+            
             ## adding check for different column types in metadata
             tmp_metadata <- metadata
             tmp_metadata$sample_type <- as.factor(tmp_metadata$sample_type)
@@ -57,6 +66,7 @@ test_that(desc = 'testing SCRuB variations on plasma dataset',
             expect_error( SCRuB( data[1:50, 1:n_feats_considered], metadata[1:50,] ) )
             expect_error( SCRuB( data[1:50, 1:n_feats_considered], metadata[1:50,], NA ) )
             expect_error( SCRuB( data[1:50, 1:n_feats_considered], metadata[1:50,], c('control blank library prep', NA ) ) )
+            expect_error( SCRuB( 0*data[1:50, 1:n_feats_considered], metadata[1:50,], c('control blank library prep', NA ) ) )
           })
 
 
