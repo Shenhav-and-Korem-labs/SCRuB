@@ -24,17 +24,17 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
   for(i in 1:ncol(control_idcs) ){
     print(paste( 'SCRuBbing away contamination in the',  colnames(control_idcs)[i] , 'controls...') )
     if(i==1){
-        if(sum(control_idcs[, i])==1){
-          cont_tmp <- t( data[control_idcs[,i],] )
-          row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
-        }else{
-          cont_tmp <- data[control_idcs[, i], ]
-        }
-
+      if(sum(control_idcs[, i])==1){
+        cont_tmp <- t( data[control_idcs[,i],] )
+        row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+      }else{
+        cont_tmp <- data[control_idcs[, i], ]
+      }
+      
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( samples, 
                                                                                  cont_tmp,
                                                                                  print_loglikelihood = verbose
-                                                                                 )
+      )
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
       if(sum(control_idcs[, i])==1){
@@ -74,45 +74,45 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
   for( i in 1:ncol(control_idcs) ){
     print(paste( 'SCRuBbing away contamination in the',  colnames(control_idcs)[i] , 'controls...') )
     if(i==1){
-        if(sum(control_idcs[, i])==1){
-            cont_tmp <- t( data[control_idcs[,i],] )
-            row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
-        }else{
-          cont_tmp <- data[control_idcs[, i], ]
-        }
-        
-        inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, cont_tmp ),
-                                                                                c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
-                                                                                well_dists,
-                                                                                dist_threshold, 
-                                                                                print_loglikelihood = verbose 
-                                                                                )
-        colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
-        cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
+      if(sum(control_idcs[, i])==1){
+        cont_tmp <- t( data[control_idcs[,i],] )
+        row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
       }else{
-          if(sum(control_idcs[, i])==1){
-            cont_tmp <- t( data[control_idcs[,i],] )
-            row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
-          }else{
-              cont_tmp <- data[control_idcs[, i], ]
-            }
-            
-        
-        inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( 
-                                        rbind( inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
-                                               cont_tmp ) , 
-                                        c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
-                                        well_dists,
-                                        dist_threshold, 
-                                        print_loglikelihood = verbose
-                                      )
-        colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
-        cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
+        cont_tmp <- data[control_idcs[, i], ]
       }
       
-      row.names( inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples ) <- row.names(samples)
+      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( rbind( samples, cont_tmp ),
+                                                                              c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
+                                                                              well_dists,
+                                                                              dist_threshold, 
+                                                                              print_loglikelihood = verbose 
+      )
+      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
+      cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
+    }else{
+      if(sum(control_idcs[, i])==1){
+        cont_tmp <- t( data[control_idcs[,i],] )
+        row.names(cont_tmp) <- row.names(data)[control_idcs[,i]]
+      }else{
+        cont_tmp <- data[control_idcs[, i], ]
+      }
+      
+      
+      inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- spatial_SCRUB( 
+        rbind( inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
+               cont_tmp ) , 
+        c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
+        well_dists,
+        dist_threshold, 
+        print_loglikelihood = verbose
+      )
+      colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
+      cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
     }
     
+    row.names( inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples ) <- row.names(samples)
+  }
+  
   return(list(decontaminated_samples=inner_scrub_iterations[[colnames(control_idcs)[ncol(control_idcs)] ]]$decontaminated_samples,
               p = cumulative_p, 
               inner_iterations=inner_scrub_iterations
@@ -134,6 +134,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' @param control_order vector, default NA. If specified, outlines the order of controls to run decontamination in. Input as a vector, of which each element must also be found in the metadata's second column. If not specified, all control types found in `metadata` will be run sequentially based on their order from that table. 
 #' @param dist_threshold float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. This input is only used if the well location metadata is provided Default of 1.5 
 #' @param dist_metric string, default `euclidean`. The distance metric to be used when evaluating samples' physical distance. This input is used in the `stats` library's `dist` function; see their documentation for other options.
+#' @param manual_leaker_override NA, or list (default NA). If provided as a list, is used to override any well locations to specify which samples could leak into which controls. Each list element needs to be a control sample's name, which maps to a vector containing the names of all samples for which SCRuB should track leakage. 
 #' @param verbose boolean - if TRUE, SCRuB prints the log-likelihood of hte dataset thoughout each iteration. 
 #' @return A list containing:
 #' 1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
@@ -147,8 +148,9 @@ SCRuB <- function(input_data,
                   control_order=NA,
                   dist_threshold=1.5, 
                   dist_metric='euclidean',
+                  manual_leaker_override=NA,
                   verbose=F
-                  ){
+){
   
   using_biom <- F
   if(is.data.frame(input_data)){
@@ -183,10 +185,10 @@ SCRuB <- function(input_data,
       metadata <- read.csv(metadata, row.names = 1)
     } else if(str_ends(metadata, '.tsv')){
       metadata <- read.csv(metadata, row.names=1, sep='\t')
-      } else{ stop("Couldn't recognize `metadata` file format; filepath must end with `.tsv`, or `.csv`.") }
+    } else{ stop("Couldn't recognize `metadata` file format; filepath must end with `.tsv`, or `.csv`.") }
   }
   
- 
+  
   
   # cont_type_overlap <- metadata %>% filter(is_control) %>% pull(Groups) %>% unique() %in% 
   #                           ( metadata %>% filter(is_control==F) %>% pull(Groups) %>% unique )
@@ -202,14 +204,18 @@ SCRuB <- function(input_data,
   data <- as.matrix(data)
   metadata <- as.data.frame(metadata)
   
+  ## check for empty samples
+  if( sum( rowSums(data) == 0 ) > 0 ){
+    stop('The provided data includes empty samples. Please remove them before running SCRuB!') }
+  
   if(is.vector(control_order)&(max(is.na(control_order))==F)){
     if(length(control_order) !=length(unique(control_order))){ stop('All entries within `control_order` must be unique!') }
     for(cont_tp in control_order){
       if( F == (cont_tp %in% metadata[metadata[,1]==T, 2 ] %>% unique() ) ){
         stop(paste0( "All entries in `control_order` must be found in the `metadata` rows where `is_contaminant` is TRUE. No such entries found for `", 
-                      cont_tp,
-                      "`."  ) )
-        }   }
+                     cont_tp,
+                     "`."  ) )
+      }   }
   } else if (min(is.na(control_order))){
     ## select control order based on the order in the metadata
     control_order <- metadata[metadata[,1]==T, 2 ] %>% unique() %>% as.character()
@@ -219,25 +225,48 @@ SCRuB <- function(input_data,
     sapply( function(x) metadata[,2] == x ) %>% as.matrix()
   
   
-  if(ncol(metadata) == 3){
+  if( (ncol(metadata) == 3)|(is.list(manual_leaker_override)) ){
     
-    well_counts <- count( metadata, metadata[,3] )
-    if( max(well_counts[,2]) > 1){
-      stop(paste0( "Multiple well metadata entries found for the following well locations: ", 
-                   paste0( filter(well_counts, well_counts[, 2] > 1)[,1], collapse = ', '),
-                   ". Well locations must be unique to run sample. If running SCRuB across a collection of multiple batches, decontamination should be implemented in parallel across each plate."  )
-           )
+    if( is.list(manual_leaker_override) ){
+      print('Using manually provided list to track well-to-well leakage!' )
+      
+      ## manually create the distance matrix using the provided list
+      well_dists <- matrix(data = dist_threshold + 10, ## really just need a number > dist_threshold
+                           nrow = (metadata$is_control) %>% sum(), 
+                           ncol = (metadata$is_control==F) %>% sum(), 
+                           dimnames = list( metadata %>% filter(is_control) %>% row.names,
+                                            metadata %>% filter(is_control==F) %>% row.names
+                           )
+      )
+      
+      ## loop through the list to 'gate in' the specified sample-control pairs
+      leaking_dist <- dist_threshold - 0.5 ## any number < the threshold would work
+      for( a in names(manual_leaker_override) ){
+        for( b in manual_leaker_override[[a]] )
+          well_dists[a, b] <- leaking_dist
+      }
+      
+      
+    }else{
+      
+      well_counts <- count( metadata, metadata[,3] )
+      if( max(well_counts[,2]) > 1){
+        stop(paste0( "Multiple well metadata entries found for the following well locations: ", 
+                     paste0( filter(well_counts, well_counts[, 2] > 1)[,1], collapse = ', '),
+                     ". Well locations must be unique to run sample. If running SCRuB across a collection of multiple batches, decontamination should be implemented in parallel across each plate."  )
+        )
+      }
+      
+      if(is.factor(metadata[, 3])) metadata[, 3] <- metadata[, 3] %>% as.character()
+      
+      well_dists <- metadata %>%
+        mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
+               indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, nchar(x)) %>% as.integer)
+        ) %>% 
+        select(as.symbol('well'), as.symbol('indices') ) %>% 
+        dist(method=dist_metric) %>% as.matrix()
+      print('Incorporating the well metadata to track well-to-well leakage!' )
     }
-    
-    if(is.factor(metadata[, 3])) metadata[, 3] <- metadata[, 3] %>% as.character()
-    
-    well_dists <- metadata %>%
-      mutate(well = metadata[, 3] %>% sapply( function(x) which( LETTERS == substr(x, 1, 1) ) ),
-             indices = metadata[, 3] %>% sapply( function(x) substr(x, 2, nchar(x)) %>% as.integer)
-      ) %>% 
-      select(as.symbol('well'), as.symbol('indices') ) %>% 
-      dist(method=dist_metric) %>% as.matrix()
-    print('Incorporating the well metadata to track well-to-well leakage!' )
     
     return( SCRuB_wrapper(data, control_mat, well_dists, dist_threshold=dist_threshold, verbose = verbose) )
     
@@ -245,5 +274,4 @@ SCRuB <- function(input_data,
     print('Did not find well metadata, running SCRuB without the spatial component')
     return(SCRuB_wrapper_no_spatial(data = data, control_mat, verbose = verbose))
   }
-  }
-  
+}
