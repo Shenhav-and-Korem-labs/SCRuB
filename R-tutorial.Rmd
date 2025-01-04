@@ -74,7 +74,7 @@ control_order <- c("control blank DNA extraction", "control blank library prep")
 To run SCRuB, we only need to execute a single function:
 
 ```{r}
-scr_out <- SCRuB( data[,1:750], # temporarily shortening feature space to shorten tutorial runtime as the documentation is being developped...
+scr_out <- SCRuB( data,
                   metadata, 
                   control_order = control_order
                   )

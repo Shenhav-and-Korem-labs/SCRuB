@@ -135,7 +135,7 @@ Now we can compare the raw table and SCRuB's output:
 
 
 ```{python, eval=FALSE}
-from qiime2.plugins.deicode.actions import rpca
+from qiime2.plugins.gemelli.actions import rpca
 from qiime2.plugins.emperor.actions import (plot, biplot)
 ```
 
