@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: |
           R --vanilla -q -e 'install.packages("BiocManager", repos="https://cloud.r-project.org")'
-          R --vanilla -q -e 'BiocManager::install(c("S4Vectors", "SparseArray"), ask=FALSE, update=FALSE)'
+          R --vanilla -q -e 'BiocManager::install(c("S4Vectors", "SparseArray", "Biobase"), ask=FALSE, update=FALSE)'
 
       # Verify that it was actually installed
       - name: Verify S4Vectors
