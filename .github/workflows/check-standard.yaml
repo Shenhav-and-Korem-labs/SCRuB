@@ -44,6 +44,12 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Check biomformat
+        run: |
+          R -q -e 'packageVersion("biomformat")'
+          R -q -e 'packageDescription("biomformat")[c("Depends","Imports","Suggests")]'
+          R -q -e 'print(requireNamespace("S4Vectors", quietly=TRUE))'
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: 'c("--no-manual")'

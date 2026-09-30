@@ -140,6 +140,7 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
 #' @param dist_metric string, default `euclidean`. The distance metric to be used when evaluating samples' physical distance. This input is used in the `stats` library's `dist` function; see their documentation for other options.
 #' @param manual_leaker_override NA, or list (default NA). If provided as a list, is used to override any well locations to specify which samples could leak into which controls. Each list element needs to be a control sample's name, which maps to a vector containing the names of all samples for which SCRuB should track leakage. 
 #' @param verbose boolean - if TRUE, SCRuB prints the log-likelihood of hte dataset thoughout each iteration. 
+#' @param COVERAGE INT, Rarefaction depth to use in the parameter initializatin pipeline
 #' @return A list containing:
 #' 1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
 #' 2) p - The fitted p parameter, as described in SCRuB's methods. 

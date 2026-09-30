@@ -10,7 +10,8 @@ spatial_SCRUB(
   is_control,
   well_dists,
   dist_threshold = 1.5,
-  print_loglikelihood = F
+  print_loglikelihood = F,
+  COVERAGE = 10000
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ spatial_SCRUB(
 \item{dist_threshold}{float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5}
 
 \item{print_loglikelihood}{Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration}
+
+\item{COVERAGE}{INT, Rarefaction depth to use in the parameter initializatin pipeline}
 }
 \value{
 A list containing:

@@ -77,6 +77,7 @@ initialize_w2w_params <- function(samples,
 #' @param well_dists numeric matrix. Deontes the spatial distance between each pairwise samples, names rows and columns must correst to the rownames of `data`
 #' @param dist_threshold float - Determines the maximum euclidean distance between samples and controls which SCRuB determines as potential sources of well leakage. Default of 1.5 
 #' @param print_loglikelihood Boolean, TRUE of FALSE. Determines if SCRuB should print the calculated log-likelihood during each iteration
+#' @param COVERAGE INT, Rarefaction depth to use in the parameter initializatin pipeline
 #' @return A list containing:
 #' 1) decontaminated_samples - a n_samples x n_taxa count matrix, representing the decontaminated samples
 #' 2) p - The fitted p parameter, as described in SCRuB's methods. 
