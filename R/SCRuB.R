@@ -149,8 +149,9 @@ SCRuB <- function(input_data,
                   dist_threshold=1.5, 
                   dist_metric='euclidean',
                   manual_leaker_override=NA,
-                  verbose=F
-){
+                  verbose=F,
+                  COVERAGE=10000
+                  ){
   
   using_biom <- F
   if(is.data.frame(input_data)){
@@ -268,10 +269,18 @@ SCRuB <- function(input_data,
       print('Incorporating the well metadata to track well-to-well leakage!' )
     }
     
-    return( SCRuB_wrapper(data, control_mat, well_dists, dist_threshold=dist_threshold, verbose = verbose) )
+    return( SCRuB_wrapper(data, 
+                          control_mat, 
+                          well_dists, 
+                          dist_threshold=dist_threshold, 
+                          verbose = verbose, 
+                          COVERAGE=COVERAGE) )
     
   }else{
     print('Did not find well metadata, running SCRuB without the spatial component')
-    return(SCRuB_wrapper_no_spatial(data = data, control_mat, verbose = verbose))
+    return(SCRuB_wrapper_no_spatial(data = data, 
+                                    control_mat, 
+                                    verbose = verbose, 
+                                    COVERAGE=COVERAGE))
   }
 }

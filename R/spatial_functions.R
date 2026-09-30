@@ -92,7 +92,8 @@ spatial_SCRUB <- function(data,
                           is_control, 
                           well_dists,
                           dist_threshold=1.5, 
-                          print_loglikelihood=F
+                          print_loglikelihood=F,
+                          COVERAGE=10000
                           ){
   
   samples <- data[is_control == FALSE, ]
@@ -126,7 +127,9 @@ spatial_SCRUB <- function(data,
   if(sum(tmp_controls) == 0 )  tmp_controls <- controls
   
   setup <- set_up_SCRUB(samples, 
-                           tmp_controls) 
+                        tmp_controls, 
+                        COVERAGE=COVERAGE
+                        ) 
   
   f_setup <- setup$sink_setup
   contam <- setup$contam
