@@ -11,7 +11,7 @@
 NULL
 
 
-SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
+SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F, COVERAGE=10000){
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
   samples <- data[any_cont_type==F, ]
   if(sum(any_cont_type==F)==1){
@@ -33,7 +33,8 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
       
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( samples, 
                                                                                  cont_tmp,
-                                                                                 print_loglikelihood = verbose
+                                                                                 print_loglikelihood = verbose,
+                                                                                 COVERAGE=COVERAGE
       )
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
     }else{
@@ -44,9 +45,10 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
         cont_tmp <- data[control_idcs[, i], ]
       }
       inner_scrub_iterations[[ colnames(control_idcs)[i] ]] <- SCRUB_no_spatial( 
-        inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
-        cont_tmp,
-        print_loglikelihood = verbose)
+                                  inner_scrub_iterations[[ colnames(control_idcs)[i-1] ]]$decontaminated_samples,
+                                  cont_tmp,
+                                  print_loglikelihood = verbose,
+                                  COVERAGE=COVERAGE)
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
     }
     
@@ -60,7 +62,7 @@ SCRuB_wrapper_no_spatial <- function(data, control_idcs, verbose=F){
 }
 
 
-SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, verbose=F){
+SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, verbose=F, COVERAGE=10000){
   
   any_cont_type <- ( control_idcs %>% rowSums() ) > 0
   samples <- data[any_cont_type==F, ]
@@ -85,7 +87,8 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
                                                                               c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
                                                                               well_dists,
                                                                               dist_threshold, 
-                                                                              print_loglikelihood = verbose 
+                                                                              print_loglikelihood = verbose ,
+                                                                              COVERAGE=COVERAGE
       )
       colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p
@@ -104,7 +107,8 @@ SCRuB_wrapper <- function(data, control_idcs, well_dists, dist_threshold=1.5, ve
         c( rep(F, nrow(samples)), rep(T, sum(control_idcs[,i]) ) ),
         well_dists,
         dist_threshold, 
-        print_loglikelihood = verbose
+        print_loglikelihood = verbose,
+        COVERAGE=COVERAGE
       )
       colnames(inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$decontaminated_samples) <- colnames(data)
       cumulative_p <- inner_scrub_iterations[[ colnames(control_idcs)[i] ]]$p * cumulative_p
