@@ -51,7 +51,7 @@ initialize_contaminant <- function(sinks, control_samples, COVERAGE=10000){
   # goal - initialize contaminant as weighted average of control samples,
   # weight is determined by alphas from lsq_init
   n_controls <- nrow(control_samples)
-  lsq_out <- LSQ_init(sinks, control_samples, COVERAGE=10000)
+  lsq_out <- LSQ_init(sinks, control_samples, COVERAGE=COVERAGE)
   alpha_inits <- lsq_out$alpha_inits
   contam_init <-  rescale( (alpha_inits %>% apply(MARGIN=2, mean) )[1:n_controls] ) %*% control_samples
   return(contam_init)
@@ -149,7 +149,9 @@ SCRUB_no_spatial <- function(samples,
   
   
   setup <- set_up_SCRUB(samples,
-                        controls)
+                        controls,
+                        COVERAGE=COVERAGE
+                        )
   
   
   f_setup <- setup$sink_setup

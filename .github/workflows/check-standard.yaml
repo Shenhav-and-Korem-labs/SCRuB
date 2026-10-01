@@ -44,6 +44,20 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      # Explicitly install the Bioconductor dependency
+      - name: Install S4Vectors
+        shell: bash
+        run: |
+          R --vanilla -q -e 'install.packages("BiocManager", repos="https://cloud.r-project.org")'
+          R --vanilla -q -e 'BiocManager::install(c("S4Vectors", "SparseArray", "Biobase"), ask=FALSE, update=FALSE)'
+
+      # Verify that it was actually installed
+      - name: Verify S4Vectors
+        shell: bash
+        run: |
+          R --vanilla -q -e 'print(packageVersion("S4Vectors"))'
+          R --vanilla -q -e 'library(S4Vectors)'
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: 'c("--no-manual")'
